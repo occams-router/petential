@@ -3,13 +3,14 @@ import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
-	return (
-		<View style={styles.container}>
-			<Text>Hello World! We are Occams Router.</Text>
-			<Button title="Sign Up" />
-			<StatusBar style="auto" />
-		</View>
-	);
+
+  return (
+    <View style={styles.container}>
+      <Text>Hello World! We are Occam's Router!</Text>
+      <StatusBar style="auto" />
+    </View>
+  );
+
 }
 
 const styles = StyleSheet.create({
