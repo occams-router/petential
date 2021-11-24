@@ -1,43 +1,17 @@
-import {
-  Text,
-  StyleSheet,
-  TextInput,
-  SafeAreaView,
-  Button,
-} from "react-native";
+import { Text, TextInput, View, Button, TouchableOpacity } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import styles from "./styles";
 import React, { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
-import { auth } from "../../firebase/config";
+import { auth, db } from "../../firebase/config";
 import { createUserWithEmailAndPassword } from "@firebase/auth";
-import { getFirestore } from "@firebase/firestore";
-
-const db = getFirestore();
-
-const styles = StyleSheet.create({
-  baseText: {
-    fontFamily: "sans-serif",
-  },
-  titleText: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 8,
-    width: 250,
-  },
-});
 
 export const AdopterSignup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [user, setUser] = useState({});
 
-  const onClick = (name, email, password) => {
+  const onSignupPress = (name, email, password) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(async (response) => {
         const uid = response.user.uid;
@@ -62,36 +36,48 @@ export const AdopterSignup = () => {
   };
 
   return (
-    <SafeAreaView>
-      <Text style={styles.baseText}>
-        <Text style={styles.titleText}>Welcome, adopter!</Text>
-      </Text>
+    <View style={styles.container}>
+      <KeyboardAwareScrollView
+        style={{ flex: 1, width: "100%" }}
+        keyboardShouldPersistTaps="always"
+      >
+        <Text style={styles.title}>Welcome!</Text>
 
-      <Text style={styles.baseText}>Name</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={(text) => setName(text)}
-        value={name}
-      ></TextInput>
-
-      <Text style={styles.baseText}>Email</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={(text) => setEmail(text)}
-        value={email}
-      ></TextInput>
-
-      <Text style={styles.baseText}>Password</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={(text) => setPassword(text)}
-        value={password}
-      ></TextInput>
-
-      <Button
-        title="Sign Up"
-        onPress={() => onClick(name, email, password)}
-      ></Button>
-    </SafeAreaView>
+        <TextInput
+          style={styles.input}
+          placeholder="Name"
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => setName(text)}
+          value={name}
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          placeholderTextColor="#aaaaaa"
+          placeholder="Email"
+          onChangeText={(text) => setEmail(text)}
+          value={email}
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          placeholderTextColor="#aaaaaa"
+          secureTextEntry
+          placeholder="Password"
+          onChangeText={(text) => setPassword(text)}
+          value={password}
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+        />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => onSignupPress(name, email, password)}
+        >
+          <Text style={styles.buttonTitle}>Sign Up</Text>
+        </TouchableOpacity>
+      </KeyboardAwareScrollView>
+    </View>
   );
 };
