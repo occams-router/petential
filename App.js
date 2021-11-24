@@ -5,6 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Home, RegistrationScreen } from './src/screens';
 import { Login } from './src/screens';
 import { decode, encode } from 'base-64';
+import { auth } from './src/firebase/config';
+import { onAuthStateChanged } from '@firebase/auth';
 if (!global.btoa) {
 	global.btoa = encode;
 }
@@ -18,11 +20,19 @@ export default function App() {
 	const [loading, setLoading] = useState(true);
 	const [user, setUser] = useState(null);
 
+	onAuthStateChanged(auth, (currentUser) => {
+		setUser(currentUser);
+	});
+
 	return (
 		<NavigationContainer>
 			<Stack.Navigator>
 				{user ? (
-					<Stack.Screen name="Home">{(props) => <Home />}</Stack.Screen>
+					<>
+						<Stack.Screen name="Home">
+							{(props) => <Home {...props} extraData={user} />}
+						</Stack.Screen>
+					</>
 				) : (
 					<>
 						<Stack.Screen name="Login" component={Login} />
