@@ -2,7 +2,12 @@ import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { FillerHome, RegistrationScreen } from './src/screens';
+import {
+	FillerHome,
+	RegistrationScreen,
+	ShelterSignup,
+	AdopterSignup,
+} from './src/screens';
 import { Login } from './src/screens';
 import { decode, encode } from 'base-64';
 import { auth } from './src/firebase/config';
