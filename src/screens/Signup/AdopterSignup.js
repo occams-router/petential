@@ -1,6 +1,6 @@
 import { Text, TextInput, View, Button, TouchableOpacity } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import styles from "./styles";
+import styles from "../Login/styles";
 import React, { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase/config";
