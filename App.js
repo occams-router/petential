@@ -1,10 +1,10 @@
-import "react-native-gesture-handler";
-import React, { useEffect, useState } from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { Home, RegistrationScreen } from "./src/screens";
-import { Login } from "./src/screens";
-import { decode, encode } from "base-64";
+import 'react-native-gesture-handler';
+import React, { useEffect, useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Home, RegistrationScreen, ShelterSignup, AdopterSignup } from './src/screens';
+import { Login } from './src/screens';
+import { decode, encode } from 'base-64';
 if (!global.btoa) {
   global.btoa = encode;
 }
@@ -33,14 +33,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-// const styles = StyleSheet.create({
-// 	container: {
-// 		flex: 1,
-// 		backgroundColor: 'white',
-// 		alignItems: 'center',
-// 		justifyContent: 'center',
-// 		padding: 10,
-// 		margin: 10,
-// 	},
-// });
