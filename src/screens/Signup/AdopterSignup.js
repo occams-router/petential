@@ -1,4 +1,3 @@
-import { firebase } from "../../firebase/config";
 import {
   Text,
   StyleSheet,
@@ -7,6 +6,13 @@ import {
   Button,
 } from "react-native";
 import React, { useState } from "react";
+import { collection, addDoc } from "firebase/firestore";
+// import { db } from "../../firebase/config";
+import { auth } from "../../firebase/config";
+import { getFirestore } from "@firebase/firestore";
+import { createUserWithEmailAndPassword } from "@firebase/auth";
+
+const db = getFirestore();
 
 const styles = StyleSheet.create({
   baseText: {
@@ -27,6 +33,33 @@ const styles = StyleSheet.create({
 });
 
 export const AdopterSignup = () => {
+  const onClick = () => {
+    let email = "testuser4@gmail.com";
+    let password = "123456";
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(async (response) => {
+        const uid = response.user.uid;
+        console.log("uid:", uid);
+        const data = {
+          id: uid,
+          email,
+          password,
+          name: "Test",
+        };
+
+        try {
+          const docRef = await addDoc(collection(db, "adopters"), data);
+          console.log("Document written with ID: ", docRef.id);
+        } catch (error) {
+          console.error("Error adding document: ", error);
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+
   return (
     <SafeAreaView>
       <Text style={styles.baseText}>
@@ -42,7 +75,7 @@ export const AdopterSignup = () => {
       <Text style={styles.baseText}>Password</Text>
       <TextInput style={styles.input}></TextInput>
 
-      <Button title="Next"></Button>
+      <Button title="Sign Up" onPress={() => onClick()}></Button>
     </SafeAreaView>
   );
 };
