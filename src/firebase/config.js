@@ -1,5 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import secrets from '../../secrets';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 // Optionally import the services that you want to use
 //import {...} from "firebase/auth";
@@ -18,4 +20,7 @@ const firebaseConfig = {
   appId: secrets.APP_ID,
 };
 
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+
+export const auth = getAuth(app);
+export const db = getFirestore(app);
