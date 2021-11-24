@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Home, RegistrationScreen } from './src/screens';
+import { FillerHome, RegistrationScreen } from './src/screens';
 import { Login } from './src/screens';
 import { decode, encode } from 'base-64';
 import { auth } from './src/firebase/config';
@@ -29,8 +29,8 @@ export default function App() {
 			<Stack.Navigator>
 				{user ? (
 					<>
-						<Stack.Screen name="Home">
-							{(props) => <Home {...props} extraData={user} />}
+						<Stack.Screen name="FillerHome">
+							{(props) => <FillerHome {...props} extraData={user} />}
 						</Stack.Screen>
 					</>
 				) : (

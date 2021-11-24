@@ -4,7 +4,7 @@ import { auth } from '../../firebase/config';
 import styles from './styles';
 import { signOut } from '@firebase/auth';
 
-export default function Home(props) {
+export default function FillerHome(props) {
 	const logout = async () => {
 		try {
 			await signOut(auth);
