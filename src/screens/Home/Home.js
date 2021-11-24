@@ -13,7 +13,7 @@ const Home = ({ navigation }) => {
         />
         <Button
           title="I represent a shelter!"
-          onPress={() => navigation.navigate("Screen")}
+          onPress={() => navigation.navigate("Shelter Sign Up")}
         />
         <Image
           source={{

@@ -13,16 +13,9 @@ import {
 export default function Login({ navigation }) {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [user, setUser] = useState({});
-
-	useEffect(() => {
-		onAuthStateChanged(auth, (currentUser) => {
-			setUser(currentUser);
-		});
-	});
 
 	const onFooterLinkPress = () => {
-		navigation.navigate('Registration');
+		navigation.navigate('Home');
 	};
 
 	const onLoginPress = async () => {
@@ -30,7 +23,7 @@ export default function Login({ navigation }) {
 			const user = await signInWithEmailAndPassword(auth, email, password);
 			console.log(user);
 			alert('You are logged in!');
-			navigation.navigate('Home', user);
+			navigation.navigate('FillerHome');
 		} catch (error) {
 			alert('Invalid email or password');
 			console.log(error.message);
