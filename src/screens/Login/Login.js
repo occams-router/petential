@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
@@ -7,6 +7,7 @@ import {
 	createUserWithEmailAndPassword,
 	onAuthStateChanged,
 	signInWithEmailAndPassword,
+	signOut,
 } from '@firebase/auth';
 
 export default function Login({ navigation }) {
@@ -14,8 +15,10 @@ export default function Login({ navigation }) {
 	const [password, setPassword] = useState('');
 	const [user, setUser] = useState({});
 
-	onAuthStateChanged(auth, (currentUser) => {
-		setUser(currentUser);
+	useEffect(() => {
+		onAuthStateChanged(auth, (currentUser) => {
+			setUser(currentUser);
+		});
 	});
 
 	const onFooterLinkPress = () => {
@@ -27,7 +30,7 @@ export default function Login({ navigation }) {
 			const user = await signInWithEmailAndPassword(auth, email, password);
 			console.log(user);
 			alert('You are logged in!');
-			// navigation.navigate('Home', { user });
+			navigation.navigate('Home', user);
 		} catch (error) {
 			alert('Invalid email or password');
 			console.log(error.message);
