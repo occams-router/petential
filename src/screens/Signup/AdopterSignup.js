@@ -7,10 +7,9 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
-// import { db } from "../../firebase/config";
 import { auth } from "../../firebase/config";
-import { getFirestore } from "@firebase/firestore";
 import { createUserWithEmailAndPassword } from "@firebase/auth";
+import { getFirestore } from "@firebase/firestore";
 
 const db = getFirestore();
 
@@ -33,19 +32,21 @@ const styles = StyleSheet.create({
 });
 
 export const AdopterSignup = () => {
-  const onClick = () => {
-    let email = "testuser4@gmail.com";
-    let password = "123456";
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [user, setUser] = useState({});
 
+  const onClick = (name, email, password) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(async (response) => {
         const uid = response.user.uid;
-        console.log("uid:", uid);
+
         const data = {
           id: uid,
           email,
           password,
-          name: "Test",
+          name,
         };
 
         try {
@@ -67,15 +68,30 @@ export const AdopterSignup = () => {
       </Text>
 
       <Text style={styles.baseText}>Name</Text>
-      <TextInput style={styles.input}></TextInput>
+      <TextInput
+        style={styles.input}
+        onChangeText={(text) => setName(text)}
+        value={name}
+      ></TextInput>
 
       <Text style={styles.baseText}>Email</Text>
-      <TextInput style={styles.input}></TextInput>
+      <TextInput
+        style={styles.input}
+        onChangeText={(text) => setEmail(text)}
+        value={email}
+      ></TextInput>
 
       <Text style={styles.baseText}>Password</Text>
-      <TextInput style={styles.input}></TextInput>
+      <TextInput
+        style={styles.input}
+        onChangeText={(text) => setPassword(text)}
+        value={password}
+      ></TextInput>
 
-      <Button title="Sign Up" onPress={() => onClick()}></Button>
+      <Button
+        title="Sign Up"
+        onPress={() => onClick(name, email, password)}
+      ></Button>
     </SafeAreaView>
   );
 };
