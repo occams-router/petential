@@ -2,12 +2,7 @@ import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {
-	FillerHome,
-	RegistrationScreen,
-	ShelterSignup,
-	AdopterSignup,
-} from './src/screens';
+import { FillerHome, ShelterSignup, AdopterSignup, Home } from './src/screens';
 import { Login } from './src/screens';
 import { decode, encode } from 'base-64';
 import { auth } from './src/firebase/config';
@@ -26,7 +21,11 @@ export default function App() {
 	const [user, setUser] = useState(null);
 
 	onAuthStateChanged(auth, (currentUser) => {
-		setUser(currentUser);
+		if (currentUser) {
+			setUser(currentUser);
+		} else {
+			setUser(null);
+		}
 	});
 
 	return (
@@ -34,14 +33,12 @@ export default function App() {
 			<Stack.Navigator>
 				{user ? (
 					<>
-						<Stack.Screen name="FillerHome">
-							{(props) => <FillerHome {...props} extraData={user} />}
-						</Stack.Screen>
+						<Stack.Screen name="FillerHome" component={FillerHome} />
 					</>
 				) : (
 					<>
 						<Stack.Screen name="Login" component={Login} />
-						{/* <Stack.Screen name="Registration" component={RegistrationScreen} /> */}
+						<Stack.Screen name="Home" component={Home} />
 					</>
 				)}
 			</Stack.Navigator>
