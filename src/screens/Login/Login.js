@@ -22,7 +22,7 @@ export default function Login({ navigation }) {
 	});
 
 	const onFooterLinkPress = () => {
-		navigation.navigate('Registration');
+		navigation.navigate('Home');
 	};
 
 	const onLoginPress = async () => {
@@ -30,7 +30,7 @@ export default function Login({ navigation }) {
 			const user = await signInWithEmailAndPassword(auth, email, password);
 			console.log(user);
 			alert('You are logged in!');
-			navigation.navigate('Home', user);
+			navigation.navigate('FillerHome');
 		} catch (error) {
 			alert('Invalid email or password');
 			console.log(error.message);
