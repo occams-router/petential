@@ -1,6 +1,6 @@
 import { Text, TextInput, View, Button, TouchableOpacity } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import styles from "../Login/styles";
+import styles from "./styles";
 import React, { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase/config";
@@ -19,6 +19,10 @@ export default function AdopterSignup({ navigation }) {
   const [housing, setHousing] = useState("");
   const [lifestyle, setLifestyle] = useState("");
   const [petHistory, setPetHistory] = useState("");
+
+  const onFooterLinkPress = () => {
+    navigation.navigate("Login");
+  };
 
   const onSignupPress = async () => {
     try {
@@ -177,6 +181,14 @@ export default function AdopterSignup({ navigation }) {
         <TouchableOpacity style={styles.button} onPress={() => onSignupPress()}>
           <Text style={styles.buttonTitle}>Sign Up</Text>
         </TouchableOpacity>
+        <View style={styles.footerView}>
+          <Text style={styles.footerText}>
+            Already have an account?{" "}
+            <Text onPress={onFooterLinkPress} style={styles.footerLink}>
+              Log in
+            </Text>
+          </Text>
+        </View>
       </KeyboardAwareScrollView>
     </View>
   );
