@@ -3,13 +3,13 @@ import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import {
-  FillerHome,
   ShelterHome,
+  AdopterHome,
   ShelterSignup,
   AdopterSignup,
   ProfileOptions,
+  Login,
 } from "./src/screens";
-import { Login } from "./src/screens";
 import { decode, encode } from "base-64";
 import { auth } from "./src/firebase/config";
 import { onAuthStateChanged } from "@firebase/auth";
@@ -39,15 +39,15 @@ export default function App() {
       <Stack.Navigator>
         {user ? (
           <>
-            <Stack.Screen name="FillerHome" component={FillerHome} />
+            <Stack.Screen name="ShelterHome" component={ShelterHome} />
+            <Stack.Screen name="AdopterHome" component={AdopterHome} />
           </>
         ) : (
           <>
             <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Home" component={ProfileOptions} />
+            <Stack.Screen name="ProfileOptions" component={ProfileOptions} />
             <Stack.Screen name="AdopterSignup" component={AdopterSignup} />
             <Stack.Screen name="ShelterSignup" component={ShelterSignup} />
-            <Stack.Screen name="ShelterHome" component={ShelterHome} />
           </>
         )}
       </Stack.Navigator>
