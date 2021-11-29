@@ -43,8 +43,13 @@ export default function ShelterSignup({ navigation }) {
         phone,
         description,
       };
-      await addDoc(collection(db, 'shelters'), data);
-      navigation.navigate('Home', { user: data });
+      const docRef = await addDoc(collection(db, 'shelters'), data);
+      await addDoc(collection(db, 'users'), {
+        id: response.user.uid,
+        docId: `shelters/${docRef.id}`,
+        type: 'shelter',
+      });
+      navigation.navigate('ShelterHome');
     } catch (error) {
       console.log(error);
     }
