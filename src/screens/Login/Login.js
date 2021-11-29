@@ -22,16 +22,17 @@ export default function Login({ navigation }) {
 			const user = await signInWithEmailAndPassword(auth, email, password);
 			// console.log(user);
 			const data = await getDocs(usersCollectionRef);
-			console.log('User', user.user.uid);
+			console.log('UID', user.user.uid);
 			const usersArr = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+			console.log('Users', usersArr);
 			const correctUser = usersArr.find(
 				(element) => element.uid === user.user.uid
 			);
 			console.log(correctUser.type);
 			if (correctUser.type === 'adopter') {
-				navigation.navigate('FillerHome');
+				navigation.navigate('AdopterHome');
 			} else if (correctUser.type === 'shelter') {
-				navigation.navigate('FillerHome');
+				navigation.navigate('ShelterHome');
 			}
 		} catch (error) {
 			alert('Invalid email or password');
