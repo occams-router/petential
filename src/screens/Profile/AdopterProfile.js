@@ -6,6 +6,7 @@ import {
 	Image,
 	TextInput,
 	TouchableOpacity,
+    Button
 } from 'react-native';
 import { auth, db } from '../../firebase/config';
 import {
@@ -166,9 +167,9 @@ export default function AdopterProfile(props) {
 					underlineColorAndroid="transparent"
 					autoCapitalize="none"
 				/>
-				<TouchableOpacity style={styles.button} onPress={() => updatePress()}>
+				<Button style={styles.button} onPress={() => updatePress()}>
 					<Text style={styles.buttonTitle}>Update Profile</Text>
-				</TouchableOpacity>
+				</Button>
 			</KeyboardAwareScrollView>
 		</SafeAreaView>
 	);
