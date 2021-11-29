@@ -14,7 +14,7 @@ export default function Login({ navigation }) {
 	const [shelter, setShelter] = useState([]);
 
 	const onFooterLinkPress = () => {
-		navigation.navigate('Home');
+		navigation.navigate('ProfileOptions');
 	};
 
 	const onLoginPress = async () => {
