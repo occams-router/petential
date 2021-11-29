@@ -1,6 +1,8 @@
 export { default as Login } from './Login/Login';
 
-export { default as FillerHome } from './Home/FillerHome';
+export { default as AdopterHome } from './Home/AdopterHome';
+
+export { default as ShelterHome } from './Home/ShelterHome';
 
 export { default as ProfileOptions } from './Signup/ProfileOptions';
 
