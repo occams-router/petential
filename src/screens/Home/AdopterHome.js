@@ -16,7 +16,7 @@ export default function AdopterHome(props) {
   };
   return (
     <View>
-      <Text style={styles.title}>Your Feed</Text>
+      <Text style={styles.title}>Adopter Feed</Text>
       <TouchableOpacity style={styles.button} onPress={() => logout()}>
         <Text style={styles.buttonTitle}>Log out</Text>
       </TouchableOpacity>
