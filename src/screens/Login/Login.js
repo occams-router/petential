@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Image, SafeAreaView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+	Image,
+	SafeAreaView,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View,
+} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import { auth, db } from '../../firebase/config';
@@ -10,6 +17,8 @@ export default function Login({ navigation }) {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const usersCollectionRef = collection(db, 'users');
+	const adoptersCollectionRef = collection(db, 'adopters');
+	const sheltersCollectionRef = collection(db, 'shelters');
 	const [adopter, setAdopters] = useState([]);
 	const [shelter, setShelter] = useState([]);
 
@@ -23,14 +32,20 @@ export default function Login({ navigation }) {
 			// console.log(user);
 			const data = await getDocs(usersCollectionRef);
 			console.log('UID', user.user.uid);
-			const usersArr = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+			const usersArr = data.docs.map((doc) => ({ ...doc.data() }));
 			console.log('Users', usersArr);
 			const correctUser = usersArr.find(
 				(element) => element.uid === user.user.uid
 			);
 			console.log(correctUser.type);
 			if (correctUser.type === 'adopter') {
-				navigation.navigate('AdopterHome');
+				const data = await getDocs(adoptersCollectionRef);
+				const adoptersArr = data.docs.map((doc) => ({ ...doc.data() }));
+				const correctAdopter = adoptersArr.find(
+					(element) => element.uid === user.user.uid
+				);
+				console.log(correctAdopter);
+				navigation.navigate('AdopterHome', { user: correctAdopter });
 			} else if (correctUser.type === 'shelter') {
 				navigation.navigate('ShelterHome');
 			}
