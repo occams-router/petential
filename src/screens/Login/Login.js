@@ -2,17 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
-import { auth } from '../../firebase/config';
-import {
-	createUserWithEmailAndPassword,
-	onAuthStateChanged,
-	signInWithEmailAndPassword,
-	signOut,
-} from '@firebase/auth';
+import { auth, db } from '../../firebase/config';
+import { signInWithEmailAndPassword } from '@firebase/auth';
+import { collection, getDocs, doc } from 'firebase/firestore';
 
 export default function Login({ navigation }) {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const usersCollectionRef = collection(db, 'users');
+	const [adopter, setAdopters] = useState([]);
+	const [shelter, setShelter] = useState([]);
 
 	const onFooterLinkPress = () => {
 		navigation.navigate('Home');
@@ -21,9 +20,19 @@ export default function Login({ navigation }) {
 	const onLoginPress = async () => {
 		try {
 			const user = await signInWithEmailAndPassword(auth, email, password);
-			console.log(user);
-			alert('You are logged in!');
-			navigation.navigate('FillerHome');
+			// console.log(user);
+			const data = await getDocs(usersCollectionRef);
+			console.log('User', user.user.uid);
+			const usersArr = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+			const correctUser = usersArr.find(
+				(element) => element.uid === user.user.uid
+			);
+			console.log(correctUser.type);
+			if (correctUser.type === 'adopter') {
+				navigation.navigate('FillerHome');
+			} else if (correctUser.type === 'shelter') {
+				navigation.navigate('FillerHome');
+			}
 		} catch (error) {
 			alert('Invalid email or password');
 			console.log(error.message);
