@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, SafeAreaView, TouchableOpacity } from "react-native";
 import { auth } from "../../firebase/config";
 import styles from "./styles";
 import { signOut } from "@firebase/auth";
@@ -15,11 +15,11 @@ export default function AdopterHome(props) {
     }
   };
   return (
-    <View>
+    <SafeAreaView>
       <Text style={styles.title}>Adopter Feed</Text>
       <TouchableOpacity style={styles.button} onPress={() => logout()}>
         <Text style={styles.buttonTitle}>Log out</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }
