@@ -13,7 +13,7 @@ const Home = ({ navigation }) => {
         />
         <Button
           title="I represent a shelter!"
-          onPress={() => navigation.navigate("Shelter Sign Up")}
+          onPress={() => navigation.navigate("ShelterSignup")}
         />
         <Image
           source={{
@@ -22,7 +22,7 @@ const Home = ({ navigation }) => {
         />
         <Button
           title="I want to adopt!"
-          onPress={() => navigation.navigate("Screen")}
+          onPress={() => navigation.navigate("AdopterSignup")}
         />
       </View>
     </View>
