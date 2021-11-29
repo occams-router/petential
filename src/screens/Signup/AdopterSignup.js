@@ -39,7 +39,7 @@ export default function AdopterSignup({ navigation }) {
       const uid = response.user.uid;
 
       const adopterData = {
-        id: uid,
+        uid,
         name,
         email,
         password,
@@ -57,7 +57,7 @@ export default function AdopterSignup({ navigation }) {
       console.log("Successfully added to adopters collection.");
 
       const userData = {
-        id: uid,
+        uid,
         docId: `adopters/${docRef.id}`,
         type: "adopter",
       };
