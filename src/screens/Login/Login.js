@@ -47,7 +47,13 @@ export default function Login({ navigation }) {
 				console.log(correctAdopter);
 				navigation.navigate('AdopterHome', { user: correctAdopter });
 			} else if (correctUser.type === 'shelter') {
-				navigation.navigate('ShelterHome');
+				const data = await getDocs(sheltersCollectionRef);
+				const sheltersArr = data.docs.map((doc) => ({ ...doc.data() }));
+				const correctShelter = sheltersArr.find(
+					(element) => element.uid === user.user.uid
+				);
+				console.log(correctShelter);
+				navigation.navigate('ShelterHome', { user: correctShelter });
 			}
 		} catch (error) {
 			alert('Invalid email or password');
