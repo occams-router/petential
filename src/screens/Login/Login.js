@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, SafeAreaView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import { auth, db } from '../../firebase/config';
@@ -41,7 +41,7 @@ export default function Login({ navigation }) {
 	};
 
 	return (
-		<View style={styles.container}>
+		<SafeAreaView style={styles.container}>
 			<KeyboardAwareScrollView
 				style={{ flex: 1, width: '100%' }}
 				keyboardShouldPersistTaps="always">
@@ -83,6 +83,6 @@ export default function Login({ navigation }) {
 					</Text>
 				</View>
 			</KeyboardAwareScrollView>
-		</View>
+		</SafeAreaView>
 	);
 }
