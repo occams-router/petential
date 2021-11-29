@@ -38,7 +38,7 @@ export default function AdopterSignup({ navigation }) {
 
       const uid = response.user.uid;
 
-      const data = {
+      const adopterData = {
         id: uid,
         name,
         email,
@@ -53,8 +53,19 @@ export default function AdopterSignup({ navigation }) {
         petHistory,
       };
 
-      await addDoc(collection(db, "adopters"), data);
-      console.log("User was successfully added.");
+      const docRef = await addDoc(collection(db, "adopters"), adopterData);
+      console.log("Successfully added to adopters collection.");
+
+      const userData = {
+        id: uid,
+        docId: `adopters/${docRef.id}`,
+        type: "adopter",
+      };
+
+      await addDoc(collection(db, "users"), userData);
+      console.log("Successfully added to users collection.");
+
+      navigation.navigate("AdopterHome", { user: adopterData });
     } catch (error) {
       console.error("Error adding user: ", error);
     }
