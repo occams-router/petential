@@ -1,80 +1,90 @@
-import { useState, React } from 'react';
-import { SafeAreaView, Text, Image } from 'react-native';
+import React from 'react';
+import { useState } from 'react';
+import {
+	SafeAreaView,
+	Text,
+	Image,
+	TextInput,
+	TouchableOpacity,
+} from 'react-native';
 import { auth, db } from '../../firebase/config';
 import {
-  collection,
-  getDocs,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  doc,
-} from "firebase/firestore";
+	collection,
+	getDocs,
+	addDoc,
+	updateDoc,
+	deleteDoc,
+	doc,
+} from 'firebase/firestore';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import styles from './styles';
 
 export default function AdopterProfile(props) {
-	const [name, setName] = useState(props.user.name || '');
-	const [city, setCity] = useState(props.user.city || '');
-	const [state, setState] = useState(props.user.state || '');
-	const [phone, setPhone] = useState(props.user.phone || '');
-	const [description, setDescription] = useState(props.user.description || '');
-	const [imageUrl, setImageUrl] = useState(props.user.imageUrl || '');
-	const [housing, setHousing] = useState(props.user.housing || '');
-	const [lifestyle, setLifestyle] = useState(props.user.lifestyle || '');
-	const [petHistory, setPetHistory] = useState(props.user.petHistory || '');
-    const updateName = async (id, newName) => {
-        const userDoc = doc(db, "adopters", name);
-        const newFields = { name: newName };
-        await updateDoc(userDoc, newFields);
-      };
+    const user = props.route.params.user
+	const id = user.id
+	const [name, setName] = useState(user.name || '');
+	const [city, setCity] = useState(user.city || '');
+	const [state, setState] = useState(user.state || '');
+	const [phone, setPhone] = useState(user.phone || '');
+	const [description, setDescription] = useState(user.description || '');
+	const [imageUrl, setImageUrl] = useState(user.imageUrl || '');
+	const [housing, setHousing] = useState(user.housing || '');
+	const [lifestyle, setLifestyle] = useState(user.lifestyle || '');
+	const [petHistory, setPetHistory] = useState(user.petHistory || '');
+	// const updateName = async (id, newName) => {
+	// 	const userDoc = doc(db, 'adopters', name);
+	// 	const newFields = { name: newName };
+	// 	await updateDoc(userDoc, newFields);
+	// };
 
-      const updateCity = async (id, newCity) => {
-        const userDoc = doc(db, "adopters", city);
-        const newFields = { city: newCity };
-        await updateDoc(userDoc, newFields);
-      };
+	// const updateCity = async (id, newCity) => {
+	// 	const userDoc = doc(db, 'adopters', city);
+	// 	const newFields = { city: newCity };
+	// 	await updateDoc(userDoc, newFields);
+	// };
 
-      const updateState = async (id, newState) => {
-        const userDoc = doc(db, "adopters", state);
-        const newFields = { state: newState };
-        await updateDoc(userDoc, newFields);
-      };
+	// const updateState = async (id, newState) => {
+	// 	const userDoc = doc(db, 'adopters', state);
+	// 	const newFields = { state: newState };
+	// 	await updateDoc(userDoc, newFields);
+	// };
 
-      const updatePhone = async (id, newPhone) => {
-        const userDoc = doc(db, "adopters", phone);
-        const newFields = { phone: newPhone };
-        await updateDoc(userDoc, newFields);
-      };
+	// const updatePhone = async (id, newPhone) => {
+	// 	const userDoc = doc(db, 'adopters', phone);
+	// 	const newFields = { phone: newPhone };
+	// 	await updateDoc(userDoc, newFields);
+	// };
 
-      const updateDescription = async (id, newDescription) => {
-        const userDoc = doc(db, "adopters", description);
-        const newFields = { description: newDescription };
-        await updateDoc(userDoc, newFields);
-      };
+	// const updateDescription = async (id, newDescription) => {
+	// 	const userDoc = doc(db, 'adopters', description);
+	// 	const newFields = { description: newDescription };
+	// 	await updateDoc(userDoc, newFields);
+	// };
 
-      const updateHousing = async (id, newHousing) => {
-        const userDoc = doc(db, "adopters", housing);
-        const newFields = { housing: newHousing };
-        await updateDoc(userDoc, newFields);
-      };
+	// const updateHousing = async (id, newHousing) => {
+	// 	const userDoc = doc(db, 'adopters', housing);
+	// 	const newFields = { housing: newHousing };
+	// 	await updateDoc(userDoc, newFields);
+	// };
 
-      const updateImage = async (id, newImage) => {
-        const userDoc = doc(db, "adopters", image);
-        const newFields = { imageUrl: newImage };
-        await updateDoc(userDoc, newFields);
-      };
+	// const updateImage = async (id, newImage) => {
+	// 	const userDoc = doc(db, 'adopters', image);
+	// 	const newFields = { imageUrl: newImage };
+	// 	await updateDoc(userDoc, newFields);
+	// };
 
-      const updateLifestyle = async (id, newLifestyle) => {
-        const userDoc = doc(db, "adopters", lifestyle);
-        const newFields = { lifestyle: newLifestyle };
-        await updateDoc(userDoc, newFields);
-      };
-
+	// const updateLifestyle = async (id, newLifestyle) => {
+	// 	const userDoc = doc(db, 'adopters', lifestyle);
+	// 	const newFields = { lifestyle: newLifestyle };
+	// 	await updateDoc(userDoc, newFields);
+	// };
 	return (
 		<SafeAreaView>
 			<KeyboardAwareScrollView
 				style={{ flex: 1, width: '100%' }}
 				keyboardShouldPersistTaps="always">
-				<Text style={styles.title}>Welcome!</Text>
-
+				<Text style={styles.title}>Welcome, {user.name}!</Text>
+                <Text style={styles.title}>Profile</Text>
 				<TextInput
 					style={styles.input}
 					placeholder="Name"
@@ -156,10 +166,10 @@ export default function AdopterProfile(props) {
 					underlineColorAndroid="transparent"
 					autoCapitalize="none"
 				/>
-                <TouchableOpacity style={styles.button} onPress={() => updatePress()}>
+				<TouchableOpacity style={styles.button} onPress={() => updatePress()}>
 					<Text style={styles.buttonTitle}>Update Profile</Text>
 				</TouchableOpacity>
-   </KeyboardAwareScrollView>
+			</KeyboardAwareScrollView>
 		</SafeAreaView>
 	);
 }
