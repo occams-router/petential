@@ -1,7 +1,7 @@
-import 'react-native-gesture-handler';
-import React, { useEffect, useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import "react-native-gesture-handler";
+import React, { useEffect, useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import {
   ShelterHome,
   AdopterHome,
@@ -15,10 +15,10 @@ import { auth, db } from "./src/firebase/config";
 import { onAuthStateChanged } from "@firebase/auth";
 import { collection, getDocs } from "@firebase/firestore";
 if (!global.btoa) {
-	global.btoa = encode;
+  global.btoa = encode;
 }
 if (!global.atob) {
-	global.atob = decode;
+  global.atob = decode;
 }
 import { Text, SafeAreaView, View, Image } from "react-native";
 
