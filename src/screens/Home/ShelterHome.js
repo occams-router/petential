@@ -14,8 +14,8 @@ import { signOut } from "@firebase/auth";
 import { render } from "react-dom";
 import { snapshotEqual } from "firebase/firestore";
 // import { useEffect } from "react/cjs/react.development";
+import PetCard from "./PetCard";
 
-//dummy data
 const pets = [
   {
     id: 1,
@@ -90,30 +90,6 @@ export default function ShelterHome(props) {
   //   getPets();
   // }, []);
 
-  //make seperate component?
-  const renderPets = (pets) => {
-    return (
-      <SafeAreaView>
-        <View>
-          <Image
-            source={{
-              uri: pets.petImage,
-            }}
-            style={{ height: 100, width: 100 }}
-          />
-        </View>
-        <View>
-          <Text>{pets.name}</Text>
-          <Text>{pets.species}</Text>
-          <Text>{pets.age}</Text>
-        </View>
-        <TouchableOpacity>
-          <Text>Edit Pet</Text>
-        </TouchableOpacity>
-      </SafeAreaView>
-    );
-  };
-
   return (
     <SafeAreaView>
       <Text style={styles.title}>Current Pets</Text>
@@ -125,7 +101,8 @@ export default function ShelterHome(props) {
       <FlatList
         data={pets}
         keyextractor={(item) => item.id}
-        renderItem={({ item }) => renderPets(item)}
+        renderItem={({ item }) => <PetCard pets={item} />}
+        showsVerticalScrollIndicator={false}
       />
 
       <TouchableOpacity style={styles.button} onPress={() => logout()}>
