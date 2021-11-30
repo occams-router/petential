@@ -29,7 +29,6 @@ export default function Login({ navigation }) {
 	const onLoginPress = async () => {
 		try {
 			const user = await signInWithEmailAndPassword(auth, email, password);
-			// console.log(user);
 			const data = await getDocs(usersCollectionRef);
 			const usersArr = data.docs.map((doc) => ({ ...doc.data() }));
 			const correctUser = usersArr.find(
