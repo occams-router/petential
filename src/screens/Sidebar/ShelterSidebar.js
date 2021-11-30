@@ -1,10 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
+import { ShelterHome, ShelterProfile } from '../index.js';
 import {
-  Image,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  SafeAreaView,
-} from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import './styles.css';
+  MaterialCommunityIcons,
+  Feather,
+  FontAwesome5,
+} from '@expo/vector-icons';
+
+const Drawer = createDrawerNavigator();
+
+export default function ShelterSidebar() {
+  return (
+    <NavigationContainer>
+      <Drawer.Navigator
+        drawerType="front"
+        initialRouteName="Home"
+        drawerContentOptions={{
+          activeTintColor: '#e91e63',
+          itemStyle: { marginVertical: 10 },
+        }}
+      >
+        <Drawer.Screen name="Home" component={ShelterHome} />
+        <Drawer.Screen name="Profile" component={ShelterProfile} />
+        <Drawer.Screen name="Requests" />
+        <Drawer.Screen name="Matches" />
+      </Drawer.Navigator>
+    </NavigationContainer>
+  );
+}
