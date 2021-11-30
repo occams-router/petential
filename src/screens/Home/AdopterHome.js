@@ -2,6 +2,7 @@ import React from "react";
 import { Text, SafeAreaView, TouchableOpacity } from "react-native";
 import { auth } from "../../firebase/config";
 import styles from "./styles";
+import AdopterPetCard from "../PetCards/AdopterPetCard";
 import { signOut } from "@firebase/auth";
 
 export default function AdopterHome(props) {
@@ -17,6 +18,9 @@ export default function AdopterHome(props) {
   return (
     <SafeAreaView>
       <Text style={styles.title}>Adopter Feed</Text>
+
+      <AdopterPetCard />
+
       <TouchableOpacity style={styles.button} onPress={() => logout()}>
         <Text style={styles.buttonTitle}>Log out</Text>
       </TouchableOpacity>

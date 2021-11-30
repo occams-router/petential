@@ -1,4 +1,10 @@
-import { Text, TextInput, SafeAreaView, TouchableOpacity } from "react-native";
+import {
+  Text,
+  TextInput,
+  SafeAreaView,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
 import React, { useState } from "react";
