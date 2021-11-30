@@ -1,12 +1,7 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-import { ShelterHome, ShelterProfile } from '../index.js';
-import {
-  MaterialCommunityIcons,
-  Feather,
-  FontAwesome5,
-} from '@expo/vector-icons';
+import { ShelterHome, ShelterProfile, Header } from '../index.js';
 
 const Drawer = createDrawerNavigator();
 
@@ -23,22 +18,22 @@ export default function ShelterSidebar() {
       >
         <Drawer.Screen
           name="Home"
-          options={{ headerShown: true, header: <Header /> }}
+          options={{ headerShown: true, header: () => <Header /> }}
           component={ShelterHome}
         />
         <Drawer.Screen
           name="Profile"
-          options={{ headerShown: true, header: <Header /> }}
+          options={{ headerShown: true, header: () => <Header /> }}
           component={ShelterProfile}
         />
-        <Drawer.Screen
-          name="Requests"
-          options={{ headerShown: true, header: <Header /> }}
-        />
-        <Drawer.Screen
-          name="Matches"
-          options={{ headerShown: true, header: <Header /> }}
-        />
+        {/* <Drawer.Screen
+        name="Requests"
+        options={{ headerShown: true, header: <Header /> }}
+      />
+      <Drawer.Screen
+        name="Matches"
+        options={{ headerShown: true, header: <Header /> }}
+      /> */}
       </Drawer.Navigator>
     </NavigationContainer>
   );
