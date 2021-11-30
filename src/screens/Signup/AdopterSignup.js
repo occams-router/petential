@@ -2,11 +2,12 @@ import { Text, TextInput, View, Button, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import React, { useState } from 'react';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc} from 'firebase/firestore';
 import { auth, db } from '../../firebase/config';
 import { createUserWithEmailAndPassword } from '@firebase/auth';
 
 export default function AdopterSignup({ navigation }) {
+  const adoptersCollectionRef = collection(db, 'adopters');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');

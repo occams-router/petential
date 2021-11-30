@@ -43,7 +43,7 @@ export default function Login({ navigation }) {
 				const correctAdopter = adoptersArr.find(
 					(element) => element.uid === user.user.uid
 				);
-				navigation.navigate('AdopterProfile', { user: correctAdopter });
+				navigation.navigate('AdopterHome', { user: correctAdopter });
 			} else if (correctUser.type === 'shelter') {
 				const data = await getDocs(sheltersCollectionRef);
 				const sheltersArr = data.docs.map((doc) => ({
