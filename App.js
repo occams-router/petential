@@ -11,8 +11,9 @@ import {
   Login,
 } from "./src/screens";
 import { decode, encode } from "base-64";
-import { auth } from "./src/firebase/config";
+import { auth, db } from "./src/firebase/config";
 import { onAuthStateChanged } from "@firebase/auth";
+import { collection, getDocs } from "@firebase/firestore";
 if (!global.btoa) {
   global.btoa = encode;
 }
@@ -25,9 +26,24 @@ const Stack = createStackNavigator();
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const [userType, setUserType] = useState(null);
 
-  onAuthStateChanged(auth, (currentUser) => {
+  const usersCollectionRef = collection(db, "users");
+
+  onAuthStateChanged(auth, async (currentUser) => {
     if (currentUser) {
+      const data = await getDocs(usersCollectionRef);
+
+      const usersArr = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+
+      const correctUser = usersArr.find(
+        (element) => element.uid === currentUser.uid
+      );
+
+      console.log("user type:", correctUser.type);
+      console.log("currentUser:", currentUser);
+
+      setUserType(correctUser.type);
       setUser(currentUser);
     } else {
       setUser(null);
@@ -38,10 +54,15 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         {user ? (
-          <>
-            <Stack.Screen name="ShelterHome" component={ShelterHome} />
-            <Stack.Screen name="AdopterHome" component={AdopterHome} />
-          </>
+          userType === "shelter" ? (
+            <>
+              <Stack.Screen name="ShelterHome" component={ShelterHome} />
+            </>
+          ) : (
+            <>
+              <Stack.Screen name="AdopterHome" component={AdopterHome} />
+            </>
+          )
         ) : (
           <>
             <Stack.Screen name="Login" component={Login} />
@@ -65,3 +86,26 @@ export default function App() {
 // 		margin: 10,
 // 	},
 // });
+
+/*
+
+{user ? (
+          userType === "shelter" ? (
+            <>
+              <Stack.Screen name="ShelterHome" component={ShelterHome} />
+            </>
+          ) : (
+            <>
+              <Stack.Screen name="AdopterHome" component={AdopterHome} />
+            </>
+          )
+        ) : (
+          <>
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="ProfileOptions" component={ProfileOptions} />
+            <Stack.Screen name="AdopterSignup" component={AdopterSignup} />
+            <Stack.Screen name="ShelterSignup" component={ShelterSignup} />
+          </>
+        )}
+
+*/
