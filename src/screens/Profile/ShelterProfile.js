@@ -8,25 +8,17 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
-import { auth, db } from '../../firebase/config';
+import { db } from '../../firebase/config';
 import { doc, setDoc } from 'firebase/firestore';
 
 export default function ShelterProfile(props) {
-  //   const uid = auth.currentUser.uid;
-  //   const sheltersCollectionRef = collection(db, 'shelters');
-
-  //   const getShelter = async () => {
-  //     const data = await getDocs(sheltersCollectionRef);
-  //     const sheltersArr = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-  //     const correctShelter = sheltersArr.find((shelter) => shelter.uid === uid);
-  //     return correctShelter;
-  //   };
-
-  //   const shelter = await getShelter();
   const shelter = props.route.params.user;
 
   const [nameOfShelter, setNameOfShelter] = useState(shelter.name || '');
-  const [imageUrl, setImageUrl] = useState(shelter.imageUrl || '');
+  const [imageUrl, setImageUrl] = useState(
+    shelter.imageUrl ||
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2gT4BUTqAaMh6kIvJdw8Wf6pQQGbm6HI0Yg&usqp=CAU'
+  );
   const [city, setCity] = useState(shelter.city || '');
   const [state, setState] = useState(shelter.state || '');
   const [phone, setPhone] = useState(shelter.phone || '');
@@ -44,8 +36,10 @@ export default function ShelterProfile(props) {
       };
       const shelterRef = doc(db, 'shelters', shelter.id);
       await setDoc(shelterRef, data);
+      alert('Update was successful!');
     } catch (error) {
       console.log(error);
+      alert('Update failed');
     }
   };
 
