@@ -65,36 +65,17 @@ export default function App() {
     });
   });
 
-  /*
-  onAuthStateChanged(auth, async (currentUser) => {
-    if (currentUser) {
-      const data = await getDocs(usersCollectionRef);
-
-      const usersArr = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-
-      const correctUser = usersArr.find(
-        (element) => element.uid === currentUser.uid
-      );
-
-      setUserType(correctUser.type);
-      setUser(currentUser);
-    } else {
-      setUser(null);
-    }
-  });
-*/
-
   let screen;
   if (user) {
     screen =
       userType === "shelter" ? (
         <>
-          <Stack.Screen name="ShelterProfile" component={ShelterProfile} />
+          {/* <Stack.Screen name="ShelterProfile" component={ShelterProfile} /> */}
           <Stack.Screen name="ShelterHome" component={ShelterHome} />
         </>
       ) : (
         <>
-          <Stack.Screen name="AdopterProfile" component={AdopterProfile} />
+          {/* <Stack.Screen name="AdopterProfile" component={AdopterProfile} /> */}
           <Stack.Screen name="AdopterHome" component={AdopterHome} />
         </>
       );
