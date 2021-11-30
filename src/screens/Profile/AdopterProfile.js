@@ -6,7 +6,7 @@ import {
 	Image,
 	TextInput,
 	TouchableOpacity,
-    Button
+	Button,
 } from 'react-native';
 import { auth, db } from '../../firebase/config';
 import {
@@ -21,8 +21,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import styles from './styles';
 
 export default function AdopterProfile(props) {
-    const user = props.route.params.user
-	const id = user.id
+	const user = props.route.params.user;
+	const id = user.id;
 	const [name, setName] = useState(user.name || '');
 	const [city, setCity] = useState(user.city || '');
 	const [state, setState] = useState(user.state || '');
@@ -32,62 +32,33 @@ export default function AdopterProfile(props) {
 	const [housing, setHousing] = useState(user.housing || '');
 	const [lifestyle, setLifestyle] = useState(user.lifestyle || '');
 	const [petHistory, setPetHistory] = useState(user.petHistory || '');
-	// const updateName = async (id, newName) => {
-	// 	const userDoc = doc(db, 'adopters', name);
-	// 	const newFields = { name: newName };
-	// 	await updateDoc(userDoc, newFields);
-	// };
 
-	// const updateCity = async (id, newCity) => {
-	// 	const userDoc = doc(db, 'adopters', city);
-	// 	const newFields = { city: newCity };
-	// 	await updateDoc(userDoc, newFields);
-	// };
+	const updateAdopter = async () => {
+		const adopterRef = doc(db, 'adopters', id);
+		const updates = {
+			lifestyle,
+			name,
+			city,
+			state,
+			phone,
+			description,
+			imageUrl,
+			housing,
+			petHistory,
+		};
+		await updateDoc(adopterRef, updates);
+	};
 
-	// const updateState = async (id, newState) => {
-	// 	const userDoc = doc(db, 'adopters', state);
-	// 	const newFields = { state: newState };
-	// 	await updateDoc(userDoc, newFields);
-	// };
-
-	// const updatePhone = async (id, newPhone) => {
-	// 	const userDoc = doc(db, 'adopters', phone);
-	// 	const newFields = { phone: newPhone };
-	// 	await updateDoc(userDoc, newFields);
-	// };
-
-	// const updateDescription = async (id, newDescription) => {
-	// 	const userDoc = doc(db, 'adopters', description);
-	// 	const newFields = { description: newDescription };
-	// 	await updateDoc(userDoc, newFields);
-	// };
-
-	// const updateHousing = async (id, newHousing) => {
-	// 	const userDoc = doc(db, 'adopters', housing);
-	// 	const newFields = { housing: newHousing };
-	// 	await updateDoc(userDoc, newFields);
-	// };
-
-	// const updateImage = async (id, newImage) => {
-	// 	const userDoc = doc(db, 'adopters', image);
-	// 	const newFields = { imageUrl: newImage };
-	// 	await updateDoc(userDoc, newFields);
-	// };
-
-	// const updateLifestyle = async (id, newLifestyle) => {
-	// 	const userDoc = doc(db, 'adopters', lifestyle);
-	// 	const newFields = { lifestyle: newLifestyle };
-	// 	await updateDoc(userDoc, newFields);
-	// };
 	return (
 		<SafeAreaView>
 			<KeyboardAwareScrollView
 				style={{ flex: 1, width: '100%' }}
 				keyboardShouldPersistTaps="always">
 				<Text style={styles.title}>Welcome, {user.name}!</Text>
-                <Text style={styles.title}>Profile</Text>
+				<Text style={styles.title}> Your Profile</Text>
 				<TextInput
 					style={styles.input}
+					label="Name"
 					placeholder="Name"
 					placeholderTextColor="#aaaaaa"
 					onChangeText={(text) => setName(text)}
@@ -98,6 +69,7 @@ export default function AdopterProfile(props) {
 				<TextInput
 					style={styles.input}
 					placeholderTextColor="#aaaaaa"
+					label="City"
 					placeholder="City"
 					onChangeText={(text) => setCity(text)}
 					value={city}
@@ -107,6 +79,7 @@ export default function AdopterProfile(props) {
 				<TextInput
 					style={styles.input}
 					placeholderTextColor="#aaaaaa"
+					label="State"
 					placeholder="State"
 					onChangeText={(text) => setState(text)}
 					value={state}
@@ -116,6 +89,7 @@ export default function AdopterProfile(props) {
 				<TextInput
 					style={styles.input}
 					placeholderTextColor="#aaaaaa"
+					label="Phone No."
 					placeholder="Phone No."
 					onChangeText={(text) => setPhone(text)}
 					value={phone}
@@ -125,6 +99,7 @@ export default function AdopterProfile(props) {
 				<TextInput
 					style={styles.input}
 					placeholderTextColor="#aaaaaa"
+					label="Description"
 					placeholder="Description"
 					onChangeText={(text) => setDescription(text)}
 					value={description}
@@ -134,6 +109,7 @@ export default function AdopterProfile(props) {
 				<TextInput
 					style={styles.input}
 					placeholderTextColor="#aaaaaa"
+					label="Image URL"
 					placeholder="Image URL"
 					onChangeText={(text) => setImageUrl(text)}
 					value={imageUrl}
@@ -143,6 +119,7 @@ export default function AdopterProfile(props) {
 				<TextInput
 					style={styles.input}
 					placeholderTextColor="#aaaaaa"
+					label="Housing"
 					placeholder="Housing"
 					onChangeText={(text) => setHousing(text)}
 					value={housing}
@@ -152,6 +129,7 @@ export default function AdopterProfile(props) {
 				<TextInput
 					style={styles.input}
 					placeholderTextColor="#aaaaaa"
+					label="Lifestyle"
 					placeholder="Lifestyle"
 					onChangeText={(text) => setLifestyle(text)}
 					value={lifestyle}
@@ -161,13 +139,14 @@ export default function AdopterProfile(props) {
 				<TextInput
 					style={styles.input}
 					placeholderTextColor="#aaaaaa"
+					label="Pet History"
 					placeholder="Pet History"
 					onChangeText={(text) => setPetHistory(text)}
 					value={petHistory}
 					underlineColorAndroid="transparent"
 					autoCapitalize="none"
 				/>
-				<Button style={styles.button} onPress={() => updatePress()}>
+				<Button style={styles.button} onPress={() => updateAdopter()}>
 					<Text style={styles.buttonTitle}>Update Profile</Text>
 				</Button>
 			</KeyboardAwareScrollView>
