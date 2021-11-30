@@ -21,9 +21,20 @@ export default function ShelterSidebar() {
           itemStyle: { marginVertical: 10 },
         }}
       >
-        <Drawer.Screen name="Home" component={AdopterHome} />
-        <Drawer.Screen name="Profile" component={AdopterProfile} />
-        <Drawer.Screen name="Matches" />
+        <Drawer.Screen
+          name="Home"
+          options={{ headerShown: true, header: <Header /> }}
+          component={AdopterHome}
+        />
+        <Drawer.Screen
+          name="Profile"
+          options={{ headerShown: true, header: <Header /> }}
+          component={AdopterProfile}
+        />
+        <Drawer.Screen
+          name="Matches"
+          options={{ headerShown: true, header: <Header /> }}
+        />
       </Drawer.Navigator>
     </NavigationContainer>
   );
