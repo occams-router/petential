@@ -34,7 +34,6 @@ export default function Login({ navigation }) {
 			const correctUser = usersArr.find(
 				(element) => element.uid === user.user.uid
 			);
-			console.log(correctUser.type);
 			if (correctUser.type === 'adopter') {
 				const data = await getDocs(adoptersCollectionRef);
 				const adoptersArr = data.docs.map((doc) => ({ ...doc.data() }));

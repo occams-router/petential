@@ -34,19 +34,25 @@ export default function AdopterProfile(props) {
 	const [petHistory, setPetHistory] = useState(user.petHistory || '');
 
 	const updateAdopter = async () => {
-		const adopterRef = doc(db, 'adopters', id);
-		const updates = {
-			lifestyle,
-			name,
-			city,
-			state,
-			phone,
-			description,
-			imageUrl,
-			housing,
-			petHistory,
-		};
-		await updateDoc(adopterRef, updates);
+		try {
+			const adopterRef = doc(db, 'adopters', id);
+			const updates = {
+				lifestyle,
+				name,
+				city,
+				state,
+				phone,
+				description,
+				imageUrl,
+				housing,
+				petHistory,
+			};
+			await updateDoc(adopterRef, updates);
+			alert('Update was successful!');
+		} catch (error) {
+			alert('Update failed.');
+			console.log('Update adopter', error);
+		}
 	};
 
 	return (
