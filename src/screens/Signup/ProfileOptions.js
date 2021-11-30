@@ -1,31 +1,47 @@
-import React from 'react';
-import { View, Text, Button, Image } from 'react-native';
+import React from "react";
+import {
+  View,
+  Text,
+  Image,
+  SafeAreaView,
+  TouchableOpacity,
+} from "react-native";
+import styles from "./styles";
 
 const ProfileOptions = ({ navigation }) => {
   return (
-    <View>
-      <Text>Are you a shelter or an adopter?</Text>
+    <SafeAreaView>
+      <View>
+        <Text style={styles.title}>Are you a shelter or an adopter?</Text>
+      </View>
       <View>
         <Image
+          style={{ width: 100, height: 100, alignSelf: "center" }}
           source={{
-            uri: 'https://tinyurl.com/2w8xx583',
+            uri: "https://tinyurl.com/2w8xx583",
           }}
         />
-        <Button
-          title="I represent a shelter!"
-          onPress={() => navigation.navigate('ShelterSignup')}
-        />
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("ShelterSignup")}
+        >
+          <Text style={styles.buttonTitle}>I represent a shelter!</Text>
+        </TouchableOpacity>
         <Image
+          style={{ height: 100, width: 100, alignSelf: "center" }}
           source={{
-            uri: 'http://www.aspca.org/sites/default/files/nyc-adoption-center-facebook.jpg',
+            uri: "http://www.aspca.org/sites/default/files/nyc-adoption-center-facebook.jpg",
           }}
         />
-        <Button
-          title="I want to adopt!"
-          onPress={() => navigation.navigate('AdopterSignup')}
-        />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("AdopterSignup")}
+        >
+          <Text style={styles.buttonTitle}>I want to adopt!</Text>
+        </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
