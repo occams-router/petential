@@ -9,6 +9,7 @@ import {
   AdopterSignup,
   ProfileOptions,
   Login,
+  AdopterProfile
 } from "./src/screens";
 import { decode, encode } from "base-64";
 import { auth } from "./src/firebase/config";
@@ -41,6 +42,7 @@ export default function App() {
           <>
             <Stack.Screen name="ShelterHome" component={ShelterHome} />
             <Stack.Screen name="AdopterHome" component={AdopterHome} />
+            <Stack.Screen name="AdopterProfile" component={AdopterProfile} />
           </>
         ) : (
           <>
