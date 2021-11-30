@@ -1,34 +1,33 @@
+import React, { useState } from 'react';
 import {
   Text,
   TextInput,
   SafeAreaView,
   TouchableOpacity,
   View,
-} from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import styles from "./styles";
-import React, { useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
-import { auth, db } from "../../firebase/config";
-import { createUserWithEmailAndPassword } from "@firebase/auth";
+} from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import styles from './styles';
+import { collection, addDoc } from 'firebase/firestore';
+import { auth, db } from '../../firebase/config';
+import { createUserWithEmailAndPassword } from '@firebase/auth';
 
 export default function AdopterSignup({ navigation }) {
-  const adoptersCollectionRef = collection(db, "adopters");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [name, setName] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [phone, setPhone] = useState("");
-  const [description, setDescription] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [housing, setHousing] = useState("");
-  const [lifestyle, setLifestyle] = useState("");
-  const [petHistory, setPetHistory] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [phone, setPhone] = useState('');
+  const [description, setDescription] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+  const [housing, setHousing] = useState('');
+  const [lifestyle, setLifestyle] = useState('');
+  const [petHistory, setPetHistory] = useState('');
 
   const onFooterLinkPress = () => {
-    navigation.navigate("Login");
+    navigation.navigate('Login');
   };
 
   const onSignupPress = async () => {
@@ -60,27 +59,27 @@ export default function AdopterSignup({ navigation }) {
         petHistory,
       };
 
-      const docRef = await addDoc(collection(db, "adopters"), adopterData);
-      console.log("Successfully added to adopters collection.");
+      const docRef = await addDoc(collection(db, 'adopters'), adopterData);
+      console.log('Successfully added to adopters collection.');
 
       const userData = {
         uid,
         docId: `adopters/${docRef.id}`,
-        type: "adopter",
+        type: 'adopter',
       };
 
-      await addDoc(collection(db, "users"), userData);
-      console.log("Successfully added to users collection.");
-      navigation.navigate("AdopterHome", { user: adopterData });
+      await addDoc(collection(db, 'users'), userData);
+      console.log('Successfully added to users collection.');
+      navigation.navigate('AdopterProfile', { user: adopterData });
     } catch (error) {
-      console.error("Error adding user: ", error);
+      console.error('Error adding user: ', error);
     }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAwareScrollView
-        style={{ flex: 1, width: "100%" }}
+        style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always"
       >
         <Text style={styles.title}>Welcome!</Text>
@@ -200,7 +199,7 @@ export default function AdopterSignup({ navigation }) {
         </TouchableOpacity>
         <View style={styles.footerView}>
           <Text style={styles.footerText}>
-            Already have an account?{" "}
+            Already have an account?{' '}
             <Text onPress={onFooterLinkPress} style={styles.footerLink}>
               Log in
             </Text>

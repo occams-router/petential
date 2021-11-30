@@ -55,7 +55,7 @@ export default function ShelterSignup({ navigation }) {
         docId: `shelters/${docRef.id}`,
         type: 'shelter',
       });
-      navigation.navigate('ShelterHome');
+      navigation.navigate('ShelterProfile', { user: data });
     } catch (error) {
       console.log(error);
     }
@@ -160,7 +160,7 @@ export default function ShelterSignup({ navigation }) {
           style={styles.button}
           onPress={() => onRegisterPress()}
         >
-          <Text style={styles.buttonTitle}>Create account</Text>
+          <Text style={styles.buttonTitle}>Sign Up</Text>
         </TouchableOpacity>
         <SafeAreaView style={styles.footerView}>
           <Text style={styles.footerText}>
