@@ -142,7 +142,6 @@ const TinderCard = React.forwardRef(
           onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
 
           onPanResponderGrant: (evt, gestureState) => {
-            console.log("gestureState from respondergrant:", gestureState);
             // The gesture has started.
             // Probably wont need this anymore as postion i relative to swipe!
             setSpringTarget({
@@ -153,10 +152,6 @@ const TinderCard = React.forwardRef(
             });
           },
           onPanResponderMove: (evt, gestureState) => {
-            console.log(
-              "gesturesafsdfState from respondergrant:",
-              gestureState
-            );
             // use guestureState.vx / guestureState.vy for velocity calculations
             // translate element
             let rot = ((300 * gestureState.vx) / width) * 15; // Magic number 300 different on different devices? Run on physical device!
@@ -169,14 +164,9 @@ const TinderCard = React.forwardRef(
             });
           },
           onPanResponderTerminationRequest: (evt, gestureState) => {
-            console.log(
-              "gesdfsdfstureState from respondergrant:",
-              gestureState
-            );
             return true;
           },
           onPanResponderRelease: (evt, gestureState) => {
-            console.log("gfsdfdestureState from respondergrant:", gestureState);
             // The user has released all touches while this view is the
             // responder. This typically means a gesture has succeeded
             // enable
