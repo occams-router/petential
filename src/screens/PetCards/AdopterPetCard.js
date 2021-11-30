@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Text, SafeAreaView, View, Image } from "react-native";
+import styles from "./styles";
 import styled from "styled-components/native";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../firebase/config";
-import TinderCard from "../../react-tinder-card/reactTinderCard";
+import TinderCard from "react-tinder-card";
+import { useState } from "react";
 
 const Container = styled.View`
   display: flex;
@@ -25,7 +25,7 @@ const CardContainer = styled.View`
 `;
 
 const Card = styled.View`
-  position: relative;
+  position: absolute;
   background-color: #fff;
   width: 100%;
   max-width: 260px;
@@ -107,11 +107,9 @@ const pets = [
 
 export default function AdopterPetCard(props) {
   const [lastDirection, setLastDirection] = useState();
-  const [petsList, setPetsList] = useState(pets);
 
   const swiped = (direction, nameToDelete) => {
     console.log("removing: " + nameToDelete);
-    setPetsList(petsList.slice(1));
     setLastDirection(direction);
   };
 
@@ -119,24 +117,22 @@ export default function AdopterPetCard(props) {
     console.log(name + " left the screen!");
   };
 
-  useEffect(() => {});
-
   return (
     <Container>
       <CardContainer>
-        {((pet) => (
+        {pets.map((pet) => (
           <TinderCard
             key={pet.name}
             onSwipe={(dir) => swiped(dir, pet.name)}
             onCardLeftScreen={() => outOfFrame(pet.name)}
           >
             <Card>
-              <CardImage source={{ uri: pet.imageUrl }}>
+              <CardImage source={pet.imageUrl}>
                 <CardTitle>{pet.name}</CardTitle>
               </CardImage>
             </Card>
           </TinderCard>
-        ))(petsList[0])}
+        ))}
       </CardContainer>
       {lastDirection ? (
         <InfoText>You swiped {lastDirection}</InfoText>
