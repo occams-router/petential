@@ -14,7 +14,7 @@ import { signOut } from "@firebase/auth";
 import { render } from "react-dom";
 import { snapshotEqual } from "firebase/firestore";
 // import { useEffect } from "react/cjs/react.development";
-import PetCard from "./PetCard";
+import PetCard from "../PetCards/ShelterPetCard";
 
 const pets = [
   {
@@ -60,7 +60,9 @@ const pets = [
 ];
 
 export default function ShelterHome(props) {
-  // const [petData, setPetData] = useState([])
+  const [petData, setPetData] = useState([]);
+  // const user = props.route.params.user;
+  // const id = user.id;
   const logout = async () => {
     try {
       await signOut(auth);
@@ -70,25 +72,25 @@ export default function ShelterHome(props) {
       console.log(error.message);
     }
   };
+  const getPets = async () => {
+    try {
+      const list = [];
+      // const ShelterRef = doc(db, "shelters", id);
+      //for each pet in shelterpets collection push it into petData state
+      shelterRef.forEach((doc) => {
+        console.log(ShelterRef);
+        list.push(doc.data());
+      });
+      setPetData([...list]);
+    } catch (e) {
+      console.error(e, "No Pets in DB");
+    }
+  };
 
-  // const getPets = async () => {
-  //   try {
-  //     const list = [];
-  //     const shelterPets = await db.collection("shelters").get();
-  //     //for each pet in shelterpets collection push it into petData state
-  //     shelterPets.forEach((doc) => {
-  //       list.push(doc.data());
-  //     });
-  //     setPetData([...list]);
-  //   } catch (e) {
-  //     console.error(e, "No Pets in DB");
-  //   }
-  // };
-
-  //component did mount
-  // useEffect(() => {
-  //   getPets();
-  // }, []);
+  // component did mount
+  useEffect(() => {
+    getPets();
+  }, []);
 
   return (
     <SafeAreaView>
