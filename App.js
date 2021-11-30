@@ -25,42 +25,6 @@ import { Text, SafeAreaView, View, Image } from "react-native";
 const Stack = createStackNavigator();
 
 export default function App() {
-<<<<<<< HEAD
-	const [loading, setLoading] = useState(true);
-	const [user, setUser] = useState(null);
-
-	onAuthStateChanged(auth, (currentUser) => {
-		if (currentUser) {
-			setUser(currentUser);
-		} else {
-			setUser(null);
-		}
-	});
-
-	return (
-		<NavigationContainer>
-			<Stack.Navigator
-				screenOptions={{
-					headerShown: false,
-				}}>
-				{user ? (
-					<>
-						<Stack.Screen name="ShelterHome" component={ShelterHome} />
-						<Stack.Screen name="AdopterHome" component={AdopterHome} />
-						<Stack.Screen name="AdopterProfile" component={AdopterProfile} />
-					</>
-				) : (
-					<>
-						<Stack.Screen name="Login" component={Login} />
-						<Stack.Screen name="ProfileOptions" component={ProfileOptions} />
-						<Stack.Screen name="AdopterSignup" component={AdopterSignup} />
-						<Stack.Screen name="ShelterSignup" component={ShelterSignup} />
-					</>
-				)}
-			</Stack.Navigator>
-		</NavigationContainer>
-	);
-=======
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(undefined);
   const [userType, setUserType] = useState(null);
@@ -119,5 +83,4 @@ export default function App() {
       <Stack.Navigator>{screen}</Stack.Navigator>
     </NavigationContainer>
   );
->>>>>>> main
 }
