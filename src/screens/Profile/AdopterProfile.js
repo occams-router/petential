@@ -34,7 +34,7 @@ export default function AdopterProfile(props) {
 	const [petHistory, setPetHistory] = useState(user.petHistory || '');
 
 	const updateAdopter = async () => {
-		const adopterRef = doc(db, 'adopters', id);
+		const adopterRef = doc(db, 'adopters', user.id);
 		const updates = {
 			lifestyle,
 			name,

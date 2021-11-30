@@ -31,9 +31,7 @@ export default function Login({ navigation }) {
 			const user = await signInWithEmailAndPassword(auth, email, password);
 			// console.log(user);
 			const data = await getDocs(usersCollectionRef);
-			console.log('UID', user.user.uid);
 			const usersArr = data.docs.map((doc) => ({ ...doc.data() }));
-			console.log('Users', usersArr);
 			const correctUser = usersArr.find(
 				(element) => element.uid === user.user.uid
 			);
@@ -44,7 +42,6 @@ export default function Login({ navigation }) {
 				const correctAdopter = adoptersArr.find(
 					(element) => element.uid === user.user.uid
 				);
-				console.log(correctAdopter);
 				navigation.navigate('AdopterProfile', { user: correctAdopter });
 			} else if (correctUser.type === 'shelter') {
 				const data = await getDocs(sheltersCollectionRef);
