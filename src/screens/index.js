@@ -11,3 +11,5 @@ export { default as ShelterSignup } from './Signup/ShelterSignup';
 export { default as AdopterSignup } from './Signup/AdopterSignup';
 
 export { default as AdopterProfile } from './Profile/AdopterProfile';
+
+export { default as ShelterProfile } from './Profile/ShelterProfile';
