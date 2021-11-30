@@ -9,7 +9,7 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import { db } from '../../firebase/config';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 
 export default function ShelterProfile(props) {
   const shelter = props.route.params.user;
@@ -35,7 +35,7 @@ export default function ShelterProfile(props) {
         description,
       };
       const shelterRef = doc(db, 'shelters', shelter.id);
-      await setDoc(shelterRef, data);
+      await updateDoc(shelterRef, data);
       alert('Update was successful!');
     } catch (error) {
       console.log(error);

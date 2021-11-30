@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, doc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../../firebase/config';
 import { createUserWithEmailAndPassword } from '@firebase/auth';
 
@@ -60,6 +60,8 @@ export default function AdopterSignup({ navigation }) {
       };
 
       const docRef = await addDoc(collection(db, 'adopters'), adopterData);
+      const adopterRef = doc(db, 'adopters', docRef.id);
+      await updateDoc(adopterRef, { id: adopterRef.id });
       console.log('Successfully added to adopters collection.');
 
       const userData = {
@@ -70,6 +72,7 @@ export default function AdopterSignup({ navigation }) {
 
       await addDoc(collection(db, 'users'), userData);
       console.log('Successfully added to users collection.');
+      adopterData['id'] = docRef.id;
       navigation.navigate('AdopterProfile', { user: adopterData });
     } catch (error) {
       console.error('Error adding user: ', error);

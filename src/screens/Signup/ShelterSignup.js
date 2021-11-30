@@ -10,7 +10,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import styles from './styles';
 import { auth, db } from '../../firebase/config';
 import { createUserWithEmailAndPassword } from '@firebase/auth';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, doc, addDoc, updateDoc } from 'firebase/firestore';
 
 export default function ShelterSignup({ navigation }) {
   const [nameOfShelter, setNameOfShelter] = useState('');
@@ -50,11 +50,15 @@ export default function ShelterSignup({ navigation }) {
         description,
       };
       const docRef = await addDoc(collection(db, 'shelters'), data);
+      const shelterRef = doc(db, 'shelters', docRef.id);
+      await updateDoc(shelterRef, { id: shelterRef.id });
+
       await addDoc(collection(db, 'users'), {
         uid: response.user.uid,
         docId: `shelters/${docRef.id}`,
         type: 'shelter',
       });
+      data['id'] = docRef.id;
       navigation.navigate('ShelterProfile', { user: data });
     } catch (error) {
       console.log(error);
