@@ -71,7 +71,7 @@ export default function AdopterSignup({ navigation }) {
 
       await addDoc(collection(db, "users"), userData);
       console.log("Successfully added to users collection.");
-      navigation.navigate("AdopterProfile", { user: adopterData });
+      navigation.navigate("AdopterHome", { user: adopterData });
     } catch (error) {
       console.error("Error adding user: ", error);
     }
