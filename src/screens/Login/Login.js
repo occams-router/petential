@@ -36,14 +36,20 @@ export default function Login({ navigation }) {
 			);
 			if (correctUser.type === 'adopter') {
 				const data = await getDocs(adoptersCollectionRef);
-				const adoptersArr = data.docs.map((doc) => ({ ...doc.data() }));
+				const adoptersArr = data.docs.map((doc) => ({
+					...doc.data(),
+					id: doc.id,
+				}));
 				const correctAdopter = adoptersArr.find(
 					(element) => element.uid === user.user.uid
 				);
 				navigation.navigate('AdopterProfile', { user: correctAdopter });
 			} else if (correctUser.type === 'shelter') {
 				const data = await getDocs(sheltersCollectionRef);
-				const sheltersArr = data.docs.map((doc) => ({ ...doc.data() }));
+				const sheltersArr = data.docs.map((doc) => ({
+					...doc.data(),
+					id: doc.id,
+				}));
 				const correctShelter = sheltersArr.find(
 					(element) => element.uid === user.user.uid
 				);
