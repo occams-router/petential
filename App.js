@@ -36,6 +36,8 @@ if (!global.atob) {
 import { Text, SafeAreaView, View, Image } from "react-native";
 const Stack = createStackNavigator();
 
+let UserContext;
+
 export default function App() {
   const [specificUser, setSpecificUser] = useState({});
   const [loading, setLoading] = useState(true);
@@ -76,21 +78,32 @@ export default function App() {
   console.log("userType:", userType);
   console.log("specific user:", specificUser);
 
-  const UserContext = createContext();
+  UserContext = createContext(specificUser);
 
   let screen;
   if (user) {
     screen =
-      userType === "shelter" ? (
+      userType === "shelter" && specificUser !== {} ? (
         <>
           <Stack.Screen name="ShelterHome" component={ShelterHome} />
           <Stack.Screen name="ShelterProfile" component={ShelterProfile} />
         </>
-      ) : (
+      ) : userType === "adopter" && specificUser !== {} ? (
         <>
           <Stack.Screen name="AdopterHome" component={AdopterHome} />
           <Stack.Screen name="AdopterProfile" component={AdopterProfile} />
         </>
+      ) : (
+        (screen = (
+          <Stack.Screen
+            name="Loading"
+            component={() => (
+              <View>
+                <Text>Loading...</Text>
+              </View>
+            )}
+          />
+        ))
       );
   } else if (user === null) {
     screen = (
@@ -121,3 +134,5 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+export { UserContext };
