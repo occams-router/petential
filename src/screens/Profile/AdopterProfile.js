@@ -5,7 +5,6 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  Button,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { db } from '../../firebase/config';
@@ -48,7 +47,7 @@ export default function AdopterProfile(props) {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always"
@@ -145,9 +144,9 @@ export default function AdopterProfile(props) {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-        <Button style={styles.button} onPress={() => updateAdopter()}>
-          <Text style={styles.buttonTitle}>Update Profile</Text>
-        </Button>
+        <TouchableOpacity style={styles.button} onPress={() => updateAdopter()}>
+          <Text style={styles.buttonTitle}>Save</Text>
+        </TouchableOpacity>
       </KeyboardAwareScrollView>
     </SafeAreaView>
   );
