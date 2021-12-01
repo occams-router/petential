@@ -43,7 +43,7 @@ export default function Login({ navigation }) {
         const correctAdopter = adoptersArr.find(
           (element) => element.uid === user.user.uid
         );
-        navigation.navigate("AdopterProfile", { user: correctAdopter });
+        navigation.navigate("AdopterHome", { user: correctAdopter });
       } else if (correctUser.type === "shelter") {
         const data = await getDocs(sheltersCollectionRef);
         const sheltersArr = data.docs.map((doc) => ({
@@ -53,6 +53,7 @@ export default function Login({ navigation }) {
         const correctShelter = sheltersArr.find(
           (element) => element.uid === user.user.uid
         );
+        console.log(correctShelter);
         navigation.navigate("ShelterHome", { user: correctShelter });
       }
     } catch (error) {
