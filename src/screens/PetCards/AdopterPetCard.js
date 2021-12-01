@@ -21,7 +21,7 @@ const Header = styled.Text`
 const CardContainer = styled.View`
   width: 90%;
   max-width: 260px;
-  height: 300px;
+  height: auto;
 `;
 
 const Card = styled.View`
