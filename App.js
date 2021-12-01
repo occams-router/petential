@@ -35,7 +35,13 @@ if (!global.atob) {
 }
 import { Text, SafeAreaView, View, Image } from "react-native";
 const Stack = createStackNavigator();
+<<<<<<< HEAD
 // const usersCollectionRef = collection(db, "users");
+=======
+
+let UserContext;
+
+>>>>>>> main
 export default function App() {
   const [specificUser, setSpecificUser] = useState({});
   const [loading, setLoading] = useState(true);
@@ -46,25 +52,23 @@ export default function App() {
     let userData;
     onSnapshot(collection(db, "users"), (snapshot) => {
       userData = snapshot.docs.map((doc) => doc.data());
-      console.log("userData from useEffect:", userData);
       onAuthStateChanged(auth, async (currentUser) => {
         if (currentUser) {
           const correctUser = userData.find(
             (element) => element.uid === currentUser.uid
           );
-          console.log("correctUser:", correctUser);
+
           if (correctUser) {
-        
             setUserType(correctUser.type);
             setUser(currentUser);
+
             const userRef = await getDoc(
-      doc(db, `${correctUser.type}s`, correctUser.docId)
-    );
-    console.log("userRef:", userRef);
-    const userData = userRef.data()
-    console.log("userRef data:", userRef.data());
-    setSpecificUser(userData);
-    console.log('specificUser:', specificUser);
+              doc(db, `${correctUser.type}s`, correctUser.docId)
+            );
+
+            const userData = userRef.data();
+
+            setSpecificUser(userData);
           }
         } else {
           setUser(null);
@@ -72,20 +76,29 @@ export default function App() {
       });
     });
   }, []);
-  const UserContext = createContext();
   let screen;
   if (user) {
     screen =
-      userType === "shelter" ? (
+      userType === "shelter" && specificUser !== {} ? (
         <>
           <Stack.Screen name="ShelterHome" component={ShelterHome} />
           <Stack.Screen name="ShelterProfile" component={ShelterProfile} />
         </>
-      ) : (
         <>
           <Stack.Screen name="AdopterHome" component={AdopterHome} />
           <Stack.Screen name="AdopterProfile" component={AdopterProfile} />
         </>
+      ) : (
+        (screen = (
+          <Stack.Screen
+            name="Loading"
+            component={() => (
+              <View>
+                <Text>Loading...</Text>
+              </View>
+            )}
+          />
+        ))
       );
   } else if (user === null) {
     screen = (
@@ -110,9 +123,11 @@ export default function App() {
   }
   return (
     <NavigationContainer>
-      <UserContext.Provider value={null}>
+      <UserContext.Provider value={specificUser}>
         <Stack.Navigator>{screen}</Stack.Navigator>
       </UserContext.Provider>
     </NavigationContainer>
   );
 }
+
+export { UserContext };
