@@ -1,38 +1,34 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState } from 'react';
 import {
   SafeAreaView,
   Text,
   Image,
   TextInput,
   TouchableOpacity,
-} from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { db } from "../../firebase/config";
-import { doc, updateDoc } from "firebase/firestore";
-import styles from "./styles";
-import { UserContext } from "../../../App";
+} from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { db } from '../../firebase/config';
+import { doc, updateDoc } from 'firebase/firestore';
+import styles from './styles';
+import { UserContext } from '../../../App';
 
-export default function AdopterProfile(props) {
-  // const user = props.route.params.user;
-
+export default function AdopterProfile() {
   const user = useContext(UserContext);
-
-  console.log("user in AdopterProfile:", user);
-
   const id = user.id;
-  const [name, setName] = useState(user.name || "");
-  const [city, setCity] = useState(user.city || "");
-  const [state, setState] = useState(user.state || "");
-  const [phone, setPhone] = useState(user.phone || "");
-  const [description, setDescription] = useState(user.description || "");
-  const [imageUrl, setImageUrl] = useState(user.imageUrl || "");
-  const [housing, setHousing] = useState(user.housing || "");
-  const [lifestyle, setLifestyle] = useState(user.lifestyle || "");
-  const [petHistory, setPetHistory] = useState(user.petHistory || "");
+
+  const [name, setName] = useState(user.name || '');
+  const [city, setCity] = useState(user.city || '');
+  const [state, setState] = useState(user.state || '');
+  const [phone, setPhone] = useState(user.phone || '');
+  const [description, setDescription] = useState(user.description || '');
+  const [imageUrl, setImageUrl] = useState(user.imageUrl || '');
+  const [housing, setHousing] = useState(user.housing || '');
+  const [lifestyle, setLifestyle] = useState(user.lifestyle || '');
+  const [petHistory, setPetHistory] = useState(user.petHistory || '');
 
   const updateAdopter = async () => {
     try {
-      const adopterRef = doc(db, "adopters", id);
+      const adopterRef = doc(db, 'adopters', id);
       const updates = {
         lifestyle,
         name,
@@ -45,17 +41,17 @@ export default function AdopterProfile(props) {
         petHistory,
       };
       await updateDoc(adopterRef, updates);
-      alert("Update was successful!");
+      alert('Update was successful!');
     } catch (error) {
-      alert("Update failed.");
-      console.log("Update adopter", error);
+      alert('Update failed.');
+      console.log('Update adopter', error);
     }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAwareScrollView
-        style={{ flex: 1, width: "100%" }}
+        style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always"
       >
         <Text style={styles.title}>Welcome, {user.name}!</Text>

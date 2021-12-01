@@ -1,7 +1,7 @@
-import "react-native-gesture-handler";
-import React, { createContext, useEffect, useState } from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import 'react-native-gesture-handler';
+import React, { createContext, useEffect, useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
   ShelterHome,
   AdopterHome,
@@ -13,10 +13,10 @@ import {
   ShelterSidebar,
   AdopterSidebar,
   Login,
-} from "./src/screens";
-import { decode, encode } from "base-64";
-import { auth, db } from "./src/firebase/config";
-import { onAuthStateChanged } from "@firebase/auth";
+} from './src/screens';
+import { decode, encode } from 'base-64';
+import { auth, db } from './src/firebase/config';
+import { onAuthStateChanged } from '@firebase/auth';
 import {
   collection,
   getDocs,
@@ -26,22 +26,18 @@ import {
   limit,
   doc,
   getDoc,
-} from "@firebase/firestore";
+} from '@firebase/firestore';
 if (!global.btoa) {
   global.btoa = encode;
 }
 if (!global.atob) {
   global.atob = decode;
 }
-import { Text, SafeAreaView, View, Image } from "react-native";
+import { Text, SafeAreaView, View, Image } from 'react-native';
 const Stack = createStackNavigator();
-<<<<<<< HEAD
-// const usersCollectionRef = collection(db, "users");
-=======
 
 let UserContext;
 
->>>>>>> main
 export default function App() {
   const [specificUser, setSpecificUser] = useState({});
   const [loading, setLoading] = useState(true);
@@ -50,7 +46,7 @@ export default function App() {
 
   useEffect(async () => {
     let userData;
-    onSnapshot(collection(db, "users"), (snapshot) => {
+    onSnapshot(collection(db, 'users'), (snapshot) => {
       userData = snapshot.docs.map((doc) => doc.data());
       onAuthStateChanged(auth, async (currentUser) => {
         if (currentUser) {
@@ -76,15 +72,25 @@ export default function App() {
       });
     });
   }, []);
+
+  console.log('user:', user);
+  console.log('userType:', userType);
+  console.log('specific user:', specificUser);
+
+  UserContext = createContext(specificUser);
+
   let screen;
   if (user) {
     screen =
-      userType === "shelter" && specificUser !== {} ? (
+      userType === 'shelter' && specificUser !== {} ? (
         <>
+          <Stack.Screen name="ShelterSidebar" component={ShelterSidebar} />
           <Stack.Screen name="ShelterHome" component={ShelterHome} />
           <Stack.Screen name="ShelterProfile" component={ShelterProfile} />
         </>
+      ) : userType === 'adopter' && specificUser !== {} ? (
         <>
+          <Stack.Screen name="AdopterSidebar" component={AdopterSidebar} />
           <Stack.Screen name="AdopterHome" component={AdopterHome} />
           <Stack.Screen name="AdopterProfile" component={AdopterProfile} />
         </>
