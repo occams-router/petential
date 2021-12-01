@@ -115,7 +115,7 @@ export default function App() {
   }
   return (
     <NavigationContainer>
-      <UserContext.Provider value={null}>
+      <UserContext.Provider value={specificUser}>
         <Stack.Navigator>{screen}</Stack.Navigator>
       </UserContext.Provider>
     </NavigationContainer>
