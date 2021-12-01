@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   TouchableOpacity,
@@ -6,7 +6,7 @@ import {
   FlatList,
   View,
   Image,
-} from "react-native";
+} from 'react-native';
 
 import { auth, db } from "../../firebase/config";
 import styles from "./styles";
@@ -19,43 +19,43 @@ import PetCard from "../PetCards/ShelterPetCard";
 const pets = [
   {
     id: 1,
-    name: "Oliver",
-    species: "dog",
+    name: 'Oliver',
+    species: 'dog',
     age: 9,
     petImage:
-      "https://www.k9web.com/wp-content/uploads/2021/01/teddy-bear-cut-poodle-780x975.jpg",
+      'https://www.k9web.com/wp-content/uploads/2021/01/teddy-bear-cut-poodle-780x975.jpg',
   },
   {
     id: 2,
-    name: "Oliver",
-    species: "dog",
+    name: 'Oliver',
+    species: 'dog',
     age: 9,
     petImage:
-      "https://www.k9web.com/wp-content/uploads/2021/01/teddy-bear-cut-poodle-780x975.jpg",
+      'https://www.k9web.com/wp-content/uploads/2021/01/teddy-bear-cut-poodle-780x975.jpg',
   },
   {
     id: 3,
-    name: "Oliver",
-    species: "dog",
+    name: 'Oliver',
+    species: 'dog',
     age: 9,
     petImage:
-      "https://www.k9web.com/wp-content/uploads/2021/01/teddy-bear-cut-poodle-780x975.jpg",
+      'https://www.k9web.com/wp-content/uploads/2021/01/teddy-bear-cut-poodle-780x975.jpg',
   },
   {
     id: 4,
-    name: "Oliver",
-    species: "dog",
+    name: 'Oliver',
+    species: 'dog',
     age: 9,
     petImage:
-      "https://www.k9web.com/wp-content/uploads/2021/01/teddy-bear-cut-poodle-780x975.jpg",
+      'https://www.k9web.com/wp-content/uploads/2021/01/teddy-bear-cut-poodle-780x975.jpg',
   },
   {
     id: 4,
-    name: "Oliver",
-    species: "dog",
+    name: 'Oliver',
+    species: 'dog',
     age: 9,
     petImage:
-      "https://www.k9web.com/wp-content/uploads/2021/01/teddy-bear-cut-poodle-780x975.jpg",
+      'https://www.k9web.com/wp-content/uploads/2021/01/teddy-bear-cut-poodle-780x975.jpg',
   },
 ];
 
@@ -66,9 +66,9 @@ export default function ShelterHome(props) {
   const logout = async () => {
     try {
       await signOut(auth);
-      alert("You are logged out.");
+      alert('You are logged out.');
     } catch (error) {
-      alert("Log-out was unsuccesful.");
+      alert('Log-out was unsuccesful.');
       console.log(error.message);
     }
   };
@@ -101,16 +101,16 @@ export default function ShelterHome(props) {
         <Text style={styles.buttonTitle}>Add a Pet</Text>
       </TouchableOpacity>
 
+      <TouchableOpacity style={styles.button} onPress={() => logout()}>
+        <Text style={styles.buttonTitle}>Log out</Text>
+      </TouchableOpacity>
+
       <FlatList
         data={pets}
         keyextractor={(item) => item.id}
         renderItem={({ item }) => <PetCard pets={item} />}
         showsVerticalScrollIndicator={false}
       />
-
-      <TouchableOpacity style={styles.button} onPress={() => logout()}>
-        <Text style={styles.buttonTitle}>Log out</Text>
-      </TouchableOpacity>
     </SafeAreaView>
   );
 }

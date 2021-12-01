@@ -1,7 +1,7 @@
-import "react-native-gesture-handler";
-import React, { useEffect, useState } from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import 'react-native-gesture-handler';
+import React, { useEffect, useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
   ShelterHome,
   AdopterHome,
@@ -9,11 +9,15 @@ import {
   AdopterSignup,
   ProfileOptions,
   Login,
-  AdopterProfile
-} from "./src/screens";
-import { decode, encode } from "base-64";
-import { auth } from "./src/firebase/config";
-import { onAuthStateChanged } from "@firebase/auth";
+  ShelterProfile,
+  AdopterProfile,
+  ShelterSidebar,
+  AdopterSidebar,
+} from './src/screens';
+import { decode, encode } from 'base-64';
+import { auth } from './src/firebase/config';
+import { onAuthStateChanged } from '@firebase/auth';
+
 if (!global.btoa) {
   global.btoa = encode;
 }
@@ -42,12 +46,12 @@ export default function App() {
           <>
             <Stack.Screen name="ShelterHome" component={ShelterHome} />
             <Stack.Screen name="AdopterHome" component={AdopterHome} />
+            <Stack.Screen name="ShelterProfile" component={ShelterProfile} />
             <Stack.Screen name="AdopterProfile" component={AdopterProfile} />
           </>
         ) : (
           <>
             <Stack.Screen name="Login" component={Login} />
-
             <Stack.Screen name="ProfileOptions" component={ProfileOptions} />
             <Stack.Screen name="AdopterSignup" component={AdopterSignup} />
             <Stack.Screen name="ShelterSignup" component={ShelterSignup} />
@@ -57,14 +61,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-// const styles = StyleSheet.create({
-// 	container: {
-// 		flex: 1,
-// 		backgroundColor: 'white',
-// 		alignItems: 'center',
-// 		justifyContent: 'center',
-// 		padding: 10,
-// 		margin: 10,
-// 	},
-// });
