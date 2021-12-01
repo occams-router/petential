@@ -10,6 +10,8 @@ import {
   ShelterSignup,
   AdopterSignup,
   ProfileOptions,
+  ShelterSidebar,
+  AdopterSidebar,
   Login,
 } from "./src/screens";
 import { decode, encode } from "base-64";
@@ -107,3 +109,27 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+/*
+
+return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        {user ? (
+          <>
+            <Stack.Screen name="ShelterHome" component={ShelterHome} />
+            <Stack.Screen name="AdopterHome" component={AdopterHome} />
+            <Stack.Screen name="ShelterProfile" component={ShelterProfile} />
+            <Stack.Screen name="AdopterProfile" component={AdopterProfile} />
+          </>
+        ) : (
+          <>
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="ProfileOptions" component={ProfileOptions} />
+            <Stack.Screen name="AdopterSignup" component={AdopterSignup} />
+            <Stack.Screen name="ShelterSignup" component={ShelterSignup} />
+          </>
+
+          );
+
+*/
