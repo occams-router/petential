@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   SafeAreaView,
   Text,
@@ -10,10 +10,12 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { db } from '../../firebase/config';
 import { doc, updateDoc } from 'firebase/firestore';
 import styles from './styles';
+import { UserContext } from '../../../App';
 
-export default function AdopterProfile(props) {
-  const user = props.route.params.user;
+export default function AdopterProfile() {
+  const user = useContext(UserContext);
   const id = user.id;
+
   const [name, setName] = useState(user.name || '');
   const [city, setCity] = useState(user.city || '');
   const [state, setState] = useState(user.state || '');

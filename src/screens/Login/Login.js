@@ -43,7 +43,7 @@ export default function Login({ navigation }) {
         const correctAdopter = adoptersArr.find(
           (element) => element.uid === user.user.uid
         );
-        navigation.navigate("AdopterHome", { user: correctAdopter });
+        navigation.navigate("AdopterSidebar", { user: correctAdopter });
       } else if (correctUser.type === "shelter") {
         const data = await getDocs(sheltersCollectionRef);
         const sheltersArr = data.docs.map((doc) => ({
@@ -54,7 +54,7 @@ export default function Login({ navigation }) {
           (element) => element.uid === user.user.uid
         );
         console.log(correctShelter);
-        navigation.navigate("ShelterHome", { user: correctShelter });
+        navigation.navigate("ShelterSidebar", { user: correctShelter });
       }
     } catch (error) {
       alert("Invalid email or password");
