@@ -130,7 +130,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <UserContext.Provider value={specificUser}>
-        <Stack.Navigator>{screen}</Stack.Navigator>
+        <Stack.Navigator screenOptions={{
+    headerShown: false
+  }}>{screen}</Stack.Navigator>
       </UserContext.Provider>
     </NavigationContainer>
   );
