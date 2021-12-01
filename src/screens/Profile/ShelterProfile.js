@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Image,
   Text,
@@ -10,9 +10,10 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import styles from './styles';
 import { db } from '../../firebase/config';
 import { doc, updateDoc } from 'firebase/firestore';
+import { UserContext } from '../../../App';
 
-export default function ShelterProfile(props) {
-  const shelter = props.route.params.user;
+export default function ShelterProfile() {
+  const shelter = useContext(UserContext);
 
   const [nameOfShelter, setNameOfShelter] = useState(shelter.name || '');
   const [imageUrl, setImageUrl] = useState(
