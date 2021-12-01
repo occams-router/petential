@@ -136,17 +136,21 @@ export default function AdopterPetCard(props) {
     <Container>
       <CardContainer>
         {((pet) => (
-          <TinderCard
-            key={pet.name}
-            onSwipe={(dir) => swiped(dir, pet.name)}
-            onCardLeftScreen={() => outOfFrame(pet.name)}
-          >
-            <Card>
-              <CardImage source={{ uri: pet.imageUrl }}>
-                <CardTitle>{pet.name}</CardTitle>
-              </CardImage>
-            </Card>
-          </TinderCard>
+          <>
+            <TinderCard
+              key={pet.name}
+              onSwipe={(dir) => swiped(dir, pet.name)}
+              onCardLeftScreen={() => outOfFrame(pet.name)}
+            >
+              <Card>
+                <CardImage source={{ uri: pet.imageUrl }}>
+                  {/* <CardTitle>{pet.name}</CardTitle> */}
+                </CardImage>
+              </Card>
+            </TinderCard>
+            <Header>{pet.name}</Header>
+            <InfoText>{pet.description}</InfoText>
+          </>
         ))(petsList[0])}
       </CardContainer>
       {lastDirection ? (
