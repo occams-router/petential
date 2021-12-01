@@ -109,6 +109,8 @@ export default function AdopterPetCard(props) {
   const [lastDirection, setLastDirection] = useState();
   const [petsList, setPetsList] = useState(pets);
 
+  const petsCollectionRef = collection(db, "pets");
+
   const swiped = (direction, nameToDelete) => {
     console.log("removing: " + nameToDelete);
     setPetsList(petsList.slice(1));
@@ -119,7 +121,16 @@ export default function AdopterPetCard(props) {
     console.log(name + " left the screen!");
   };
 
-  useEffect(() => {});
+  useEffect(async () => {
+    const allPets = await getDocs(petsCollectionRef);
+    let petsData = allPets.docs.map((doc) => ({
+      ...doc.data(),
+    }));
+
+    setPetsList(petsData);
+
+    console.log("pets list:", petsList);
+  }, []);
 
   return (
     <Container>
