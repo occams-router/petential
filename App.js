@@ -45,6 +45,7 @@ export default function App() {
   const [userType, setUserType] = useState(null);
 
   useEffect(async () => {
+    setLoading(true)
     let userData;
     onSnapshot(collection(db, 'users'), (snapshot) => {
       userData = snapshot.docs.map((doc) => doc.data());
@@ -71,28 +72,41 @@ export default function App() {
         }
       });
     });
+    setLoading(false)
   }, []);
-
-  console.log('user:', user);
-  console.log('userType:', userType);
-  console.log('specific user:', specificUser);
+  // console.log('user:', user);
+  // console.log('userType:', userType);
+  // console.log('specific user:', specificUser);
+  console.log('loading', loading)
 
   UserContext = createContext(specificUser);
 
   let screen;
+  if(loading){
+    screen = (
+      <Stack.Screen
+        name="Loading"
+        component={() => (
+          <View>
+            <Text>Loading...</Text>
+          </View>
+        )}
+      />
+    );
+  } else{
   if (user) {
     screen =
-      userType === 'shelter' && specificUser !== {} ? (
+      userType === 'shelter' && specificUser !== {} && loading === false ? (
         <>
           <Stack.Screen name="ShelterSidebar" component={ShelterSidebar} />
-          <Stack.Screen name="ShelterHome" component={ShelterHome} />
           <Stack.Screen name="ShelterProfile" component={ShelterProfile} />
+          <Stack.Screen name="ShelterHome" component={ShelterHome} />
         </>
-      ) : userType === 'adopter' && specificUser !== {} ? (
+      ) : userType === 'adopter' && specificUser !== {} && loading === false ? (
         <>
           <Stack.Screen name="AdopterSidebar" component={AdopterSidebar} />
-          <Stack.Screen name="AdopterHome" component={AdopterHome} />
           <Stack.Screen name="AdopterProfile" component={AdopterProfile} />
+          <Stack.Screen name="AdopterHome" component={AdopterHome} />
         </>
       ) : (
         (screen = (
@@ -127,6 +141,7 @@ export default function App() {
       />
     );
   }
+}
   return (
     <NavigationContainer>
       <UserContext.Provider value={specificUser}>
