@@ -1,63 +1,118 @@
-import 'react-native-gesture-handler';
-import React, { useEffect, useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import "react-native-gesture-handler";
+import React, { createContext, useEffect, useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import {
   ShelterHome,
   AdopterHome,
+  ShelterProfile,
+  AdopterProfile,
   ShelterSignup,
   AdopterSignup,
   ProfileOptions,
-  Login,
-  ShelterProfile,
-  AdopterProfile,
   ShelterSidebar,
   AdopterSidebar,
-} from './src/screens';
-import { decode, encode } from 'base-64';
-import { auth } from './src/firebase/config';
-import { onAuthStateChanged } from '@firebase/auth';
-
+  Login,
+} from "./src/screens";
+import { decode, encode } from "base-64";
+import { auth, db } from "./src/firebase/config";
+import { onAuthStateChanged } from "@firebase/auth";
+import {
+  collection,
+  getDocs,
+  onSnapshot,
+  query,
+  orderBy,
+  limit,
+  doc,
+  getDoc,
+} from "@firebase/firestore";
 if (!global.btoa) {
   global.btoa = encode;
 }
-
-const Stack = createStackNavigator();
-
 if (!global.atob) {
   global.atob = decode;
 }
-
+import { Text, SafeAreaView, View, Image } from "react-native";
+const Stack = createStackNavigator();
+// const usersCollectionRef = collection(db, "users");
 export default function App() {
+  const [specificUser, setSpecificUser] = useState({});
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(undefined);
+  const [userType, setUserType] = useState(null);
 
-  onAuthStateChanged(auth, (currentUser) => {
-    if (currentUser) {
-      setUser(currentUser);
-    } else {
-      setUser(null);
-    }
-  });
+  useEffect(async () => {
+    let userData;
+    onSnapshot(collection(db, "users"), (snapshot) => {
+      userData = snapshot.docs.map((doc) => doc.data());
+      console.log("userData from useEffect:", userData);
+      onAuthStateChanged(auth, async (currentUser) => {
+        if (currentUser) {
+          const correctUser = userData.find(
+            (element) => element.uid === currentUser.uid
+          );
+          console.log("correctUser:", correctUser);
+          if (correctUser) {
+        
+            setUserType(correctUser.type);
+            setUser(currentUser);
+            const userRef = await getDoc(
+      doc(db, `${correctUser.type}s`, correctUser.docId)
+    );
+    console.log("userRef:", userRef);
+    const userData = userRef.data()
+    console.log("userRef data:", userRef.data());
+    setSpecificUser(userData);
+    console.log('specificUser:', specificUser);
+          }
+        } else {
+          setUser(null);
+        }
+      });
+    });
+  }, []);
+  const UserContext = createContext();
+  let screen;
+  if (user) {
+    screen =
+      userType === "shelter" ? (
+        <>
+          <Stack.Screen name="ShelterHome" component={ShelterHome} />
+          <Stack.Screen name="ShelterProfile" component={ShelterProfile} />
+        </>
+      ) : (
+        <>
+          <Stack.Screen name="AdopterHome" component={AdopterHome} />
+          <Stack.Screen name="AdopterProfile" component={AdopterProfile} />
+        </>
+      );
+  } else if (user === null) {
+    screen = (
+      <>
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="ProfileOptions" component={ProfileOptions} />
+        <Stack.Screen name="AdopterSignup" component={AdopterSignup} />
+        <Stack.Screen name="ShelterSignup" component={ShelterSignup} />
+      </>
+    );
+  } else {
+    screen = (
+      <Stack.Screen
+        name="Loading"
+        component={() => (
+          <View>
+            <Text>Loading...</Text>
+          </View>
+        )}
+      />
+    );
+  }
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        {user ? (
-          <>
-            <Stack.Screen name="ShelterHome" component={ShelterHome} />
-            <Stack.Screen name="AdopterHome" component={AdopterHome} />
-            <Stack.Screen name="ShelterProfile" component={ShelterProfile} />
-            <Stack.Screen name="AdopterProfile" component={AdopterProfile} />
-          </>
-        ) : (
-          <>
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="ProfileOptions" component={ProfileOptions} />
-            <Stack.Screen name="AdopterSignup" component={AdopterSignup} />
-            <Stack.Screen name="ShelterSignup" component={ShelterSignup} />
-          </>
-        )}
-      </Stack.Navigator>
+      <UserContext.Provider value={null}>
+        <Stack.Navigator>{screen}</Stack.Navigator>
+      </UserContext.Provider>
     </NavigationContainer>
   );
 }
