@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import {
@@ -24,8 +24,9 @@ import {
   query,
   orderBy,
   limit,
+  doc,
+  getDoc,
 } from "@firebase/firestore";
-
 if (!global.btoa) {
   global.btoa = encode;
 }
@@ -33,21 +34,18 @@ if (!global.atob) {
   global.atob = decode;
 }
 import { Text, SafeAreaView, View, Image } from "react-native";
-
 const Stack = createStackNavigator();
 
-const usersCollectionRef = collection(db, "users");
-
 export default function App() {
+  const [specificUser, setSpecificUser] = useState({});
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(undefined);
   const [userType, setUserType] = useState(null);
 
-  useEffect(() => {
+  useEffect(async () => {
     let userData;
     onSnapshot(collection(db, "users"), (snapshot) => {
       userData = snapshot.docs.map((doc) => doc.data());
-      console.log("userData from useEffect:", userData);
 
       onAuthStateChanged(auth, async (currentUser) => {
         if (currentUser) {
@@ -55,30 +53,43 @@ export default function App() {
             (element) => element.uid === currentUser.uid
           );
 
-          console.log("correctUser:", correctUser);
           if (correctUser) {
             setUserType(correctUser.type);
             setUser(currentUser);
+
+            const userRef = await getDoc(
+              doc(db, `${correctUser.type}s`, correctUser.docId)
+            );
+
+            const userData = userRef.data();
+
+            setSpecificUser(userData);
           }
         } else {
           setUser(null);
         }
       });
     });
-  });
+  }, []);
+
+  console.log("user:", user);
+  console.log("userType:", userType);
+  console.log("specific user:", specificUser);
+
+  const UserContext = createContext();
 
   let screen;
   if (user) {
     screen =
       userType === "shelter" ? (
         <>
-          {/* <Stack.Screen name="ShelterProfile" component={ShelterProfile} /> */}
           <Stack.Screen name="ShelterHome" component={ShelterHome} />
+          <Stack.Screen name="ShelterProfile" component={ShelterProfile} />
         </>
       ) : (
         <>
-          {/* <Stack.Screen name="AdopterProfile" component={AdopterProfile} /> */}
           <Stack.Screen name="AdopterHome" component={AdopterHome} />
+          <Stack.Screen name="AdopterProfile" component={AdopterProfile} />
         </>
       );
   } else if (user === null) {
@@ -102,34 +113,11 @@ export default function App() {
       />
     );
   }
-
   return (
     <NavigationContainer>
-      <Stack.Navigator>{screen}</Stack.Navigator>
+      <UserContext.Provider value={null}>
+        <Stack.Navigator>{screen}</Stack.Navigator>
+      </UserContext.Provider>
     </NavigationContainer>
   );
 }
-
-/*
-
-return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {user ? (
-          <>
-            <Stack.Screen name="ShelterHome" component={ShelterHome} />
-            <Stack.Screen name="AdopterHome" component={AdopterHome} />
-            <Stack.Screen name="ShelterProfile" component={ShelterProfile} />
-            <Stack.Screen name="AdopterProfile" component={AdopterProfile} />
-          </>
-        ) : (
-          <>
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="ProfileOptions" component={ProfileOptions} />
-            <Stack.Screen name="AdopterSignup" component={AdopterSignup} />
-            <Stack.Screen name="ShelterSignup" component={ShelterSignup} />
-          </>
-
-          );
-
-*/
