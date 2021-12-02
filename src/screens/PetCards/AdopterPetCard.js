@@ -139,7 +139,10 @@ export default function AdopterPetCard(props) {
     const allPets = await getDocs(petsCollectionRef);
     let petsData = allPets.docs.map((doc) => ({
       ...doc.data(),
+      id: doc.id,
     }));
+
+    console.log("petsData:", petsData);
 
     setPetsList(petsData);
   }, []);
@@ -154,7 +157,7 @@ export default function AdopterPetCard(props) {
         {((pet) => (
           <>
             <TinderCard
-              key={pet.name}
+              key={pet.id}
               onSwipe={(dir) => swiped(dir, pet.name)}
               onCardLeftScreen={() => outOfFrame(pet.name)}
             >
