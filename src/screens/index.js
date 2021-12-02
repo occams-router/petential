@@ -14,14 +14,12 @@ export { default as AdopterProfile } from './Profile/AdopterProfile';
 
 export { default as ShelterProfile } from './Profile/ShelterProfile';
 
+export { default as PetProfile } from './Profile/PetProfile';
+
 export { default as Header } from './Sidebar/Header';
 
 export { default as AdopterSidebar } from './Sidebar/AdopterSidebar';
 
 export { default as ShelterSidebar } from './Sidebar/ShelterSidebar';
 
-export { default as Loading} from './Loading';
-
-
-
-
+export { default as Loading } from './Loading';

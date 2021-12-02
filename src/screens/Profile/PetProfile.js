@@ -43,6 +43,7 @@ export default function PetProfile(props) {
         breed,
         imageUrl,
         shelterName,
+        shelterRefId: shelter.id,
         city,
         state,
         description,
