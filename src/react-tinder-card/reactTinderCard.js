@@ -176,7 +176,7 @@ const TinderCard = React.forwardRef(
       []
     );
 
-    console.warn("xy", x, y);
+    // console.warn("xy", x, y);
 
     return (
       <AnimatedView
