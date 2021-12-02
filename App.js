@@ -13,6 +13,7 @@ import {
   ShelterSidebar,
   AdopterSidebar,
   Login,
+  Loading
 } from './src/screens';
 import { decode, encode } from 'base-64';
 import { auth, db } from './src/firebase/config';
@@ -40,7 +41,7 @@ let UserContext;
 
 export default function App() {
   const [specificUser, setSpecificUser] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(undefined);
   const [userType, setUserType] = useState(null);
 
@@ -77,7 +78,7 @@ export default function App() {
   // console.log('user:', user);
   // console.log('userType:', userType);
   // console.log('specific user:', specificUser);
-  console.log('loading', loading)
+
 
   UserContext = createContext(specificUser);
 
@@ -86,11 +87,7 @@ export default function App() {
     screen = (
       <Stack.Screen
         name="Loading"
-        component={() => (
-          <View>
-            <Text>Loading...</Text>
-          </View>
-        )}
+        component={Loading}
       />
     );
   } else{
@@ -112,11 +109,7 @@ export default function App() {
         (screen = (
           <Stack.Screen
             name="Loading"
-            component={() => (
-              <View>
-                <Text>Loading...</Text>
-              </View>
-            )}
+            component={Loading}
           />
         ))
       );
@@ -133,11 +126,7 @@ export default function App() {
     screen = (
       <Stack.Screen
         name="Loading"
-        component={() => (
-          <View>
-            <Text>Loading...</Text>
-          </View>
-        )}
+        component={Loading}
       />
     );
   }
