@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import styled from "styled-components/native";
-import { Card, Title, Paragraph, Button } from "react-native-paper";
+import { Card, Title, Button } from "react-native-paper";
 
 const Container = styled.View`
   display: flex;

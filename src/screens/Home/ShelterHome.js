@@ -63,6 +63,7 @@ export default function ShelterHome({ navigation }) {
         keyextractor={(item, index) => item.key}
         renderItem={({ item }) => <PetCard pets={item} />}
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 150 }}
       />
     </SafeAreaView>
   );
