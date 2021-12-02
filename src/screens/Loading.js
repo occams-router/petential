@@ -4,7 +4,7 @@ import { ActivityIndicator, StyleSheet, Text, SafeAreaView } from "react-native"
 export default function Loading () {
     return(
   <SafeAreaView style={[styles.container, styles.horizontal]}>
-    <ActivityIndicator size="large" color="#00ff00" />
+    <ActivityIndicator size="large" color="#FFC0CB" />
   </SafeAreaView>
     )
 };
