@@ -5,7 +5,7 @@ import { AdopterHome, AdopterProfile, Header } from '../index.js';
 
 const Drawer = createDrawerNavigator();
 
-export default function ShelterSidebar() {
+export default function AdopterSidebar() {
   return (
     <Drawer.Navigator
       drawerType="front"
