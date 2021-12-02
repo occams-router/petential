@@ -11,7 +11,14 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import TinderCard from "../../react-tinder-card/reactTinderCard";
-import { Card, Title, Paragraph, Button, Divider } from "react-native-paper";
+import {
+  Card,
+  Title,
+  Paragraph,
+  Button,
+  Divider,
+  Subheading,
+} from "react-native-paper";
 import { UserContext } from "../../../App";
 
 const Container = styled.View`
@@ -128,6 +135,7 @@ export default function AdopterPetCard(props) {
         userPetHistory: user.petHistory,
         userDescription: user.description,
         userDocRef: user.id,
+        status: "pending",
       };
 
       await addDoc(requestsSubRef, requestData);
@@ -175,6 +183,12 @@ export default function AdopterPetCard(props) {
                       {pet.name} ({pet.age} {pet.age > 1 ? "years" : "year"}{" "}
                       old)
                     </Title>
+                    <Divider />
+                    <Title>{pet.shelterName}</Title>
+                    <Divider />
+                    <Paragraph>
+                      Location: {pet.city}, {pet.state}
+                    </Paragraph>
                     <Divider />
                     <Paragraph>Species: {pet.species}</Paragraph>
                     <Divider />
