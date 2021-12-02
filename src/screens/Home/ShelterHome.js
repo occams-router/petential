@@ -1,13 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Text, TouchableOpacity, SafeAreaView, FlatList } from "react-native";
 
 import { auth, db } from "../../firebase/config";
 import styles from "./styles";
 import { signOut } from "@firebase/auth";
 import { render } from "react-dom";
-import { snapshotEqual, doc, collection } from "firebase/firestore";
+import {
+  snapshotEqual,
+  doc,
+  collection,
+  getDocs,
+  query,
+  collectionGroup,
+} from "firebase/firestore";
 import PetCard from "../PetCards/ShelterPetCard";
-
+import { UserContext } from "../../../App";
 // const pets = [
 //   {
 //     id: 1,
@@ -51,12 +58,10 @@ import PetCard from "../PetCards/ShelterPetCard";
 //   },
 // ];
 
-export default function ShelterHome(props) {
-  // const [petData, setPetData] = useState(null);
-  // const { user } = props.route.params;
-  // console.log(user, "User");
-  // const { id } = user;
-  // console.log(id, "id");
+export default function ShelterHome() {
+  const shelter = useContext(UserContext);
+  console.log(shelter, "i am shelter");
+  const [petData, setPetData] = useState(null);
   const logout = async () => {
     try {
       await signOut(auth);
@@ -67,34 +72,32 @@ export default function ShelterHome(props) {
     }
   };
 
-  // const getPets = async () => {
-  //   try {
-  //     const list = [];
-  //     await db
-  //       .collection("shelters")
-  //       .get()
-  //       .then((querySnapshot) => {
-  //         querySnapshot.forEach((doc) => {
-  //           console.log("total shelter", querySnapshot.size);
-  //           //   const { city, description, id } = doc.data();
-  //           //   list.push({
-  //           //     id: doc.id,
-  //           //     city: doc.city,
-  //           //     description: doc.description,
-  //           //   });
-  //         });
-  //       });
-  //     setPetData();
-  //   } catch (e) {
-  //     console.error;
-  //   }
-  // };
+  // const docsSnap = await getDocs(
+  //   collection(db, `shelters/${shelter.id}/shelterPets`)
+  // );
+  // console.log(docsSnap, "i am doc snap");
 
-  // useEffect(() => {
-  //   getPets();
-  // }, []);
+  // const ShelterRef = await doc(db, "shelters", shelter.id, "shelterPets");
+  // console.log(ShelterRef);
 
-  console.log("i am props", props);
+  // const q = query(collection(db, `shelters/${shelter.id}/'shelterPets`));
+  // const docsSnap = await getDocs(q);
+
+  // docsSnap.forEach((doc) => {
+  //   console.log(doc.data(), "I am docs");
+  // });
+  const getPets = async () => {
+    try {
+      const q = query(collection(db, `shelters/${shelter.id}/shelterPets`));
+      console.log(q, "i am q");
+      const docsSnap = await getDocs(q);
+      console.log("doc", docsSnap.data());
+    } catch (e) {
+      console.log("No pets in shelter");
+    }
+  };
+  getPets();
+
   return (
     <SafeAreaView>
       <Text style={styles.title}>Current Pets</Text>
@@ -132,3 +135,32 @@ export default function ShelterHome(props) {
 //     console.error(e, "No Pets in DB");
 //   }
 // };
+
+// const getPets = async () => {
+//   try {
+//     const list = [];
+//     const ShelterRef = await doc(db, "shelters", id);
+//     console.log(ShelterRef);
+//     // await db
+//     //   .collection("shelters")
+//     //   .get()
+//     //   .then((querySnapshot) => {
+//     //     querySnapshot.forEach((doc) => {
+//     //       console.log("total shelter", querySnapshot.size);
+//     //       //   const { city, description, id } = doc.data();
+//     //       //   list.push({
+//     //       //     id: doc.id,
+//     //       //     city: doc.city,
+//     //       //     description: doc.description,
+//     //       //   });
+//     //     });
+//     //   });
+//     // setPetData();
+//   } catch (e) {
+//     console.error;
+//   }
+// };
+
+// useEffect(() => {
+//   getPets();
+// }, []);
