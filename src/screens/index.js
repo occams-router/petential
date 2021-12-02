@@ -19,3 +19,9 @@ export { default as Header } from './Sidebar/Header';
 export { default as AdopterSidebar } from './Sidebar/AdopterSidebar';
 
 export { default as ShelterSidebar } from './Sidebar/ShelterSidebar';
+
+export { default as Loading} from './Loading';
+
+
+
+

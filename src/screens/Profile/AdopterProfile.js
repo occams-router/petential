@@ -11,11 +11,12 @@ import { db } from '../../firebase/config';
 import { doc, updateDoc } from 'firebase/firestore';
 import styles from './styles';
 import { UserContext } from '../../../App';
+import { useEffect } from 'react/cjs/react.development';
 
 export default function AdopterProfile() {
   const user = useContext(UserContext);
   const id = user.id;
-
+  const [loading, setLoading] = useState(true);
   const [name, setName] = useState(user.name || '');
   const [city, setCity] = useState(user.city || '');
   const [state, setState] = useState(user.state || '');
@@ -26,6 +27,9 @@ export default function AdopterProfile() {
   const [lifestyle, setLifestyle] = useState(user.lifestyle || '');
   const [petHistory, setPetHistory] = useState(user.petHistory || '');
 
+  useEffect(() => {
+setLoading(false)
+  }, [])
   const updateAdopter = async () => {
     try {
       const adopterRef = doc(db, 'adopters', id);
@@ -49,6 +53,11 @@ export default function AdopterProfile() {
   };
 
   return (
+      loading ? (
+        <SafeAreaView style={styles.container}>
+<Text>Loading...</Text>
+</SafeAreaView>
+      ) :
     <SafeAreaView style={styles.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
