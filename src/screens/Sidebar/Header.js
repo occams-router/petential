@@ -1,8 +1,10 @@
+
 import React from 'react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase/config';
-import { SafeAreaView, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { SafeAreaView, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+
 
 export default function Header() {
   const navigation = useNavigation();
@@ -10,9 +12,9 @@ export default function Header() {
   const logout = async () => {
     try {
       await signOut(auth);
-      alert('You are logged out.');
+      alert("You are logged out.");
     } catch (error) {
-      alert('Log-out was unsuccesful.');
+      alert("Log-out was unsuccessful.");
       console.log(error.message);
     }
   };
@@ -31,17 +33,17 @@ export default function Header() {
 
 const headerStyles = StyleSheet.create({
   container: {
-    position: 'absolute',
+    position: "absolute",
     top: 30,
     left: 0,
-    width: '100%',
-    backgroundColor: '#fa7da7',
+    width: "100%",
+    backgroundColor: "#fa7da7",
     elevation: 5,
     height: 50,
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
     paddingHorizontal: 20,
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 });

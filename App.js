@@ -3,20 +3,24 @@ import React, { createContext, useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import {
-  ShelterHome,
-  AdopterHome,
-  ShelterProfile,
-  AdopterProfile,
   ShelterSignup,
   AdopterSignup,
   ProfileOptions,
   ShelterSidebar,
   AdopterSidebar,
   Login,
+<<<<<<< HEAD
 } from "./src/screens";
 import { decode, encode } from "base-64";
 import { auth, db } from "./src/firebase/config";
 import { onAuthStateChanged } from "@firebase/auth";
+=======
+  Loading,
+} from './src/screens';
+import { decode, encode } from 'base-64';
+import { auth, db } from './src/firebase/config';
+import { onAuthStateChanged } from '@firebase/auth';
+>>>>>>> main
 import {
   collection,
   getDocs,
@@ -27,6 +31,11 @@ import {
   doc,
   getDoc,
 } from "@firebase/firestore";
+<<<<<<< HEAD
+=======
+import { Provider as PaperProvider } from "react-native-paper";
+
+>>>>>>> main
 if (!global.btoa) {
   global.btoa = encode;
 }
@@ -40,15 +49,15 @@ let UserContext;
 
 export default function App() {
   const [specificUser, setSpecificUser] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(undefined);
   const [userType, setUserType] = useState(null);
 
   useEffect(async () => {
+    setLoading(true)
     let userData;
     onSnapshot(collection(db, "users"), (snapshot) => {
       userData = snapshot.docs.map((doc) => doc.data());
-
       onAuthStateChanged(auth, async (currentUser) => {
         if (currentUser) {
           const correctUser = userData.find(
@@ -72,38 +81,53 @@ export default function App() {
         }
       });
     });
+    setLoading(false)
   }, []);
-
   // console.log('user:', user);
   // console.log('userType:', userType);
   // console.log('specific user:', specificUser);
 
+<<<<<<< HEAD
+  // console.log('user:', user);
+  // console.log('userType:', userType);
+  // console.log('specific user:', specificUser);
+=======
+>>>>>>> main
+
   UserContext = createContext(specificUser);
 
   let screen;
+  if(loading){
+    screen = (
+      <Stack.Screen
+        name="Loading"
+        component={Loading}
+      />
+    );
+  } else{
   if (user) {
     screen =
+<<<<<<< HEAD
       userType === "shelter" && specificUser !== {} ? (
+=======
+      userType === 'shelter' && specificUser !== {} && loading === false ? (
+>>>>>>> main
         <>
           <Stack.Screen name="ShelterSidebar" component={ShelterSidebar} />
-          <Stack.Screen name="ShelterHome" component={ShelterHome} />
-          <Stack.Screen name="ShelterProfile" component={ShelterProfile} />
         </>
+<<<<<<< HEAD
       ) : userType === "adopter" && specificUser !== {} ? (
+=======
+      ) : userType === 'adopter' && specificUser !== {} && loading === false ? (
+>>>>>>> main
         <>
           <Stack.Screen name="AdopterSidebar" component={AdopterSidebar} />
-          <Stack.Screen name="AdopterHome" component={AdopterHome} />
-          <Stack.Screen name="AdopterProfile" component={AdopterProfile} />
         </>
       ) : (
         (screen = (
           <Stack.Screen
             name="Loading"
-            component={() => (
-              <View>
-                <Text>Loading...</Text>
-              </View>
-            )}
+            component={Loading}
           />
         ))
       );
@@ -120,18 +144,19 @@ export default function App() {
     screen = (
       <Stack.Screen
         name="Loading"
-        component={() => (
-          <View>
-            <Text>Loading...</Text>
-          </View>
-        )}
+        component={Loading}
       />
     );
   }
+}
   return (
     <NavigationContainer>
       <UserContext.Provider value={specificUser}>
-        <Stack.Navigator>{screen}</Stack.Navigator>
+      <PaperProvider>
+        <Stack.Navigator screenOptions={{
+    headerShown: false
+  }}>{screen}</Stack.Navigator>
+    </PaperProvider>
       </UserContext.Provider>
     </NavigationContainer>
   );

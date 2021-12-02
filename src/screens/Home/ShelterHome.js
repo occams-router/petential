@@ -16,7 +16,7 @@ export default function ShelterHome({ navigation }) {
       await signOut(auth);
       alert("You are logged out.");
     } catch (error) {
-      alert("Log-out was unsuccesful.");
+      alert("Log-out was unsuccessful.");
       console.log(error.message);
     }
   };

@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, SafeAreaView, TouchableOpacity } from "react-native";
+import { Text, SafeAreaView, TouchableOpacity, View } from "react-native";
 import { auth } from "../../firebase/config";
 import styles from "./styles";
 import AdopterPetCard from "../PetCards/AdopterPetCard";
@@ -11,7 +11,7 @@ export default function AdopterHome(props) {
       await signOut(auth);
       alert("You are logged out.");
     } catch (error) {
-      alert("Log-out was unsuccesful.");
+      alert("Log-out was unsuccessful.");
       console.log(error.message);
     }
   };
