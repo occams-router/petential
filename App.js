@@ -96,14 +96,14 @@ export default function App() {
       userType === 'shelter' && specificUser !== {} && loading === false ? (
         <>
           <Stack.Screen name="ShelterSidebar" component={ShelterSidebar} />
-          <Stack.Screen name="ShelterProfile" component={ShelterProfile} />
-          <Stack.Screen name="ShelterHome" component={ShelterHome} />
+          {/* <Stack.Screen name="ShelterProfile" component={ShelterProfile} />
+          <Stack.Screen name="ShelterHome" component={ShelterHome} /> */}
         </>
       ) : userType === 'adopter' && specificUser !== {} && loading === false ? (
         <>
           <Stack.Screen name="AdopterSidebar" component={AdopterSidebar} />
-          <Stack.Screen name="AdopterProfile" component={AdopterProfile} />
-          <Stack.Screen name="AdopterHome" component={AdopterHome} />
+          {/* <Stack.Screen name="AdopterProfile" component={AdopterProfile} />
+          <Stack.Screen name="AdopterHome" component={AdopterHome} /> */}
         </>
       ) : (
         (screen = (
