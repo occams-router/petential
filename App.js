@@ -1,7 +1,7 @@
-import 'react-native-gesture-handler';
-import React, { createContext, useEffect, useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import "react-native-gesture-handler";
+import React, { createContext, useEffect, useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import {
   ShelterSignup,
   AdopterSignup,
@@ -23,14 +23,16 @@ import {
   limit,
   doc,
   getDoc,
-} from '@firebase/firestore';
+} from "@firebase/firestore";
+import { Provider as PaperProvider } from "react-native-paper";
+
 if (!global.btoa) {
   global.btoa = encode;
 }
 if (!global.atob) {
   global.atob = decode;
 }
-import { Text, SafeAreaView, View, Image } from 'react-native';
+import { Text, SafeAreaView, View, Image } from "react-native";
 const Stack = createStackNavigator();
 
 let UserContext;
@@ -44,7 +46,7 @@ export default function App() {
   useEffect(async () => {
     setLoading(true)
     let userData;
-    onSnapshot(collection(db, 'users'), (snapshot) => {
+    onSnapshot(collection(db, "users"), (snapshot) => {
       userData = snapshot.docs.map((doc) => doc.data());
       onAuthStateChanged(auth, async (currentUser) => {
         if (currentUser) {
@@ -126,9 +128,11 @@ export default function App() {
   return (
     <NavigationContainer>
       <UserContext.Provider value={specificUser}>
+      <PaperProvider>
         <Stack.Navigator screenOptions={{
     headerShown: false
   }}>{screen}</Stack.Navigator>
+    </PaperProvider>
       </UserContext.Provider>
     </NavigationContainer>
   );
