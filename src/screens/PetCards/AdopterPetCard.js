@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Text, SafeAreaView, View, Image } from "react-native";
 import styled from "styled-components/native";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, addDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import TinderCard from "../../react-tinder-card/reactTinderCard";
 import { Card, Title, Paragraph, Button } from "react-native-paper";
+import { UserContext } from "../../../App";
 
 const Container = styled.View`
   display: flex;
@@ -122,11 +123,21 @@ const pets = [
 export default function AdopterPetCard(props) {
   const [lastDirection, setLastDirection] = useState();
   const [petsList, setPetsList] = useState(pets);
+  const [currentPet, setCurrentPet] = useState();
+  const user = useContext(UserContext);
 
   const petsCollectionRef = collection(db, "pets");
 
-  const swiped = (direction, nameToDelete) => {
-    console.log("removing: " + nameToDelete);
+  const swiped = async (direction, pet) => {
+    console.log("removing:", pet.name);
+
+    const petDocRef = doc(db, "pets", pet.id);
+    const petData = await getDoc(petDocRef);
+
+    // add pet to current user's 'seen' subcollection
+
+    // if right swipe, add pet to its shelter's 'requests' subcollection
+
     setPetsList(petsList.slice(1));
     setLastDirection(direction);
   };
@@ -142,8 +153,6 @@ export default function AdopterPetCard(props) {
       id: doc.id,
     }));
 
-    console.log("petsData:", petsData);
-
     setPetsList(petsData);
   }, []);
 
@@ -154,80 +163,43 @@ export default function AdopterPetCard(props) {
   return (
     <Container>
       <CardContainer>
-        {((pet) => (
-          <>
-            <TinderCard
-              key={pet.id}
-              onSwipe={(dir) => swiped(dir, pet.name)}
-              onCardLeftScreen={() => outOfFrame(pet.name)}
-              preventSwipe={["up", "down"]}
-            >
-              <Card>
-                <Card.Cover source={{ uri: pet.imageUrl }}></Card.Cover>
+        {petsList.length ? (
+          ((pet) => (
+            <>
+              <TinderCard
+                key={pet.id}
+                onSwipe={(dir) => swiped(dir, pet)}
+                onCardLeftScreen={() => outOfFrame(pet.name)}
+                preventSwipe={["up", "down"]}
+              >
+                <Card>
+                  <Card.Cover source={{ uri: pet.imageUrl }}></Card.Cover>
 
-                <Card.Content>
-                  <Title>
-                    {pet.name} ({pet.age} {pet.age > 0 ? "years" : "year"} old)
-                  </Title>
-                  <Paragraph>{pet.description}</Paragraph>
-                </Card.Content>
+                  <Card.Content>
+                    <Title>
+                      {pet.name} ({pet.age} {pet.age > 0 ? "years" : "year"}{" "}
+                      old)
+                    </Title>
+                    <Paragraph>{pet.description}</Paragraph>
+                  </Card.Content>
 
-                <Card.Actions>
-                  <Button icon="thumb-down-outline">Pass</Button>
-                  <Button
-                    icon="heart"
-                    onPress={() => console.log("You choose to pass.")}
-                  >
-                    Like
-                  </Button>
-                </Card.Actions>
-              </Card>
-            </TinderCard>
-          </>
-        ))(petsList[0])}
+                  <Card.Actions>
+                    <Button icon="thumb-down-outline">Pass</Button>
+                    <Button
+                      icon="heart"
+                      onPress={() => console.log("You choose to pass.")}
+                    >
+                      Like
+                    </Button>
+                  </Card.Actions>
+                </Card>
+              </TinderCard>
+            </>
+          ))(petsList[0])
+        ) : (
+          <InfoText>No pets to display!</InfoText>
+        )}
       </CardContainer>
-      {lastDirection ? (
-        <InfoText>You swiped {lastDirection}</InfoText>
-      ) : (
-        <InfoText />
-      )}
     </Container>
   );
 }
-
-/*
-
-<Container>
-      <CardContainer>
-        {((pet) => (
-          <>
-            <TinderCard
-              key={pet.name}
-              onSwipe={(dir) => swiped(dir, pet.name)}
-              onCardLeftScreen={() => outOfFrame(pet.name)}
-            >
-              <Card>
-                <CardImage source={{ uri: pet.imageUrl }}></CardImage>
-              </Card>
-            </TinderCard>
-
-            <ProfileInfo>
-              <Header>{pet.name}</Header>
-
-              <Header>
-                {pet.age} {pet.age > 1 ? "years old" : "year old"}
-              </Header>
-
-              <InfoText>{pet.description}</InfoText>
-            </ProfileInfo>
-          </>
-        ))(petsList[0])}
-      </CardContainer>
-      {lastDirection ? (
-        <InfoText>You swiped {lastDirection}</InfoText>
-      ) : (
-        <InfoText />
-      )}
-    </Container>
-
-*/
