@@ -26,6 +26,7 @@ import {
 } from "@firebase/firestore";
 import { Provider as PaperProvider } from "react-native-paper";
 
+
 if (!global.btoa) {
   global.btoa = encode;
 }

@@ -1,66 +1,16 @@
-import React, { useState, useEffect } from "react";
-import {
-  Text,
-  TouchableOpacity,
-  SafeAreaView,
-  FlatList,
-  View,
-  Image,
-} from "react-native";
-
+import React, { useState, useEffect, useContext } from "react";
+import { Text, TouchableOpacity, SafeAreaView, FlatList } from "react-native";
 import { auth, db } from "../../firebase/config";
 import styles from "./styles";
 import { signOut } from "@firebase/auth";
-import { render } from "react-dom";
-import { snapshotEqual } from "firebase/firestore";
-// import { useEffect } from "react/cjs/react.development";
-import PetCard from "./PetCard";
+import { collection, getDocs } from "firebase/firestore";
+import PetCard from "../PetCards/ShelterPetCard";
+import { UserContext } from "../../../App";
+import { NavigationActions } from "react-navigation";
 
-const pets = [
-  {
-    id: 1,
-    name: "Oliver",
-    species: "dog",
-    age: 9,
-    petImage:
-      "https://www.k9web.com/wp-content/uploads/2021/01/teddy-bear-cut-poodle-780x975.jpg",
-  },
-  {
-    id: 2,
-    name: "Oliver",
-    species: "dog",
-    age: 9,
-    petImage:
-      "https://www.k9web.com/wp-content/uploads/2021/01/teddy-bear-cut-poodle-780x975.jpg",
-  },
-  {
-    id: 3,
-    name: "Oliver",
-    species: "dog",
-    age: 9,
-    petImage:
-      "https://www.k9web.com/wp-content/uploads/2021/01/teddy-bear-cut-poodle-780x975.jpg",
-  },
-  {
-    id: 4,
-    name: "Oliver",
-    species: "dog",
-    age: 9,
-    petImage:
-      "https://www.k9web.com/wp-content/uploads/2021/01/teddy-bear-cut-poodle-780x975.jpg",
-  },
-  {
-    id: 4,
-    name: "Oliver",
-    species: "dog",
-    age: 9,
-    petImage:
-      "https://www.k9web.com/wp-content/uploads/2021/01/teddy-bear-cut-poodle-780x975.jpg",
-  },
-];
-
-export default function ShelterHome(props) {
-  // const [petData, setPetData] = useState([])
+export default function ShelterHome({ navigation }) {
+  const shelter = useContext(UserContext);
+  const [petData, setPetData] = useState([]);
   const logout = async () => {
     try {
       await signOut(auth);
@@ -71,31 +21,37 @@ export default function ShelterHome(props) {
     }
   };
 
-  // const getPets = async () => {
-  //   try {
-  //     const list = [];
-  //     const shelterPets = await db.collection("shelters").get();
-  //     //for each pet in shelterpets collection push it into petData state
-  //     shelterPets.forEach((doc) => {
-  //       list.push(doc.data());
-  //     });
-  //     setPetData([...list]);
-  //   } catch (e) {
-  //     console.error(e, "No Pets in DB");
-  //   }
-  // };
+  const getPets = async () => {
+    try {
+      const list = [];
+      const docsSnap = await getDocs(
+        collection(db, `shelters/${shelter.id}/shelterPets`)
+      );
+      docsSnap.forEach((doc) => {
+        console.log("i am data", doc.data());
+        list.push(doc.data());
+      });
+      setPetData([...list]);
+    } catch (e) {
+      console.log("No pets in shelter");
+    }
+  };
 
-  //component did mount
-  // useEffect(() => {
-  //   getPets();
-  // }, []);
+  useEffect(() => {
+    getPets();
+  }, []);
 
   return (
     <SafeAreaView>
       <Text style={styles.title}>Current Pets</Text>
       <TouchableOpacity style={styles.button}>
-        {/* add onPress to link to add pet form screen */}
-        <Text style={styles.buttonTitle}>Add a Pet</Text>
+        {/* {change screen name place holder} */}
+        <Text
+          style={styles.buttonTitle}
+          oPress={navigation.navigate("ScreenNameHere")}
+        >
+          Add a Pet
+        </Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={() => logout()}>
@@ -103,8 +59,8 @@ export default function ShelterHome(props) {
       </TouchableOpacity>
 
       <FlatList
-        data={pets}
-        keyextractor={(item) => item.id}
+        data={petData}
+        keyextractor={(item, index) => item.key}
         renderItem={({ item }) => <PetCard pets={item} />}
         showsVerticalScrollIndicator={false}
       />
