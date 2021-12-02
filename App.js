@@ -13,7 +13,7 @@ import {
   ShelterSidebar,
   AdopterSidebar,
   Login,
-  Loading
+  Loading,
 } from './src/screens';
 import { decode, encode } from 'base-64';
 import { auth, db } from './src/firebase/config';
