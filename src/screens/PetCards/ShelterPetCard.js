@@ -17,12 +17,12 @@ export default function PetCard({ pets }) {
           <Image
             style={styles.imageStyle}
             source={{
-              uri: pets.petImage,
+              uri: pets.imageUrl,
             }}
           />
           <View style={styles.infoStyle}>
             <Text style={styles.titleStyle}>{pets.name}</Text>
-            <Text style={styles.categoryStyle}>Species: {pets.species}</Text>
+            <Text style={styles.categoryStyle}>Species: {pets.breed}</Text>
             <Text style={styles.categoryStyle}>Age: {pets.age}</Text>
             <TouchableOpacity>
               <Text>Edit Pet</Text>
