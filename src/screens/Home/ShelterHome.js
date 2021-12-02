@@ -49,7 +49,7 @@ export default function ShelterHome({ navigation }) {
         {/* {change screen name place holder} */}
         <Text
           style={styles.buttonTitle}
-          oPress={navigation.navigate("ScreenNameHere")}
+          // oPress={navigation.navigate("ScreenNameHere")}
         >
           Add a Pet
         </Text>

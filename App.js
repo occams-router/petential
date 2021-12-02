@@ -143,7 +143,7 @@ export default function App() {
         <PaperProvider>
           <Stack.Navigator
             screenOptions={{
-              headerShown: true,
+              headerShown: false,
               headerStyle: {
                 backgroundColor: '#218d8f',
                 // height: 50,
