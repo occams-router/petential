@@ -149,6 +149,35 @@ export default function AdopterPetCard(props) {
     }
 
     // if right swipe, add pet to its shelter's 'requests' subcollection
+    if (direction === "right") {
+      const requestsSubRef = collection(
+        db,
+        "shelters",
+        `${pet.shelterRefId}`,
+        "requests"
+      );
+
+      const requestData = {
+        petName: pet.name,
+        petDocRef: pet.id,
+        petImage: pet.imageUrl,
+        petSpecies: pet.species,
+        petBreed: pet.breed,
+        userName: user.name,
+        userCity: user.city,
+        userState: user.state,
+        userEmail: user.email,
+        userPhone: user.phone,
+        userImage: user.imageUrl,
+        userLifestyle: user.lifestyle,
+        userHousing: user.housing,
+        userPetHistory: user.petHistory,
+        userDescription: user.description,
+        userDocRef: user.id,
+      };
+
+      await addDoc(requestsSubRef, requestData);
+    }
 
     setPetsList(petsList.slice(1));
     setLastDirection(direction);
@@ -189,7 +218,7 @@ export default function AdopterPetCard(props) {
 
                   <Card.Content>
                     <Title>
-                      {pet.name} ({pet.age} {pet.age > 0 ? "years" : "year"}{" "}
+                      {pet.name} ({pet.age} {pet.age > 1 ? "years" : "year"}{" "}
                       old)
                     </Title>
                     <Divider />
