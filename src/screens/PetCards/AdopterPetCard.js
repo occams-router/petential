@@ -160,6 +160,7 @@ export default function AdopterPetCard(props) {
               key={pet.id}
               onSwipe={(dir) => swiped(dir, pet.name)}
               onCardLeftScreen={() => outOfFrame(pet.name)}
+              preventSwipe={["up", "down"]}
             >
               <Card>
                 <Card.Cover source={{ uri: pet.imageUrl }}></Card.Cover>
