@@ -135,6 +135,7 @@ export default function AdopterPetCard(props) {
         userPetHistory: user.petHistory,
         userDescription: user.description,
         userDocRef: user.id,
+        shelterRefId: pet.shelterRefId,
         status: "pending",
       };
 
