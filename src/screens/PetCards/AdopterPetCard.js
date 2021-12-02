@@ -4,6 +4,7 @@ import styled from "styled-components/native";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import TinderCard from "../../react-tinder-card/reactTinderCard";
+import { Card, Title, Paragraph, Button } from "react-native-paper";
 
 const Container = styled.View`
   display: flex;
@@ -14,8 +15,7 @@ const Container = styled.View`
 
 const Header = styled.Text`
   color: #000;
-  font-size: 30px;
-  margin-bottom: 30px;
+  font-size: 26px;
 `;
 
 const CardContainer = styled.View`
@@ -24,7 +24,7 @@ const CardContainer = styled.View`
   height: auto;
 `;
 
-const Card = styled.View`
+const xCard = styled.View`
   position: relative;
   background-color: #fff;
   width: 100%;
@@ -56,6 +56,20 @@ const InfoText = styled.Text`
   justify-content: center;
   display: flex;
   z-index: -100;
+`;
+
+const ProfileInfo = styled.View`
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 20px;
+`;
+
+const NameAndAge = styled.Text`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const pets = [
@@ -128,9 +142,11 @@ export default function AdopterPetCard(props) {
     }));
 
     setPetsList(petsData);
-
-    console.log("pets list:", petsList);
   }, []);
+
+  const onButtonPress = (choice) => {
+    alert(`You choose to ${choice}.`);
+  };
 
   return (
     <Container>
@@ -143,13 +159,26 @@ export default function AdopterPetCard(props) {
               onCardLeftScreen={() => outOfFrame(pet.name)}
             >
               <Card>
-                <CardImage source={{ uri: pet.imageUrl }}>
-                  {/* <CardTitle>{pet.name}</CardTitle> */}
-                </CardImage>
+                <Card.Cover source={{ uri: pet.imageUrl }}></Card.Cover>
+
+                <Card.Content>
+                  <Title>
+                    {pet.name} ({pet.age} {pet.age > 0 ? "years" : "year"} old)
+                  </Title>
+                  <Paragraph>{pet.description}</Paragraph>
+                </Card.Content>
+
+                <Card.Actions>
+                  <Button icon="thumb-down-outline">Pass</Button>
+                  <Button
+                    icon="heart"
+                    onPress={() => console.log("You choose to pass.")}
+                  >
+                    Like
+                  </Button>
+                </Card.Actions>
               </Card>
             </TinderCard>
-            <Header>{pet.name}</Header>
-            <InfoText>{pet.description}</InfoText>
           </>
         ))(petsList[0])}
       </CardContainer>
@@ -163,34 +192,38 @@ export default function AdopterPetCard(props) {
 }
 
 /*
-export default function AdopterPetCard(props) {
-  const [lastDirection, setLastDirection] = useState();
 
-  const swiped = (direction, nameToDelete) => {
-    console.log("removing: ", nameToDelete);
-    setLastDirection(direction);
-  };
+<Container>
+      <CardContainer>
+        {((pet) => (
+          <>
+            <TinderCard
+              key={pet.name}
+              onSwipe={(dir) => swiped(dir, pet.name)}
+              onCardLeftScreen={() => outOfFrame(pet.name)}
+            >
+              <Card>
+                <CardImage source={{ uri: pet.imageUrl }}></CardImage>
+              </Card>
+            </TinderCard>
 
-  const outOfFrame = (name) => {
-    console.log(name, " left the screen!");
-  };
+            <ProfileInfo>
+              <Header>{pet.name}</Header>
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.header}>Pet Card</Text>
-      {pets.map((pet) => (
-        <TinderCard
-          key={pet.name}
-          onSwipe={(dir) => swiped(dir, pet.name)}
-          oncardLeftScreen={() => outOfFrame(pet.name)}
-        >
-          <View style={styles.card}>
-            <Image style={styles.cardImage} source={pet.imageUrl} />
-            <Text style={styles.cardTitle}>{pet.name}</Text>
-          </View>
-        </TinderCard>
-      ))}
-    </SafeAreaView>
-  );
-}
+              <Header>
+                {pet.age} {pet.age > 1 ? "years old" : "year old"}
+              </Header>
+
+              <InfoText>{pet.description}</InfoText>
+            </ProfileInfo>
+          </>
+        ))(petsList[0])}
+      </CardContainer>
+      {lastDirection ? (
+        <InfoText>You swiped {lastDirection}</InfoText>
+      ) : (
+        <InfoText />
+      )}
+    </Container>
+
 */
