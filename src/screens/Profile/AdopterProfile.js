@@ -12,6 +12,7 @@ import { doc, updateDoc } from 'firebase/firestore';
 import styles from './styles';
 import { UserContext } from '../../../App';
 import { useEffect } from 'react/cjs/react.development';
+import GlobalStyles from '../../../GlobalStyles';
 
 export default function AdopterProfile() {
   const user = useContext(UserContext);
@@ -58,7 +59,7 @@ setLoading(false)
 <Text>Loading...</Text>
 </SafeAreaView>
       ) :
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={GlobalStyles.droidSafeArea}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always"

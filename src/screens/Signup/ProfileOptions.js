@@ -7,10 +7,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import styles from "./styles";
+import GlobalStyles from "../../../GlobalStyles";
 
 const ProfileOptions = ({ navigation }) => {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={GlobalStyles.droidSafeArea}>
       <View>
         <Text style={styles.title}>Are you a shelter or an adopter?</Text>
       </View>

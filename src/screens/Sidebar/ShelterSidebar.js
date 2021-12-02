@@ -2,11 +2,14 @@ import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { ShelterHome, ShelterProfile, Header } from '../index.js';
+import GlobalStyles from '../../../GlobalStyles.js';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Drawer = createDrawerNavigator();
 
 export default function ShelterSidebar() {
   return (
+    <SafeAreaView style={GlobalStyles.droidSafeArea}>
     <Drawer.Navigator
       drawerType="front"
       initialRouteName="Home"
@@ -34,5 +37,6 @@ export default function ShelterSidebar() {
         options={{ headerShown: true, header: <Header /> }}
       /> */}
     </Drawer.Navigator>
+    </SafeAreaView>
   );
 }

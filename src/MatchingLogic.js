@@ -22,9 +22,9 @@ acceptOnPress = async () => {
       //should matches and requests contain additional info if they already have a referenceId
 //matches page will contain petName and image
 //set 
-const matchDoc = setDoc(db, "shelters", shelter.id, "matches");
+const matchDoc = addDoc(db, "shelters", shelter.id, "matches");
 const matchRef = doc(db, "matches", docRef.id);
-await updateDoc(adopterRef, { id: adopterRef.id });
+await updateDoc(matchRef, { id: matchRef.id });
 //repeat process above for adopter
 
 //once that match doc is created shelter will get a popup/modal asking if they want to send a message

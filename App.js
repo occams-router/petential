@@ -1,4 +1,5 @@
 import 'react-native-gesture-handler';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import React, { createContext, useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -32,7 +33,7 @@ if (!global.btoa) {
 if (!global.atob) {
   global.atob = decode;
 }
-import { Text, SafeAreaView, View, Image } from 'react-native';
+import { Text, View, Image } from 'react-native';
 const Stack = createStackNavigator();
 
 let UserContext;
@@ -104,7 +105,7 @@ export default function App() {
             />
           </>
         ) : (
-          (screen = <Stack.Screen name="Loading" component={Loading} />)
+          (screen = <Stack.Screen name="Loading" component={Loading} options={{ title: '' }}/>)
         );
     } else if (user === null) {
       screen = (
@@ -132,10 +133,11 @@ export default function App() {
         </>
       );
     } else {
-      screen = <Stack.Screen name="Loading" component={Loading} />;
+      screen = <Stack.Screen name="Loading" component={Loading} options={{ title: '' }}/>;
     }
   }
   return (
+    <SafeAreaProvider>
     <NavigationContainer>
       <UserContext.Provider value={specificUser}>
         <PaperProvider>
@@ -153,6 +155,7 @@ export default function App() {
         </PaperProvider>
       </UserContext.Provider>
     </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
 

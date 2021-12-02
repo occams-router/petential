@@ -2,11 +2,14 @@ import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { AdopterHome, AdopterProfile, Header } from '../index.js';
+import { SafeAreaView } from 'react-native';
+import GlobalStyles from '../../../GlobalStyles.js';
 
 const Drawer = createDrawerNavigator();
 
 export default function AdopterSidebar() {
   return (
+    <SafeAreaView style={GlobalStyles.droidSafeArea}>
     <Drawer.Navigator
       drawerType="front"
       initialRouteName="Home"
@@ -30,5 +33,6 @@ export default function AdopterSidebar() {
         options={{ headerShown: true, header: <Header /> }}
       /> */}
     </Drawer.Navigator>
+    </SafeAreaView>
   );
 }
