@@ -59,7 +59,7 @@ export default function ShelterSignup({ navigation }) {
         type: "shelter",
       });
       data["id"] = docRef.id;
-      navigation.navigate("ShelterProfile", { user: data });
+      navigation.navigate("ShelterSidebar");
     } catch (error) {
       console.log(error);
     }
