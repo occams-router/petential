@@ -11,7 +11,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import styles from './styles';
 import { auth, db } from '../../firebase/config';
 import { signInWithEmailAndPassword } from '@firebase/auth';
-import { collection, getDocs, doc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState('');

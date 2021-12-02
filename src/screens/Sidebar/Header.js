@@ -1,8 +1,10 @@
-import React from "react";
-import { signOut } from "firebase/auth";
-import { auth } from "../../firebase/config";
-import { SafeAreaView, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+
+import React from 'react';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase/config';
+import { SafeAreaView, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 
 export default function Header() {
   const navigation = useNavigation();
