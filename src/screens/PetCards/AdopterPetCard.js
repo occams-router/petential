@@ -123,7 +123,6 @@ const pets = [
 export default function AdopterPetCard(props) {
   const [lastDirection, setLastDirection] = useState();
   const [petsList, setPetsList] = useState(pets);
-  const [currentPet, setCurrentPet] = useState();
   const user = useContext(UserContext);
 
   const petsCollectionRef = collection(db, "pets");
@@ -131,10 +130,8 @@ export default function AdopterPetCard(props) {
   const swiped = async (direction, pet) => {
     console.log("removing:", pet.name);
 
-    const petDocRef = doc(db, "pets", pet.id);
-    const petData = await getDoc(petDocRef);
-
     // add pet to current user's 'seen' subcollection
+    await addDoc(collection(db, "adopters", `${user.id}`, "seen"), pet);
 
     // if right swipe, add pet to its shelter's 'requests' subcollection
 
