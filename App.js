@@ -9,18 +9,11 @@ import {
   ShelterSidebar,
   AdopterSidebar,
   Login,
-<<<<<<< HEAD
-} from "./src/screens";
-import { decode, encode } from "base-64";
-import { auth, db } from "./src/firebase/config";
-import { onAuthStateChanged } from "@firebase/auth";
-=======
   Loading,
 } from './src/screens';
 import { decode, encode } from 'base-64';
 import { auth, db } from './src/firebase/config';
 import { onAuthStateChanged } from '@firebase/auth';
->>>>>>> main
 import {
   collection,
   getDocs,
@@ -31,11 +24,9 @@ import {
   doc,
   getDoc,
 } from "@firebase/firestore";
-<<<<<<< HEAD
-=======
 import { Provider as PaperProvider } from "react-native-paper";
 
->>>>>>> main
+
 if (!global.btoa) {
   global.btoa = encode;
 }
@@ -87,12 +78,6 @@ export default function App() {
   // console.log('userType:', userType);
   // console.log('specific user:', specificUser);
 
-<<<<<<< HEAD
-  // console.log('user:', user);
-  // console.log('userType:', userType);
-  // console.log('specific user:', specificUser);
-=======
->>>>>>> main
 
   UserContext = createContext(specificUser);
 
@@ -107,19 +92,11 @@ export default function App() {
   } else{
   if (user) {
     screen =
-<<<<<<< HEAD
-      userType === "shelter" && specificUser !== {} ? (
-=======
       userType === 'shelter' && specificUser !== {} && loading === false ? (
->>>>>>> main
         <>
           <Stack.Screen name="ShelterSidebar" component={ShelterSidebar} />
         </>
-<<<<<<< HEAD
-      ) : userType === "adopter" && specificUser !== {} ? (
-=======
       ) : userType === 'adopter' && specificUser !== {} && loading === false ? (
->>>>>>> main
         <>
           <Stack.Screen name="AdopterSidebar" component={AdopterSidebar} />
         </>
