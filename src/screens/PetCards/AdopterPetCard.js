@@ -41,56 +41,9 @@ const InfoText = styled.Text`
   z-index: -100;
 `;
 
-const pets = [
-  {
-    name: "Kitty",
-    age: 1,
-    city: "New York",
-    description: "A beautiful fluffy kitten!",
-    imageUrl:
-      "https://www.masterpieceragdolls.com/wp-content/uploads/2021/02/Chocolate-sepia-scaled.jpg",
-    shelterName: "New York Animal Shelter",
-    species: "cat",
-    breed: "ragdoll",
-  },
-  {
-    name: "Carrot",
-    age: 1,
-    city: "New York",
-    description: "A frisky little kitten!",
-    imageUrl:
-      "https://imgc.artprintimages.com/img/print/domestic-cat-6-week-tabby-chinchilla-crossed-with-british-shorthair-kitten_u-l-q10o13r0.jpg?artPerspective=n",
-    shelterName: "New York Animal Shelter",
-    species: "cat",
-    breed: "tabby",
-  },
-  {
-    name: "Gloria",
-    age: 1,
-    city: "New York",
-    description: "A shy and curious kitten!",
-    imageUrl:
-      "http://knowledgebase.lookseek.com/images/animals/cats/Scottish-Fold.jpg",
-    shelterName: "New York Animal Shelter",
-    species: "cat",
-    breed: "Scottish fold",
-  },
-  {
-    name: "Einstein",
-    age: 1,
-    city: "New York",
-    description: "A smart and hyper kitten!",
-    imageUrl:
-      "https://excitedcats.com/wp-content/uploads/2021/10/siamese-kitten_Esin-Deniz-Shutterstock.jpg",
-    shelterName: "New York Animal Shelter",
-    species: "cat",
-    breed: "Siamese",
-  },
-];
-
 export default function AdopterPetCard(props) {
   const [lastDirection, setLastDirection] = useState();
-  const [petsList, setPetsList] = useState(pets);
+  const [petsList, setPetsList] = useState([]);
   const user = useContext(UserContext);
 
   const petsCollectionRef = collection(db, "pets");
@@ -119,21 +72,7 @@ export default function AdopterPetCard(props) {
       );
 
       const requestData = {
-        petName: pet.name,
         petDocRef: pet.id,
-        petImage: pet.imageUrl,
-        petSpecies: pet.species,
-        petBreed: pet.breed,
-        userName: user.name,
-        userCity: user.city,
-        userState: user.state,
-        userEmail: user.email,
-        userPhone: user.phone,
-        userImage: user.imageUrl,
-        userLifestyle: user.lifestyle,
-        userHousing: user.housing,
-        userPetHistory: user.petHistory,
-        userDescription: user.description,
         userDocRef: user.id,
         shelterRefId: pet.shelterRefId,
         status: "pending",
