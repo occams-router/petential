@@ -6,12 +6,11 @@ import { signOut } from "@firebase/auth";
 import { collection, getDocs } from "firebase/firestore";
 import PetCard from "../PetCards/ShelterPetCard";
 import { UserContext } from "../../../App";
+import { NavigationActions } from "react-navigation";
 
-export default function ShelterHome() {
+export default function ShelterHome({ navigation }) {
   const shelter = useContext(UserContext);
-  console.log(shelter, "i am shelter");
   const [petData, setPetData] = useState([]);
-  console.log("I am pet data", petData);
   const logout = async () => {
     try {
       await signOut(auth);
@@ -46,8 +45,13 @@ export default function ShelterHome() {
     <SafeAreaView>
       <Text style={styles.title}>Current Pets</Text>
       <TouchableOpacity style={styles.button}>
-        {/* add onPress to link to add pet form screen */}
-        <Text style={styles.buttonTitle}>Add a Pet</Text>
+        {/* {change screen name place holder} */}
+        <Text
+          style={styles.buttonTitle}
+          oPress={navigation.navigate("ScreenNameHere")}
+        >
+          Add a Pet
+        </Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={() => logout()}>
