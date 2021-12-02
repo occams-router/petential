@@ -1,7 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Text, SafeAreaView, View, Image } from "react-native";
 import styled from "styled-components/native";
-import { collection, doc, getDoc, getDocs, addDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  addDoc,
+  where,
+} from "firebase/firestore";
 import { db } from "../../firebase/config";
 import TinderCard from "../../react-tinder-card/reactTinderCard";
 import { Card, Title, Paragraph, Button } from "react-native-paper";
@@ -130,8 +137,16 @@ export default function AdopterPetCard(props) {
   const swiped = async (direction, pet) => {
     console.log("removing:", pet.name);
 
-    // add pet to current user's 'seen' subcollection
-    await addDoc(collection(db, "adopters", `${user.id}`, "seen"), pet);
+    // check if the pet already exists in the user's 'seen' subcollection
+    const seenSubRef = collection(db, "adopters", `${user.id}`, "seen");
+    const seenPetsDocs = await getDocs(seenSubRef);
+    const seenPetsArr = seenPetsDocs.docs.map((doc) => ({ ...doc.data() }));
+    const petExists = seenPetsArr.find((element) => element.id === pet.id);
+
+    if (!petExists) {
+      // add pet to current user's 'seen' subcollection
+      await addDoc(seenSubRef, pet);
+    }
 
     // if right swipe, add pet to its shelter's 'requests' subcollection
 
