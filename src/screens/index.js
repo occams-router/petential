@@ -29,3 +29,5 @@ export { default as AdopterMatches } from "./Matches/AdopterMatches";
 export { default as ShelterRequests } from './Matches/ShelterRequests';
 
 export { default as ShelterMatches } from './Matches/ShelterMatches';
+
+export { default as AdopterChat } from './Chat/AdopterChat';

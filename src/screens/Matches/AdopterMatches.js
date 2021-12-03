@@ -29,6 +29,10 @@ export default function AdopterMatches() {
 
   return (
     <SafeAreaView>
+      <KeyboardAwareScrollView
+        style={{ flex: 1, width: "100%" }}
+        keyboardShouldPersistTaps="always"
+      >
       <Text style={styles.title}></Text>
         <Text style={styles.title}>Your Matches</Text>
       {matches.length === 0 ? (
@@ -42,6 +46,7 @@ export default function AdopterMatches() {
         <Text style={styles.title}></Text>
         </>
       )}
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 }

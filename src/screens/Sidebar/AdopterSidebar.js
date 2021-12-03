@@ -1,7 +1,7 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-import { AdopterHome, AdopterProfile, Header, AdopterMatches} from '../index.js';
+import { AdopterHome, AdopterProfile, Header, AdopterMatches, AdopterChat} from '../index.js';
 import { SafeAreaView} from 'react-native';
 import GlobalStyles from '../../../GlobalStyles.js';
 
@@ -46,6 +46,12 @@ export default function AdopterSidebar() {
         style={{position: 'absolute'}}
         options={{ headerShown: true, headerMode: 'screen', header: () => <Header style={{position: 'absolute'}}/> }}
         component={AdopterMatches}
+      />
+      <Drawer.Screen
+        name="Chat"
+        style={{position: 'absolute'}}
+        options={{ headerShown: true, headerMode: 'screen', header: () => <Header style={{position: 'absolute'}}/> }}
+        component={AdopterChat}
       />
     </Drawer.Navigator>
     </SafeAreaView>
