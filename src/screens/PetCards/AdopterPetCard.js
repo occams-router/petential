@@ -1,10 +1,24 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Text, SafeAreaView, View, Image } from "react-native";
 import styled from "styled-components/native";
-import { collection, doc, getDoc, getDocs, addDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  addDoc,
+  where,
+} from "firebase/firestore";
 import { db } from "../../firebase/config";
 import TinderCard from "../../react-tinder-card/reactTinderCard";
-import { Card, Title, Paragraph, Button } from "react-native-paper";
+import {
+  Card,
+  Title,
+  Paragraph,
+  Button,
+  Divider,
+  Subheading,
+} from "react-native-paper";
 import { UserContext } from "../../../App";
 
 const Container = styled.View`
@@ -14,42 +28,10 @@ const Container = styled.View`
   width: 100%;
 `;
 
-const Header = styled.Text`
-  color: #000;
-  font-size: 26px;
-`;
-
 const CardContainer = styled.View`
   width: 90%;
   max-width: 260px;
   height: auto;
-`;
-
-const xCard = styled.View`
-  position: relative;
-  background-color: #fff;
-  width: 100%;
-  max-width: 260px;
-  height: 300px;
-  shadow-color: black;
-  shadow-opacity: 0.2;
-  shadow-radius: 20px;
-  border-radius: 20px;
-  resize-mode: cover;
-`;
-
-const CardImage = styled.ImageBackground`
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  border-radius: 20px;
-`;
-
-const CardTitle = styled.Text`
-  position: absolute;
-  bottom: 0;
-  margin: 10px;
-  color: #fff;
 `;
 
 const InfoText = styled.Text`
@@ -59,71 +41,9 @@ const InfoText = styled.Text`
   z-index: -100;
 `;
 
-const ProfileInfo = styled.View`
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  background-color: #fff;
-  border-radius: 20px;
-`;
-
-const NameAndAge = styled.Text`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const pets = [
-  {
-    name: "Kitty",
-    age: 1,
-    city: "New York",
-    description: "A beautiful fluffy kitten!",
-    imageUrl:
-      "https://www.masterpieceragdolls.com/wp-content/uploads/2021/02/Chocolate-sepia-scaled.jpg",
-    shelterName: "New York Animal Shelter",
-    species: "cat",
-    breed: "ragdoll",
-  },
-  {
-    name: "Carrot",
-    age: 1,
-    city: "New York",
-    description: "A frisky little kitten!",
-    imageUrl:
-      "https://imgc.artprintimages.com/img/print/domestic-cat-6-week-tabby-chinchilla-crossed-with-british-shorthair-kitten_u-l-q10o13r0.jpg?artPerspective=n",
-    shelterName: "New York Animal Shelter",
-    species: "cat",
-    breed: "tabby",
-  },
-  {
-    name: "Gloria",
-    age: 1,
-    city: "New York",
-    description: "A shy and curious kitten!",
-    imageUrl:
-      "http://knowledgebase.lookseek.com/images/animals/cats/Scottish-Fold.jpg",
-    shelterName: "New York Animal Shelter",
-    species: "cat",
-    breed: "Scottish fold",
-  },
-  {
-    name: "Einstein",
-    age: 1,
-    city: "New York",
-    description: "A smart and hyper kitten!",
-    imageUrl:
-      "https://excitedcats.com/wp-content/uploads/2021/10/siamese-kitten_Esin-Deniz-Shutterstock.jpg",
-    shelterName: "New York Animal Shelter",
-    species: "cat",
-    breed: "Siamese",
-  },
-];
-
 export default function AdopterPetCard(props) {
   const [lastDirection, setLastDirection] = useState();
-  const [petsList, setPetsList] = useState(pets);
-  const [currentPet, setCurrentPet] = useState();
+  const [petsList, setPetsList] = useState([]);
   const user = useContext(UserContext);
 
   const petsCollectionRef = collection(db, "pets");
@@ -131,12 +51,35 @@ export default function AdopterPetCard(props) {
   const swiped = async (direction, pet) => {
     console.log("removing:", pet.name);
 
-    const petDocRef = doc(db, "pets", pet.id);
-    const petData = await getDoc(petDocRef);
+    // check if the pet already exists in the user's 'seen' subcollection
+    const seenSubRef = collection(db, "adopters", `${user.id}`, "seen");
+    const seenPetsDocs = await getDocs(seenSubRef);
+    const seenPetsArr = seenPetsDocs.docs.map((doc) => ({ ...doc.data() }));
+    const petExists = seenPetsArr.find((element) => element.id === pet.id);
 
-    // add pet to current user's 'seen' subcollection
+    if (!petExists) {
+      // add pet to current user's 'seen' subcollection
+      await addDoc(seenSubRef, pet);
+    }
 
     // if right swipe, add pet to its shelter's 'requests' subcollection
+    if (direction === "right") {
+      const requestsSubRef = collection(
+        db,
+        "shelters",
+        `${pet.shelterRefId}`,
+        "requests"
+      );
+
+      const requestData = {
+        petDocRef: pet.id,
+        userDocRef: user.id,
+        shelterRefId: pet.shelterRefId,
+        status: "pending",
+      };
+
+      await addDoc(requestsSubRef, requestData);
+    }
 
     setPetsList(petsList.slice(1));
     setLastDirection(direction);
@@ -177,10 +120,21 @@ export default function AdopterPetCard(props) {
 
                   <Card.Content>
                     <Title>
-                      {pet.name} ({pet.age} {pet.age > 0 ? "years" : "year"}{" "}
+                      {pet.name} ({pet.age} {pet.age > 1 ? "years" : "year"}{" "}
                       old)
                     </Title>
-                    <Paragraph>{pet.description}</Paragraph>
+                    <Divider />
+                    <Title>{pet.shelterName}</Title>
+                    <Divider />
+                    <Paragraph>
+                      Location: {pet.city}, {pet.state}
+                    </Paragraph>
+                    <Divider />
+                    <Paragraph>Species: {pet.species}</Paragraph>
+                    <Divider />
+                    <Paragraph>Breed: {pet.breed}</Paragraph>
+                    <Divider />
+                    <Paragraph>About: {pet.description}</Paragraph>
                   </Card.Content>
 
                   <Card.Actions>
