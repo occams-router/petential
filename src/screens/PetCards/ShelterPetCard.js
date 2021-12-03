@@ -8,11 +8,12 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from "react-native";
-d;
+
 import { Card, Title, Button } from "react-native-paper";
 import { CardContainer, Container } from "./cardstyles";
 
-export default function PetCard({ pets, navigation }) {
+export default function PetCard({ pets }) {
+  const { navigate } = props;
   return (
     <Container>
       <CardContainer>
@@ -22,7 +23,11 @@ export default function PetCard({ pets, navigation }) {
           <Text>Breed: {pets.breed}</Text>
           <Text>Age: {pets.age}</Text>
           <Card.Actions>
-            <Button mode="contained" style={{ backgroundColor: "#788eec" }}>
+            <Button
+              mode="contained"
+              style={{ backgroundColor: "#788eec" }}
+              onPress={navigate("PetProfile", { pet: pets })}
+            >
               Edit Pet
             </Button>
           </Card.Actions>
