@@ -32,16 +32,17 @@ export default function Header() {
 const headerStyles = StyleSheet.create({
   container: {
     position: 'absolute',
-    top: 25,
-    // left: 0,
+    top: 0,
+    left: 0,
+    right: 0,
     width: '100%',
     backgroundColor: '#56d9db',
     // elevation: 5,
     height: 50,
     display: 'flex',
     flexDirection: 'row',
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
   },
 });

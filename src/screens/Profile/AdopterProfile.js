@@ -64,8 +64,8 @@ setLoading(false)
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always"
       >
-        <Text style={styles.title}>Welcome, {user.name}!</Text>
-        <Text style={styles.title}> Your Profile</Text>
+        <Text style={styles.title}></Text>
+        <Text style={styles.title}> Welcome, {user.name}!</Text>
         <TextInput
           style={styles.input}
           label="Name"
