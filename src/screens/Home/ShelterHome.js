@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Text, TouchableOpacity, SafeAreaView, FlatList } from 'react-native';
-import { db } from '../../firebase/config';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Text, TouchableOpacity, FlatList } from 'react-native';
+import { NavigationActions } from 'react-navigation';
 import styles from './styles';
+import GlobalStyles from '../../../GlobalStyles';
+import { db } from '../../firebase/config';
 import { collection, getDocs } from 'firebase/firestore';
 import PetCard from '../PetCards/ShelterPetCard';
 import { UserContext } from '../../../App';
-import { NavigationActions } from 'react-navigation';
-import GlobalStyles from '../../../GlobalStyles';
 
 export default function ShelterHome({ navigation }) {
   const shelter = useContext(UserContext);
@@ -39,7 +40,7 @@ export default function ShelterHome({ navigation }) {
         {/* {change screen name place holder} */}
         <Text
           style={styles.buttonTitle}
-          // oPress={navigation.navigate("ScreenNameHere")}
+          // onPress={navigation.navigate("ScreenNameHere")}
         >
           Add a Pet
         </Text>

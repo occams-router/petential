@@ -1,17 +1,12 @@
 import React, { useState, useContext } from 'react';
-import {
-  Image,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  SafeAreaView,
-} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Image, Text, TextInput, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
+import GlobalStyles from '../../../GlobalStyles';
 import { db } from '../../firebase/config';
 import { doc, updateDoc } from 'firebase/firestore';
 import { UserContext } from '../../../App';
-import GlobalStyles from '../../../GlobalStyles';
 
 export default function ShelterProfile() {
   const shelter = useContext(UserContext);
