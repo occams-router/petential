@@ -28,6 +28,7 @@ import {
   Subheading,
 } from "react-native-paper";
 import ShelterRequestCard from "./ShelterRequestCard";
+import GlobalStyles from "../../../GlobalStyles";
 
 export default function ShelterRequests() {
   const shelter = useContext(UserContext);
@@ -104,7 +105,7 @@ export default function ShelterRequests() {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={GlobalStyles.droidSafeArea}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"

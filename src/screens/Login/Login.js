@@ -1,18 +1,12 @@
 import React, { useState } from 'react';
-import {
-  Image,
-  SafeAreaView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
+import GlobalStyles from '../../../GlobalStyles';
 import { auth, db } from '../../firebase/config';
 import { signInWithEmailAndPassword } from '@firebase/auth';
 import { collection, getDocs } from 'firebase/firestore';
-import GlobalStyles from '../../../GlobalStyles';
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
