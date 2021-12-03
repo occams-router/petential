@@ -4,8 +4,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import {
   ShelterHome,
   ShelterProfile,
-  Header,
   ShelterRequests,
+  ShelterMatches,
+  Header,
 } from "../index.js";
 import GlobalStyles from "../../../GlobalStyles.js";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -38,15 +39,11 @@ export default function ShelterSidebar() {
           options={{ headerShown: true, header: () => <Header /> }}
           component={ShelterRequests}
         />
-
-        {/* <Drawer.Screen
-        name="Requests"
-        options={{ headerShown: true, header: <Header /> }}
-      />
-      {<Drawer.Screen
-        name="Matches"
-        options={{ headerShown: true, header: <Header /> }}
-      /> */}
+        <Drawer.Screen
+          name="Matches"
+          options={{ headerShown: true, header: () => <Header /> }}
+          component={ShelterMatches}
+        />
       </Drawer.Navigator>
     </SafeAreaView>
   );
