@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   SafeAreaView,
+  FlatList,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
@@ -26,6 +27,7 @@ import {
   Divider,
   Subheading,
 } from "react-native-paper";
+import ShelterRequestCard from "./ShelterRequestCard";
 
 export default function ShelterRequests() {
   const shelter = useContext(UserContext);
@@ -92,16 +94,14 @@ export default function ShelterRequests() {
     // resolve promises returned from mapping over requestsData
     const results = await Promise.all(data);
 
-    // set results in local state
-    setAdoptersAndPets(results);
-  }, []);
+    // filter out requests which have already been reviewed
+    const pendingRequests = results.filter(
+      (request) => request.status === "pending"
+    );
 
-  const onButtonPress = (choice) => {
-    if (choice === "accept") {
-      console.log("accepted!");
-      // update status in requests subcollection
-    }
-  };
+    // set results in local state
+    setAdoptersAndPets(pendingRequests);
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -110,36 +110,11 @@ export default function ShelterRequests() {
         keyboardShouldPersistTaps="always"
       >
         <Text style={styles.title}>Requests for {nameOfShelter}</Text>
-        <View style={styles.requestContainer}>
-          {adoptersAndPets.map((request) => (
-            <View style={styles.requestCardContainer}>
-              <Card key={request.requestId}>
-                <Card.Cover source={{ uri: request.userImageUrl }} />
-                <Card.Content>
-                  <Text>Name: {request.userName}</Text>
-                  <Divider />
-                  <Text>
-                    Pet: {request.petName} the {request.petSpecies}
-                  </Text>
-                </Card.Content>
-                <Card.Actions style={styles.requestButtonContainer}>
-                  <Button
-                    icon="check-circle"
-                    onPress={() => onButtonPress("accept")}
-                  >
-                    Accept
-                  </Button>
-                  <Button
-                    icon="block-helper"
-                    onPress={() => onButtonPress("reject")}
-                  >
-                    Reject
-                  </Button>
-                </Card.Actions>
-              </Card>
-            </View>
-          ))}
-        </View>
+
+        <FlatList
+          data={adoptersAndPets}
+          renderItem={({ item }) => <ShelterRequestCard request={item} />}
+        />
       </KeyboardAwareScrollView>
     </SafeAreaView>
   );
