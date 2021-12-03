@@ -7,14 +7,17 @@ import {
   TouchableOpacity,
 } from "react-native";
 import styles from "./styles";
+import GlobalStyles from "../../../GlobalStyles";
 
 const ProfileOptions = ({ navigation }) => {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={GlobalStyles.droidSafeArea}>
       <View>
+      <Text style={styles.title}></Text>
         <Text style={styles.title}>Are you a shelter or an adopter?</Text>
       </View>
       <View>
+        <Text style={styles.title}></Text>
         <Image
           style={{ width: 100, height: 100, alignSelf: "center" }}
           source={{
@@ -28,6 +31,7 @@ const ProfileOptions = ({ navigation }) => {
         >
           <Text style={styles.buttonTitle}>I represent a shelter!</Text>
         </TouchableOpacity>
+        <Text style={styles.title}></Text>
         <Image
           style={{ height: 100, width: 100, alignSelf: "center" }}
           source={{

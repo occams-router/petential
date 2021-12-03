@@ -11,6 +11,7 @@ import styles from './styles';
 import { db } from '../../firebase/config';
 import { doc, updateDoc } from 'firebase/firestore';
 import { UserContext } from '../../../App';
+import GlobalStyles from '../../../GlobalStyles';
 
 export default function ShelterProfile() {
   const shelter = useContext(UserContext);
@@ -45,11 +46,12 @@ export default function ShelterProfile() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={GlobalStyles.droidSafeArea}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always"
       >
+        <Text style={styles.title}></Text>
         <Text style={styles.title}>Welcome, {shelter.name}!</Text>
         <Image style={styles.logo} source={imageUrl} />
         <TextInput

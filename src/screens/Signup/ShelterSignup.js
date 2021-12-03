@@ -11,6 +11,7 @@ import styles from "./styles";
 import { auth, db } from "../../firebase/config";
 import { createUserWithEmailAndPassword } from "@firebase/auth";
 import { collection, doc, addDoc, updateDoc } from "firebase/firestore";
+import GlobalStyles from "../../../GlobalStyles";
 
 export default function ShelterSignup({ navigation }) {
   const [nameOfShelter, setNameOfShelter] = useState("");
@@ -66,7 +67,7 @@ export default function ShelterSignup({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={GlobalStyles.droidSafeArea}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"
