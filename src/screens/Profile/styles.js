@@ -4,6 +4,8 @@ export default StyleSheet.create({
 	container: {
 		flex: 1,
 		alignItems: 'center',
+        padding: 25,
+        marginTop: 50,
 	},
 	title: {
 		alignSelf: 'center',

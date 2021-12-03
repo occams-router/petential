@@ -7,6 +7,7 @@ import { collection, getDocs } from "firebase/firestore";
 import PetCard from "../PetCards/ShelterPetCard";
 import { UserContext } from "../../../App";
 import { NavigationActions } from "react-navigation";
+import GlobalStyles from '../../../GlobalStyles';
 
 export default function ShelterHome({ navigation }) {
   const shelter = useContext(UserContext);
@@ -42,13 +43,14 @@ export default function ShelterHome({ navigation }) {
   }, []);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={GlobalStyles.droidSafeArea}>
+      <Text style={styles.title}></Text>
       <Text style={styles.title}>Current Pets</Text>
       <TouchableOpacity style={styles.button}>
         {/* {change screen name place holder} */}
         <Text
           style={styles.buttonTitle}
-          oPress={navigation.navigate("ScreenNameHere")}
+          // oPress={navigation.navigate("ScreenNameHere")}
         >
           Add a Pet
         </Text>

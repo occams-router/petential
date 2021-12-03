@@ -2,11 +2,24 @@ import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { AdopterHome, AdopterProfile, Header } from '../index.js';
+import { SafeAreaView} from 'react-native';
+import GlobalStyles from '../../../GlobalStyles.js';
+
 
 const Drawer = createDrawerNavigator();
 
 export default function AdopterSidebar() {
+  const logout = async () => {
+    try {
+      await signOut(auth);
+      alert('You are logged out.');
+    } catch (error) {
+      alert('Log-out was unsuccessful.');
+      console.log(error.message);
+    }
+  };
   return (
+    <SafeAreaView style={GlobalStyles.droidSafeArea}>
     <Drawer.Navigator
       drawerType="front"
       initialRouteName="Home"
@@ -17,12 +30,14 @@ export default function AdopterSidebar() {
     >
       <Drawer.Screen
         name="Home"
-        options={{ headerShown: true, header: () => <Header /> }}
+        style={{position: 'absolute'}}
+        options={{ headerShown: true, headerMode: 'screen', header: () => <Header style={{position: 'absolute'}}/> }}
         component={AdopterHome}
       />
       <Drawer.Screen
         name="Profile"
-        options={{ headerShown: true, header: () => <Header /> }}
+        style={{position: 'absolute'}}
+        options={{ headerShown: true, headerMode: 'screen', header: () => <Header style={{position: 'absolute'}}/> }}
         component={AdopterProfile}
       />
       {/* <Drawer.Screen
@@ -30,5 +45,6 @@ export default function AdopterSidebar() {
         options={{ headerShown: true, header: <Header /> }}
       /> */}
     </Drawer.Navigator>
+    </SafeAreaView>
   );
 }

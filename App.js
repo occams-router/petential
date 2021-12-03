@@ -1,7 +1,8 @@
-import "react-native-gesture-handler";
-import React, { createContext, useEffect, useState } from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import 'react-native-gesture-handler';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import React, { createContext, useEffect, useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
   ShelterSignup,
   AdopterSignup,
@@ -23,9 +24,8 @@ import {
   limit,
   doc,
   getDoc,
-} from "@firebase/firestore";
-import { Provider as PaperProvider } from "react-native-paper";
-
+} from '@firebase/firestore';
+import { Provider as PaperProvider } from 'react-native-paper';
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -33,7 +33,7 @@ if (!global.btoa) {
 if (!global.atob) {
   global.atob = decode;
 }
-import { Text, SafeAreaView, View, Image } from "react-native";
+import { Text, View, Image } from 'react-native';
 const Stack = createStackNavigator();
 
 let UserContext;
@@ -45,9 +45,9 @@ export default function App() {
   const [userType, setUserType] = useState(null);
 
   useEffect(async () => {
-    setLoading(true)
+    setLoading(true);
     let userData;
-    onSnapshot(collection(db, "users"), (snapshot) => {
+    onSnapshot(collection(db, 'users'), (snapshot) => {
       userData = snapshot.docs.map((doc) => doc.data());
       onAuthStateChanged(auth, async (currentUser) => {
         if (currentUser) {
@@ -72,70 +72,90 @@ export default function App() {
         }
       });
     });
-    setLoading(false)
+    setLoading(false);
   }, []);
   // console.log('user:', user);
   // console.log('userType:', userType);
   // console.log('specific user:', specificUser);
 
-
   UserContext = createContext(specificUser);
 
   let screen;
-  if(loading){
-    screen = (
-      <Stack.Screen
-        name="Loading"
-        component={Loading}
-      />
-    );
-  } else{
-  if (user) {
-    screen =
-      userType === 'shelter' && specificUser !== {} && loading === false ? (
-        <>
-          <Stack.Screen name="ShelterSidebar" component={ShelterSidebar} />
-        </>
-      ) : userType === 'adopter' && specificUser !== {} && loading === false ? (
-        <>
-          <Stack.Screen name="AdopterSidebar" component={AdopterSidebar} />
-        </>
-      ) : (
-        (screen = (
-          <Stack.Screen
-            name="Loading"
-            component={Loading}
-          />
-        ))
-      );
-  } else if (user === null) {
-    screen = (
-      <>
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="ProfileOptions" component={ProfileOptions} />
-        <Stack.Screen name="AdopterSignup" component={AdopterSignup} />
-        <Stack.Screen name="ShelterSignup" component={ShelterSignup} />
-      </>
-    );
+  if (loading) {
+    screen = <Stack.Screen name="Loading" component={Loading} />;
   } else {
-    screen = (
-      <Stack.Screen
-        name="Loading"
-        component={Loading}
-      />
-    );
+    if (user) {
+      screen =
+        userType === 'shelter' && specificUser !== {} && loading === false ? (
+          <>
+            <Stack.Screen
+              name="ShelterSidebar"
+              component={ShelterSidebar}
+              options={{ title: 'Petential' }}
+            />
+          </>
+        ) : userType === 'adopter' &&
+          specificUser !== {} &&
+          loading === false ? (
+          <>
+            <Stack.Screen
+              name="AdopterSidebar"
+              component={AdopterSidebar}
+              options={{ title: 'Petential' }}
+            />
+          </>
+        ) : (
+          (screen = <Stack.Screen name="Loading" component={Loading} options={{ title: '' }}/>)
+        );
+    } else if (user === null) {
+      screen = (
+        <>
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{ title: '' }}
+          />
+          <Stack.Screen
+            name="ProfileOptions"
+            component={ProfileOptions}
+            options={{ title: 'Petential' }}
+          />
+          <Stack.Screen
+            name="AdopterSignup"
+            component={AdopterSignup}
+            options={{ title: 'Petential' }}
+          />
+          <Stack.Screen
+            name="ShelterSignup"
+            component={ShelterSignup}
+            options={{ title: 'Petential' }}
+          />
+        </>
+      );
+    } else {
+      screen = <Stack.Screen name="Loading" component={Loading} options={{ title: '' }}/>;
+    }
   }
-}
   return (
+    <SafeAreaProvider>
     <NavigationContainer>
       <UserContext.Provider value={specificUser}>
-      <PaperProvider>
-        <Stack.Navigator screenOptions={{
-    headerShown: false
-  }}>{screen}</Stack.Navigator>
-    </PaperProvider>
+        <PaperProvider>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+              headerStyle: {
+                backgroundColor: '#218d8f',
+                // height: 50,
+              },
+            }}
+          >
+            {screen}
+          </Stack.Navigator>
+        </PaperProvider>
       </UserContext.Provider>
     </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
 

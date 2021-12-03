@@ -1,9 +1,11 @@
 import React from "react";
-import { Text, SafeAreaView, TouchableOpacity, View } from "react-native";
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { Text, TouchableOpacity, View } from "react-native";
 import { auth } from "../../firebase/config";
 import styles from "./styles";
 import AdopterPetCard from "../PetCards/AdopterPetCard";
 import { signOut } from "@firebase/auth";
+import GlobalStyles from "../../../GlobalStyles";
 
 export default function AdopterHome(props) {
   const logout = async () => {
@@ -16,7 +18,8 @@ export default function AdopterHome(props) {
     }
   };
   return (
-    <SafeAreaView>
+    <SafeAreaView style={GlobalStyles.droidSafeArea}>
+      <Text style={styles.title}></Text>
       <Text style={styles.title}>Adopter Feed</Text>
 
       <AdopterPetCard />
