@@ -1,9 +1,10 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-import { AdopterHome, AdopterProfile, Header } from '../index.js';
+import { AdopterHome, AdopterProfile, Header, AdopterMatches} from '../index.js';
 import { SafeAreaView} from 'react-native';
 import GlobalStyles from '../../../GlobalStyles.js';
+
 
 
 const Drawer = createDrawerNavigator();
@@ -40,10 +41,12 @@ export default function AdopterSidebar() {
         options={{ headerShown: true, headerMode: 'screen', header: () => <Header style={{position: 'absolute'}}/> }}
         component={AdopterProfile}
       />
-      {/* <Drawer.Screen
+      <Drawer.Screen
         name="Matches"
-        options={{ headerShown: true, header: <Header /> }}
-      /> */}
+        style={{position: 'absolute'}}
+        options={{ headerShown: true, headerMode: 'screen', header: () => <Header style={{position: 'absolute'}}/> }}
+        component={AdopterMatches}
+      />
     </Drawer.Navigator>
     </SafeAreaView>
   );

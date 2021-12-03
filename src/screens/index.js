@@ -24,6 +24,8 @@ export { default as ShelterSidebar } from './Sidebar/ShelterSidebar';
 
 export { default as Loading } from './Loading';
 
+export { default as AdopterMatches } from "./Matches/AdopterMatches";
+
 export { default as ShelterRequests } from './Matches/ShelterRequests';
 
 export { default as ShelterMatches } from './Matches/ShelterMatches';
