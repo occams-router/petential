@@ -7,7 +7,7 @@ import { collection, getDocs } from "firebase/firestore";
 import PetCard from "../PetCards/ShelterPetCard";
 import { UserContext } from "../../../App";
 import { NavigationActions } from "react-navigation";
-import GlobalStyles from '../../../GlobalStyles';
+import GlobalStyles from "../../../GlobalStyles";
 
 export default function ShelterHome({ navigation }) {
   const shelter = useContext(UserContext);
@@ -50,7 +50,7 @@ export default function ShelterHome({ navigation }) {
         {/* {change screen name place holder} */}
         <Text
           style={styles.buttonTitle}
-          // oPress={navigation.navigate("ScreenNameHere")}
+          onPress={navigation.navigate("PetProfile")}
         >
           Add a Pet
         </Text>
