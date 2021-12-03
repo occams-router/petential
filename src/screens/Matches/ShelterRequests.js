@@ -101,19 +101,13 @@ export default function ShelterRequests() {
         keyboardShouldPersistTaps="always"
       >
         <Text style={styles.title}>Requests for {nameOfShelter}</Text>
-
-        <View>
-          {requests.map((request) => (
-            <Text key={request.id}>status from requests: {request.status}</Text>
-          ))}
-        </View>
         <View>
           {adoptersAndPets.map((adopter) => (
-            <Text key={adopter.userId}>
-              user name from adopters/pets: {adopter.userName}
-              <br />
-              pet name from adopters/pets: {adopter.petName}
-            </Text>
+            <Card key={adopter.userId}>
+              <Text>user name from adopters/pets: {adopter.userName}</Text>
+              <Divider />
+              <Text>pet name from adopters/pets: {adopter.petName}</Text>
+            </Card>
           ))}
         </View>
       </KeyboardAwareScrollView>
