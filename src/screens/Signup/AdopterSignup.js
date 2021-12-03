@@ -11,6 +11,7 @@ import styles from "./styles";
 import { collection, addDoc, doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase/config";
 import { createUserWithEmailAndPassword } from "@firebase/auth";
+import GlobalStyles from "../../../GlobalStyles";
 
 export default function AdopterSignup({ navigation }) {
   const [email, setEmail] = useState("");
@@ -80,7 +81,7 @@ export default function AdopterSignup({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={GlobalStyles.droidSafeArea}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"

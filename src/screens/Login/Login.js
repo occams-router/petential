@@ -12,6 +12,7 @@ import styles from "./styles";
 import { auth, db } from "../../firebase/config";
 import { signInWithEmailAndPassword } from "@firebase/auth";
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
+import GlobalStyles from "../../../GlobalStyles";
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState("");
@@ -63,7 +64,7 @@ export default function Login({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={GlobalStyles.droidSafeArea}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"
