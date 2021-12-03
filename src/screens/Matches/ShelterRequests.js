@@ -38,6 +38,8 @@ export default function ShelterRequests() {
   const [requests, setRequests] = useState([]);
   const [adoptersAndPets, setAdoptersAndPets] = useState([]);
 
+  console.log("name of shelter:", nameOfShelter);
+
   useEffect(async () => {
     // retrieve all requests for this shelter
     const requestsSubRef = collection(
@@ -53,48 +55,68 @@ export default function ShelterRequests() {
     console.log("requests:", requestsData);
 
     // retrieve request adopter/pet info
-    const data = requestsData.map(async (request) => {
-      // retrieve adopter info
-      const adopterDocRef = doc(db, "adopters", `${request.adopterRefId}`);
-      const adopterDoc = await getDoc(adopterDocRef);
-      const adopterData = adopterDoc.data();
+    const data = requestsData.map(async (request, index) => {
+      try {
+        // retrieve adopter info
+        const adopterDocRef = await doc(
+          db,
+          "adopters",
+          `${request.adopterRefId}`
+        );
+        const adopterDoc = await getDoc(adopterDocRef);
+        const adopterData = adopterDoc.data();
 
-      // retrieve pet info
-      const petDocRef = doc(db, "pets", `${request.petRefId}`);
-      const petDoc = await getDoc(petDocRef);
-      const petData = petDoc.data();
+        // retrieve pet info
+        const petDocRef = await doc(db, "pets", `${request.petRefId}`);
+        const petDoc = await getDoc(petDocRef);
+        const petData = petDoc.data();
 
-      console.log("adopterData:", adopterData);
+        // console.log("adopterData:", adopterData);
 
-      const adopterAndPet = {
-        userName: adopterData.name,
-        userId: adopterData.id,
-        userEmail: adopterData.email,
-        userPhone: adopterData.phone,
-        userCity: adopterData.city,
-        userState: adopterData.state,
-        userImageUrl: adopterData.imageUrl,
-        userLifestyle: adopterData.lifestyle,
-        userHousing: adopterData.housing,
-        userPetHistory: adopterData.petHistory,
-        userDescription: adopterData.description,
-        petName: petData.name,
-        petImageUrl: petData.petImageUrl,
-      };
+        const adopterAndPet = {
+          userName: adopterData.name,
+          userId: adopterData.id,
+          userEmail: adopterData.email,
+          userPhone: adopterData.phone,
+          userCity: adopterData.city,
+          userState: adopterData.state,
+          userImageUrl: adopterData.imageUrl,
+          userLifestyle: adopterData.lifestyle,
+          userHousing: adopterData.housing,
+          userPetHistory: adopterData.petHistory,
+          userDescription: adopterData.description,
+          petName: petData.name,
+          petImageUrl: petData.imageUrl,
+          status: request.status,
+        };
 
-      return adopterAndPet;
+        console.log("adopterPet inside of map:", adopterAndPet);
+
+        return adopterAndPet;
+
+        // return { ...adopterData, ...petData };
+      } catch (e) {
+        console.log("There was an error:", e);
+      }
     });
+
+    console.log("data which came back from mapping:", data);
 
     let adopterInfo = [];
 
-    Promise.all(data).then((info) => {
-      adopterInfo.push(info);
+    const promisestuff = Promise.all(data).then((info) => {
+      console.log("info inside then method:", info);
+      adopterInfo = info;
+      setAdoptersAndPets(info);
     });
-
-    setAdoptersAndPets(adopterInfo);
     console.log("adopterInfo:", adopterInfo);
+    console.log("promisestuff:", promisestuff);
+
+    // setAdoptersAndPets(adopterInfo);
     console.log("adoptersAndPets:", adoptersAndPets);
   }, []);
+
+  console.log("adoptersAndPets outside of use effect:", adoptersAndPets);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -102,16 +124,18 @@ export default function ShelterRequests() {
         style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"
       >
-        <Text style={styles.title}>Requests</Text>
+        <Text style={styles.title}>Requests for {nameOfShelter}</Text>
 
         <View>
           {requests.map((request) => (
-            <Text>{request.status}</Text>
+            <Text key={request.id}>status from requests: {request.status}</Text>
           ))}
         </View>
         <View>
           {adoptersAndPets.map((adopter) => (
-            <Text>{adopter.name}</Text>
+            <Text key={adopter.userId}>
+              name from adopters/pets: {adopter.userName}
+            </Text>
           ))}
         </View>
       </KeyboardAwareScrollView>
