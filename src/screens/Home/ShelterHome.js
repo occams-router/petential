@@ -8,10 +8,8 @@ import PetCard from "../PetCards/ShelterPetCard";
 import { UserContext } from "../../../App";
 import { NavigationActions } from "react-navigation";
 import GlobalStyles from "../../../GlobalStyles";
-import { propTypes } from "../../react-tinder-card/reactTinderCard";
 
-export default function ShelterHome(props) {
-  const { navigate } = props.navigation;
+export default function ShelterHome({ navigation }) {
   const shelter = useContext(UserContext);
   const [petData, setPetData] = useState([]);
   const logout = async () => {
@@ -31,7 +29,6 @@ export default function ShelterHome(props) {
         collection(db, `shelters/${shelter.id}/shelterPets`)
       );
       docsSnap.forEach((doc) => {
-        console.log("i am data", doc.data());
         list.push(doc.data());
       });
       setPetData([...list]);
@@ -49,10 +46,9 @@ export default function ShelterHome(props) {
       <Text style={styles.title}></Text>
       <Text style={styles.title}>Current Pets</Text>
       <TouchableOpacity style={styles.button}>
-        {/* {change screen name place holder} */}
         <Text
           style={styles.buttonTitle}
-          // onPress={navigation.navigate("PetProfile")}
+          onPress={navigation.navigate("PetProfile", { pet: "" })}
         >
           Add a Pet
         </Text>
@@ -65,10 +61,14 @@ export default function ShelterHome(props) {
       <FlatList
         data={petData}
         keyextractor={(item, index) => item.key}
-        renderItem={({ item }) => <PetCard navigation={navigate} pets={item} />}
+        renderItem={({ item }) => (
+          <PetCard navigation={navigation.navigate} pets={item} />
+        )}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 150 }}
       />
     </SafeAreaView>
   );
 }
+
+// navigation={navigate}
