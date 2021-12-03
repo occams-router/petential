@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
-import {
-  Text,
-  TextInput,
-  SafeAreaView,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
+import GlobalStyles from '../../../GlobalStyles';
 import { collection, addDoc, doc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../../firebase/config';
 import { createUserWithEmailAndPassword } from '@firebase/auth';
-import GlobalStyles from '../../../GlobalStyles';
 
 export default function AdopterSignup({ navigation }) {
   const [email, setEmail] = useState('');

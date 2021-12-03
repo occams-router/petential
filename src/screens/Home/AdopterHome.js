@@ -1,9 +1,9 @@
 import React from 'react';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from 'react-native';
 import styles from './styles';
-import AdopterPetCard from '../PetCards/AdopterPetCard';
 import GlobalStyles from '../../../GlobalStyles';
+import AdopterPetCard from '../PetCards/AdopterPetCard';
 
 export default function AdopterHome() {
   return (
