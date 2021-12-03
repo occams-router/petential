@@ -19,6 +19,7 @@ export default function AdopterHome(props) {
   };
   return (
     <SafeAreaView style={GlobalStyles.droidSafeArea}>
+      <Text style={styles.title}></Text>
       <Text style={styles.title}>Adopter Feed</Text>
 
       <AdopterPetCard />

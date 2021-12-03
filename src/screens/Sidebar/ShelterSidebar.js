@@ -28,11 +28,11 @@ export default function ShelterSidebar() {
         options={{ headerShown: true, header: () => <Header /> }}
         component={ShelterProfile}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="Requests"
         options={{ headerShown: true, header: () => <Header /> }}
         component={ShelterRequests}
-      />
+      /> */}
 
       {/* <Drawer.Screen
         name="Requests"
