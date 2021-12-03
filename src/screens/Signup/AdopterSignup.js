@@ -1,34 +1,34 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Text,
   TextInput,
   SafeAreaView,
   TouchableOpacity,
   View,
-} from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import styles from "./styles";
-import { collection, addDoc, doc, updateDoc } from "firebase/firestore";
-import { auth, db } from "../../firebase/config";
-import { createUserWithEmailAndPassword } from "@firebase/auth";
-import GlobalStyles from "../../../GlobalStyles";
+} from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import styles from './styles';
+import { collection, addDoc, doc, updateDoc } from 'firebase/firestore';
+import { auth, db } from '../../firebase/config';
+import { createUserWithEmailAndPassword } from '@firebase/auth';
+import GlobalStyles from '../../../GlobalStyles';
 
 export default function AdopterSignup({ navigation }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [name, setName] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [phone, setPhone] = useState("");
-  const [description, setDescription] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [housing, setHousing] = useState("");
-  const [lifestyle, setLifestyle] = useState("");
-  const [petHistory, setPetHistory] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [phone, setPhone] = useState('');
+  const [description, setDescription] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+  const [housing, setHousing] = useState('');
+  const [lifestyle, setLifestyle] = useState('');
+  const [petHistory, setPetHistory] = useState('');
 
   const onFooterLinkPress = () => {
-    navigation.navigate("Login");
+    navigation.navigate('Login');
   };
 
   const onSignupPress = async () => {
@@ -60,30 +60,29 @@ export default function AdopterSignup({ navigation }) {
         petHistory,
       };
 
-      const docRef = await addDoc(collection(db, "adopters"), adopterData);
-      const adopterRef = doc(db, "adopters", docRef.id);
+      const docRef = await addDoc(collection(db, 'adopters'), adopterData);
+      const adopterRef = doc(db, 'adopters', docRef.id);
       await updateDoc(adopterRef, { id: adopterRef.id });
-      console.log("Successfully added to adopters collection.");
+      console.log('Successfully added to adopters collection.');
 
       const userData = {
         uid,
         docId: docRef.id,
-        type: "adopter",
+        type: 'adopter',
       };
 
-      await addDoc(collection(db, "users"), userData);
-      console.log("Successfully added to users collection.");
-      adopterData["id"] = docRef.id;
-      navigation.navigate("AdopterSidebar");
+      await addDoc(collection(db, 'users'), userData);
+      console.log('Successfully added to users collection.');
+      navigation.navigate('AdopterSidebar');
     } catch (error) {
-      console.error("Error adding user: ", error);
+      console.error('Error adding user: ', error);
     }
   };
 
   return (
     <SafeAreaView style={GlobalStyles.droidSafeArea}>
       <KeyboardAwareScrollView
-        style={{ flex: 1, width: "100%" }}
+        style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always"
       >
         <Text style={styles.title}>Welcome!</Text>
@@ -203,7 +202,7 @@ export default function AdopterSignup({ navigation }) {
         </TouchableOpacity>
         <View style={styles.footerView}>
           <Text style={styles.footerText}>
-            Already have an account?{" "}
+            Already have an account?{' '}
             <Text onPress={onFooterLinkPress} style={styles.footerLink}>
               Log in
             </Text>
