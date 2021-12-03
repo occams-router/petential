@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SafeAreaView, Text, FlatList, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import MatchCard from './ShelterMatchCard';
 import styles from '../Home/styles';
 import { db } from '../../firebase/config';
 import { collection, getDocs } from 'firebase/firestore';
@@ -23,10 +24,19 @@ export default function ShelterMatches() {
     getMatches();
   }, []);
 
+  console.log(matches);
+
   return (
     <SafeAreaView>
       <Text style={styles.title}>My Matches</Text>
-      <FlatList />
+      {matches.length === 0 ? (
+        <Text>No matches to display!</Text>
+      ) : (
+        <FlatList
+          data={matches}
+          renderItem={({ item }) => <MatchCard match={item} />}
+        />
+      )}
     </SafeAreaView>
   );
 }
