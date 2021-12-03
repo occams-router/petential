@@ -31,6 +31,7 @@ const InfoText = styled.Text`
   justify-content: center;
   display: flex;
   z-index: -100;
+  text-align: center;
 `;
 
 export default function AdopterPetCard(props) {
@@ -64,8 +65,8 @@ export default function AdopterPetCard(props) {
       );
 
       const requestData = {
-        petDocRef: pet.id,
-        userDocRef: user.id,
+        petRefId: pet.id,
+        adopterRefId: user.id,
         shelterRefId: pet.shelterRefId,
         status: 'pending',
       };
