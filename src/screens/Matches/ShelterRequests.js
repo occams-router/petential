@@ -1,11 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
+import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   Image,
   Text,
-  TextInput,
   TouchableOpacity,
-  View,
-  SafeAreaView,
   FlatList,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
