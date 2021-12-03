@@ -51,7 +51,7 @@ export default function ShelterRequests() {
     setRequests(requestsData);
 
     // retrieve request adopter/pet info
-    const data = requestsData.map(async (request) => {
+    const data = requestsData.map(async (request, index) => {
       try {
         // retrieve adopter info
         const adopterDocRef = doc(db, "adopters", `${request.adopterRefId}`);
@@ -78,7 +78,9 @@ export default function ShelterRequests() {
           userDescription: adopterData.description,
           petName: petData.name,
           petImageUrl: petData.imageUrl,
+          petSpecies: petData.species,
           status: request.status,
+          requestId: index,
         };
 
         return adopterAndPet;
@@ -94,6 +96,13 @@ export default function ShelterRequests() {
     setAdoptersAndPets(results);
   }, []);
 
+  const onButtonPress = (choice) => {
+    if (choice === "accept") {
+      console.log("accepted!");
+      // update status in requests subcollection
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAwareScrollView
@@ -101,13 +110,34 @@ export default function ShelterRequests() {
         keyboardShouldPersistTaps="always"
       >
         <Text style={styles.title}>Requests for {nameOfShelter}</Text>
-        <View>
-          {adoptersAndPets.map((adopter) => (
-            <Card key={adopter.userId}>
-              <Text>user name from adopters/pets: {adopter.userName}</Text>
-              <Divider />
-              <Text>pet name from adopters/pets: {adopter.petName}</Text>
-            </Card>
+        <View style={styles.requestContainer}>
+          {adoptersAndPets.map((request) => (
+            <View style={styles.requestCardContainer}>
+              <Card key={request.requestId}>
+                <Card.Cover source={{ uri: request.userImageUrl }} />
+                <Card.Content>
+                  <Text>Name: {request.userName}</Text>
+                  <Divider />
+                  <Text>
+                    Pet: {request.petName} the {request.petSpecies}
+                  </Text>
+                </Card.Content>
+                <Card.Actions style={styles.requestButtonContainer}>
+                  <Button
+                    icon="check-circle"
+                    onPress={() => onButtonPress("accept")}
+                  >
+                    Accept
+                  </Button>
+                  <Button
+                    icon="block-helper"
+                    onPress={() => onButtonPress("reject")}
+                  >
+                    Reject
+                  </Button>
+                </Card.Actions>
+              </Card>
+            </View>
           ))}
         </View>
       </KeyboardAwareScrollView>

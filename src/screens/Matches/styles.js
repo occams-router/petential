@@ -58,4 +58,16 @@ export default StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
   },
+  requestContainer: {
+    display: "flex",
+    margin: "auto",
+  },
+  requestCardContainer: {
+    width: "350px",
+    height: "auto",
+  },
+  requestButtonContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
 });
