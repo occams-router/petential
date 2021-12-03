@@ -38,8 +38,6 @@ export default function ShelterRequests() {
   const [requests, setRequests] = useState([]);
   const [adoptersAndPets, setAdoptersAndPets] = useState([]);
 
-  console.log("name of shelter:", nameOfShelter);
-
   useEffect(async () => {
     // retrieve all requests for this shelter
     const requestsSubRef = collection(
@@ -52,27 +50,20 @@ export default function ShelterRequests() {
     const requestsData = requestsDocs.docs.map((doc) => ({ ...doc.data() }));
     setRequests(requestsData);
 
-    console.log("requests:", requestsData);
-
     // retrieve request adopter/pet info
-    const data = requestsData.map(async (request, index) => {
+    const data = requestsData.map(async (request) => {
       try {
         // retrieve adopter info
-        const adopterDocRef = await doc(
-          db,
-          "adopters",
-          `${request.adopterRefId}`
-        );
+        const adopterDocRef = doc(db, "adopters", `${request.adopterRefId}`);
         const adopterDoc = await getDoc(adopterDocRef);
         const adopterData = adopterDoc.data();
 
         // retrieve pet info
-        const petDocRef = await doc(db, "pets", `${request.petRefId}`);
+        const petDocRef = doc(db, "pets", `${request.petRefId}`);
         const petDoc = await getDoc(petDocRef);
         const petData = petDoc.data();
 
-        // console.log("adopterData:", adopterData);
-
+        // create an object for current user and associated pet
         const adopterAndPet = {
           userName: adopterData.name,
           userId: adopterData.id,
@@ -90,33 +81,18 @@ export default function ShelterRequests() {
           status: request.status,
         };
 
-        console.log("adopterPet inside of map:", adopterAndPet);
-
         return adopterAndPet;
-
-        // return { ...adopterData, ...petData };
       } catch (e) {
         console.log("There was an error:", e);
       }
     });
 
-    console.log("data which came back from mapping:", data);
+    // resolve promises returned from mapping over requestsData
+    const results = await Promise.all(data);
 
-    let adopterInfo = [];
-
-    const promisestuff = Promise.all(data).then((info) => {
-      console.log("info inside then method:", info);
-      adopterInfo = info;
-      setAdoptersAndPets(info);
-    });
-    console.log("adopterInfo:", adopterInfo);
-    console.log("promisestuff:", promisestuff);
-
-    // setAdoptersAndPets(adopterInfo);
-    console.log("adoptersAndPets:", adoptersAndPets);
+    // set results in local state
+    setAdoptersAndPets(results);
   }, []);
-
-  console.log("adoptersAndPets outside of use effect:", adoptersAndPets);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -134,7 +110,9 @@ export default function ShelterRequests() {
         <View>
           {adoptersAndPets.map((adopter) => (
             <Text key={adopter.userId}>
-              name from adopters/pets: {adopter.userName}
+              user name from adopters/pets: {adopter.userName}
+              <br />
+              pet name from adopters/pets: {adopter.petName}
             </Text>
           ))}
         </View>
