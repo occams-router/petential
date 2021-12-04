@@ -62,12 +62,12 @@ id: doc.id,
 			{/* <KeyboardAwareScrollView
 				style={{ flex: 1, width: '100%' }}
 				keyboardShouldPersistTaps="always"> */}
-				<Header title="chat" />
-                <Text style={styles.title}>{pet.name} at {shelter.name}</Text>
 				<KeyboardAvoidingView
 					behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 					style={tailwind('flex-1')}
 					keyboardVerticalOffset={10}>
+                        <Header title="chat" />
+                <Text style={GlobalStyles.droidSafeArea} style={styles.title}>{pet.name} at {shelter.name}</Text>
 					<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 						<FlatList
 							data={messages}
