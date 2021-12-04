@@ -1,11 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
-import { SafeAreaView } from 'react-native-safe-area-context';
-import {
-  Image,
-  Text,
-  TouchableOpacity,
-  FlatList,
-} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Image, Text, TouchableOpacity, FlatList } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
 import { db } from "../../firebase/config";
@@ -104,17 +99,15 @@ export default function ShelterRequests() {
 
   return (
     <SafeAreaView style={GlobalStyles.droidSafeArea}>
-      <KeyboardAwareScrollView
-        style={{ flex: 1, width: "100%" }}
-        keyboardShouldPersistTaps="always"
-      >
-        <Text style={styles.title}>Requests for {nameOfShelter}</Text>
-
+      <Text style={styles.title}>Requests for {nameOfShelter}</Text>
+      {adoptersAndPets.length === 0 ? (
+        <Text>No requests to display!</Text>
+      ) : (
         <FlatList
           data={adoptersAndPets}
           renderItem={({ item }) => <ShelterRequestCard request={item} />}
         />
-      </KeyboardAwareScrollView>
+      )}
     </SafeAreaView>
   );
 }

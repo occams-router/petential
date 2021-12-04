@@ -60,11 +60,9 @@ export default StyleSheet.create({
   },
   requestContainer: {
     display: "flex",
-    margin: "auto",
   },
   requestCardContainer: {
     width: "350px",
-    height: "auto",
   },
   requestButtonContainer: {
     display: "flex",
