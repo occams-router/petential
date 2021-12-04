@@ -76,6 +76,8 @@ export default function ShelterRequests() {
             petId: petData.id,
             petImageUrl: petData.imageUrl,
             petSpecies: petData.species,
+            petBreed: petData.breed,
+            petAge: petData.age,
             status: request.status,
             requestId: request.id,
           };
