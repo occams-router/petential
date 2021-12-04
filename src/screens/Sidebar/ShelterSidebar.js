@@ -1,6 +1,7 @@
-import React from 'react';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
+import React from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { NavigationContainer } from "@react-navigation/native";
 import {
   ShelterHome,
   ShelterProfile,
@@ -21,7 +22,7 @@ export default function ShelterSidebar() {
         drawerType="front"
         initialRouteName="Home"
         drawerContentOptions={{
-          activeTintColor: '#e91e63',
+          activeTintColor: "#e91e63",
           itemStyle: { marginVertical: 10 },
         }}
       >

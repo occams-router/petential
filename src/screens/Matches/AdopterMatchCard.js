@@ -1,9 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { SafeAreaView, Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Text } from 'react-native';
 import { db } from '../../firebase/config';
 import { doc, getDoc } from 'firebase/firestore';
 import { UserContext } from '../../../App';
-import styled from "styled-components/native";
+import styled from 'styled-components/native';
 import {
     Card,
     Title,
@@ -39,14 +40,14 @@ export default function AdopterMatchCard({ match }) {
     const shelterDocRef = doc(db, 'shelters', `${match.shelterRefId}`);
     const shelterDoc = await getDoc(shelterDocRef);
     setShelter(shelterDoc.data());
-    console.log('shelterDoc', shelterDoc.data())
+    console.log('shelterDoc', shelterDoc.data());
   };
 
   const getPet = async () => {
     const petDocRef = doc(db, 'pets', `${match.petRefId}`);
     const petDoc = await getDoc(petDocRef);
     setPet(petDoc.data());
-    console.log('PetDoc', petDoc.data())
+    console.log('PetDoc', petDoc.data());
   };
 
   useEffect(() => {

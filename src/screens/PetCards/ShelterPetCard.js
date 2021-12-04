@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   View,
   Text,
   StyleSheet,
   Dimensions,
   Image,
-  SafeAreaView,
   TouchableOpacity,
-} from "react-native";
+} from 'react-native';
 
 export default function PetCard({ pets }) {
   return (
@@ -34,22 +34,22 @@ export default function PetCard({ pets }) {
   );
 }
 
-const deviceWidth = Math.round(Dimensions.get("window").width);
+const deviceWidth = Math.round(Dimensions.get('window').width);
 const offset = 40;
 const radius = 20;
 const styles = StyleSheet.create({
   container: {
     width: deviceWidth - 20,
-    alignItems: "center",
+    alignItems: 'center',
     marginTop: 25,
   },
   cardContainer: {
     width: deviceWidth - offset,
-    backgroundColor: "#788eec",
+    backgroundColor: '#788eec',
     height: 220,
     borderRadius: radius,
 
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 5,
       height: 5,
@@ -64,22 +64,22 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: radius,
     borderTopRightRadius: radius,
     opacity: 0.9,
-    alignContent: "center",
-    alignSelf: "center",
+    alignContent: 'center',
+    alignSelf: 'center',
   },
   titleStyle: {
     fontSize: 20,
-    fontWeight: "800",
+    fontWeight: '800',
   },
   categoryStyle: {
-    fontWeight: "200",
+    fontWeight: '200',
   },
   infoStyle: {
     marginHorizontal: 10,
     marginVertical: 5,
   },
   iconLabelStyle: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginTop: 10,
   },
 });

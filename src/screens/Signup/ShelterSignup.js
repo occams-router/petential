@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
-import {
-  Image,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  SafeAreaView,
-} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Image, Text, TextInput, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
+import GlobalStyles from '../../../GlobalStyles';
 import { auth, db } from '../../firebase/config';
 import { createUserWithEmailAndPassword } from '@firebase/auth';
 import { collection, doc, addDoc, updateDoc } from 'firebase/firestore';
-import GlobalStyles from '../../../GlobalStyles';
 
 export default function ShelterSignup({ navigation }) {
   const [nameOfShelter, setNameOfShelter] = useState('');

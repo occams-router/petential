@@ -1,18 +1,12 @@
-import React, { useContext, useState } from 'react';
-import {
-  SafeAreaView,
-  Text,
-  Image,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import React, { useContext, useState, useEffect } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Text, Image, TextInput, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { db } from '../../firebase/config';
 import { doc, updateDoc } from 'firebase/firestore';
 import styles from './styles';
-import { UserContext } from '../../../App';
-import { useEffect } from 'react/cjs/react.development';
 import GlobalStyles from '../../../GlobalStyles';
+import { UserContext } from '../../../App';
 
 export default function AdopterProfile() {
   const user = useContext(UserContext);
@@ -29,8 +23,9 @@ export default function AdopterProfile() {
   const [petHistory, setPetHistory] = useState(user.petHistory || '');
 
   useEffect(() => {
-setLoading(false)
-  }, [])
+    setLoading(false);
+  }, []);
+
   const updateAdopter = async () => {
     try {
       const adopterRef = doc(db, 'adopters', id);
@@ -53,12 +48,11 @@ setLoading(false)
     }
   };
 
-  return (
-      loading ? (
-        <SafeAreaView style={styles.container}>
-<Text>Loading...</Text>
-</SafeAreaView>
-      ) :
+  return loading ? (
+    <SafeAreaView style={GlobalStyles.droidSafeArea}>
+      <Text>Loading...</Text>
+    </SafeAreaView>
+  ) : (
     <SafeAreaView style={GlobalStyles.droidSafeArea}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
