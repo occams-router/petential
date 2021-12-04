@@ -43,11 +43,14 @@ export default function ShelterRequests() {
       "requests"
     );
     const requestsDocs = await getDocs(requestsSubRef);
-    const requestsData = requestsDocs.docs.map((doc) => ({ ...doc.data() }));
+    const requestsData = requestsDocs.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    }));
     setRequests(requestsData);
 
     // retrieve request adopter/pet info
-    const data = requestsData.map(async (request, index) => {
+    const data = requestsData.map(async (request) => {
       try {
         // retrieve adopter info
         const adopterDocRef = doc(db, "adopters", `${request.adopterRefId}`);
@@ -76,7 +79,7 @@ export default function ShelterRequests() {
           petImageUrl: petData.imageUrl,
           petSpecies: petData.species,
           status: request.status,
-          requestId: index,
+          requestId: request.id,
         };
 
         return adopterAndPet;

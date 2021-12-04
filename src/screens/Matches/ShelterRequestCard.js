@@ -1,8 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Text } from "react-native";
 import { db } from "../../firebase/config";
-import { doc, getDoc } from "firebase/firestore";
+import {
+  doc,
+  updateDoc,
+  getDocs,
+  getDoc,
+  collection,
+} from "firebase/firestore";
 import { UserContext } from "../../../App";
 import styled from "styled-components/native";
 import {
@@ -20,27 +26,34 @@ const Container = styled.View`
   align-items: center;
   width: 100%;
   justify-content: space-between;
-  align-content: space-around;
-  margin: 10px;
 `;
 
 const CardContainer = styled.View`
   width: 90%;
   max-width: 750px;
-  align-items: center;
   height: auto;
-  justify-content: space-between;
-  align-content: space-around;
-  margin: 10px;
+  margin-bottom: 20px;
 `;
 
 export default function ShelterRequestCard({ request }) {
   const shelter = useContext(UserContext);
 
-  const onButtonPress = (choice) => {
+  const onButtonPress = async (choice, request) => {
     if (choice === "accept") {
-      console.log("accepted!");
+      console.log("accepted!", "id:", request.requestId);
+
       // update status in requests subcollection
+      const requestDocRef = doc(
+        db,
+        "shelters",
+        `${shelter.id}`,
+        "requests",
+        request.requestId
+      );
+
+      await updateDoc(requestDocRef, { status: "accepted" });
+
+      // create a new document in shelters/matches & adopters/matches
     }
   };
 
@@ -66,7 +79,7 @@ export default function ShelterRequestCard({ request }) {
             <Card.Actions style={styles.requestButtonContainer}>
               <Button
                 icon="check-circle"
-                onPress={() => onButtonPress("accept")}
+                onPress={() => onButtonPress("accept", request)}
               >
                 Accept
               </Button>
