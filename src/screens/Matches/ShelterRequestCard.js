@@ -5,6 +5,7 @@ import { db } from "../../firebase/config";
 import {
   doc,
   updateDoc,
+  addDoc,
   getDocs,
   getDoc,
   collection,
@@ -52,6 +53,17 @@ export default function ShelterRequestCard({ request }) {
       await updateDoc(requestDocRef, { status: "accepted" });
 
       // create a new document in shelters/matches & adopters/matches
+      await addDoc(collection(db, "shelters", `${shelter.id}`, "matches"), {
+        shelterRefId: shelter.id,
+        adopterRefId: request.userId,
+        petRefId: request.petId,
+      });
+
+      await addDoc(collection(db, "adopters", `${request.userId}`, "matches"), {
+        shelterRefId: shelter.id,
+        adopterRefId: request.userId,
+        petRefId: request.petId,
+      });
     } else {
       await updateDoc(requestDocRef, { status: "rejected" });
     }
