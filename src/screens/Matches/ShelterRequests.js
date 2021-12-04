@@ -31,7 +31,6 @@ export default function ShelterRequests() {
   const [adoptersAndPets, setAdoptersAndPets] = useState([]);
 
   useEffect(() => {
-    // retrieve all requests for this shelter
     const requestsSubRef = collection(
       db,
       "shelters",
@@ -39,8 +38,8 @@ export default function ShelterRequests() {
       "requests"
     );
 
+    // retrieve only pending requests for this shelter
     const q = query(requestsSubRef, where("status", "==", "pending"));
-
     const unsub = onSnapshot(q, async (querySnapshot) => {
       const requestsData = querySnapshot.docs.map((doc) => ({
         ...doc.data(),
@@ -94,6 +93,7 @@ export default function ShelterRequests() {
       setAdoptersAndPets(results);
     });
 
+    // unsubscribe from listener before unmounting
     return unsub;
   }, []);
 
@@ -106,6 +106,7 @@ export default function ShelterRequests() {
         <FlatList
           data={adoptersAndPets}
           renderItem={({ item }) => <ShelterRequestCard request={item} />}
+          keyExtractor={(item) => item.requestId}
         />
       )}
     </SafeAreaView>
