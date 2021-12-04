@@ -32,7 +32,7 @@ export default function AdopterMessages(props) {
 	const [messages, setMessages] = useState([]);
 
     useEffect(() => 
-onSnapshot(query(collection(db, 'messages'), where('petRefId', '==', `${pet.id}`),
+onSnapshot(query(collection(db, 'messages'), where('petRefId', '==', `${pet.id}`), orderBy('timestamp', 'desc'),
 ),  snapshot => setMessages(snapshot.docs.map(doc => ({
 id: doc.id,
 ...doc.data(),
@@ -68,6 +68,7 @@ id: doc.id,
 						<FlatList
 							data={messages}
 							style={tailwind('pl-4')}
+                            inverted={-1}
 							keyExtractor={(item) => item.id}
 							renderItem={({ item: message }) =>
 								messages.userId === adopter.uid ? (
