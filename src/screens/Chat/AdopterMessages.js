@@ -1,8 +1,6 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
 	Text,
-	TouchableOpacity,
-	Image,
 	View,
 	TextInput,
 	Button,
@@ -12,7 +10,6 @@ import {
 	Keyboard,
 	FlatList,
 } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import tailwind from 'tailwind-rn';
 import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../../../App.js';
@@ -45,8 +42,6 @@ id: doc.id,
         addDoc(collection(db, 'messages'), {
             timestamp: serverTimestamp(),
             adopterRefId: adopter.id,
-            // adopterUId: adopter.uid,
-            // shelterUId: shelter.uid,
             adopterName: adopter.name,
             petRefId: pet.id,
             shelterName: shelter.name,
@@ -56,12 +51,8 @@ id: doc.id,
         })
         setInput('');
     };
-    console.log(messages)
 	return (
 		<SafeAreaView style={tailwind('flex-1')}>
-			{/* <KeyboardAwareScrollView
-				style={{ flex: 1, width: '100%' }}
-				keyboardShouldPersistTaps="always"> */}
 				<KeyboardAvoidingView
 					behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 					style={tailwind('flex-1')}
@@ -105,7 +96,6 @@ id: doc.id,
 						<Button onPress={sendMessage} title="Send" color="#56d9db" />
 					</View>
 				</KeyboardAvoidingView>
-			{/* </KeyboardAwareScrollView> */}
 		</SafeAreaView>
 	);
 }

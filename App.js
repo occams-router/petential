@@ -37,7 +37,6 @@ if (!global.btoa) {
 if (!global.atob) {
   global.atob = decode;
 }
-import { Text, View, Image } from 'react-native';
 const Stack = createStackNavigator();
 
 let UserContext;
@@ -78,9 +77,6 @@ export default function App() {
     });
     setLoading(false);
   }, []);
-  // console.log('user:', user);
-  // console.log('userType:', userType);
-  // console.log('specific user:', specificUser);
 
   UserContext = createContext(specificUser);
 
@@ -170,7 +166,6 @@ export default function App() {
               headerShown: false,
               headerStyle: {
                 backgroundColor: '#218d8f',
-                // height: 50,
               },
             }}
           >

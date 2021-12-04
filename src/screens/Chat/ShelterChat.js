@@ -1,9 +1,7 @@
 import ShelterChatList from "./ShelterChatList";
 import React, {useState, useContext, useEffect} from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Text, FlatList, TouchableOpacity } from "react-native";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import GlobalStyles from '../../../GlobalStyles.js';
+import { Text, FlatList} from "react-native";
 import styles from "../Home/styles";
 import { db } from '../../firebase/config';
 import { doc, getDocs, collection, getDoc } from 'firebase/firestore';
@@ -30,10 +28,6 @@ export default function ShelterChat() {
   console.log(matches);
     return (
 <SafeAreaView>
-      {/* <KeyboardAwareScrollView
-        style={{ flex: 1, width: "100%" }}
-        keyboardShouldPersistTaps="always"
-      > */}
         <Header/>
       <Text style={styles.title}></Text>
       {matches.length === 0 ? (
@@ -47,7 +41,6 @@ export default function ShelterChat() {
         <Text style={styles.title}></Text>
         </>
       )}
-      {/* </KeyboardAwareScrollView> */}
     </SafeAreaView>
     );
 }
