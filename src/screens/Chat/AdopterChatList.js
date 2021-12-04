@@ -37,6 +37,7 @@ export default function AdopterChatList({match}) {
     const adopter = useContext(UserContext);
   const [shelter, setShelter] = useState([]);
   const [pet, setPet] = useState([]);
+  const [latestMessage, setLatestMessage] = useState('');
 
   const getShelter = async () => {
     const shelterDocRef = doc(db, 'shelters', `${match.shelterRefId}`);
@@ -56,6 +57,7 @@ export default function AdopterChatList({match}) {
     getShelter();
     getPet();
   }, []);
+
 
     return (
 <SafeAreaView style={GlobalStyles.droidSafeArea}>

@@ -22,7 +22,9 @@ import SenderMessage from './SenderMessage.js';
 import ReceiverMessage from './ReceiverMessage.js';
 import { addDoc, onSnapshot, orderBy, serverTimestamp, doc, query, collection, where } from '@firebase/firestore';
 import { db } from '../../firebase/config.js';
-
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import GlobalStyles from '../../../GlobalStyles.js';
+const Drawer = createDrawerNavigator();
 export default function AdopterMessages(props) {
 	const pet = props.route.params.pet;
 	const shelter = props.route.params.shelter;
@@ -61,7 +63,7 @@ id: doc.id,
 				style={{ flex: 1, width: '100%' }}
 				keyboardShouldPersistTaps="always"> */}
 				<Header title="chat" />
-				<Text style={styles.title}>{pet.name} at {shelter.name}</Text>
+                <Text style={styles.title}>{pet.name} at {shelter.name}</Text>
 				<KeyboardAvoidingView
 					behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 					style={tailwind('flex-1')}

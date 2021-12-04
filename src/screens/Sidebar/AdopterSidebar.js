@@ -3,7 +3,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { AdopterHome, AdopterProfile, Header, AdopterMatches, AdopterChat} from '../index.js';
-import { SafeAreaView} from 'react-native';
 import GlobalStyles from '../../../GlobalStyles.js';
 
 const Drawer = createDrawerNavigator();

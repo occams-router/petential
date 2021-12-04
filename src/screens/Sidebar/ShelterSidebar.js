@@ -11,7 +11,6 @@ import {
   ShelterChat,
 } from '../index.js';
 import GlobalStyles from '../../../GlobalStyles.js';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Drawer = createDrawerNavigator();
 
