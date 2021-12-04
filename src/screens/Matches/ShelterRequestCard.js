@@ -39,21 +39,21 @@ export default function ShelterRequestCard({ request }) {
   const shelter = useContext(UserContext);
 
   const onButtonPress = async (choice, request) => {
+    const requestDocRef = doc(
+      db,
+      "shelters",
+      `${shelter.id}`,
+      "requests",
+      request.requestId
+    );
+
     if (choice === "accept") {
-      console.log("accepted!", "id:", request.requestId);
-
       // update status in requests subcollection
-      const requestDocRef = doc(
-        db,
-        "shelters",
-        `${shelter.id}`,
-        "requests",
-        request.requestId
-      );
-
       await updateDoc(requestDocRef, { status: "accepted" });
 
       // create a new document in shelters/matches & adopters/matches
+    } else {
+      await updateDoc(requestDocRef, { status: "rejected" });
     }
   };
 
@@ -85,7 +85,7 @@ export default function ShelterRequestCard({ request }) {
               </Button>
               <Button
                 icon="block-helper"
-                onPress={() => onButtonPress("reject")}
+                onPress={() => onButtonPress("reject", request)}
               >
                 Reject
               </Button>
