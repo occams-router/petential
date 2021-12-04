@@ -7,6 +7,7 @@ import {
   ShelterRequests,
   ShelterMatches,
   Header,
+  ShelterChat,
 } from '../index.js';
 import GlobalStyles from '../../../GlobalStyles.js';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -44,6 +45,12 @@ export default function ShelterSidebar() {
           options={{ headerShown: true, header: () => <Header /> }}
           component={ShelterMatches}
         />
+        <Drawer.Screen
+        name="Chat"
+        style={{position: 'absolute'}}
+        options={{ headerShown: true, headerMode: 'screen', header: () => <Header style={{position: 'absolute'}}/> }}
+        component={ShelterChat}
+      />
       </Drawer.Navigator>
     </SafeAreaView>
   );

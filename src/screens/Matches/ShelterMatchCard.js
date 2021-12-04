@@ -1,4 +1,5 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect} from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView, Text } from 'react-native';
 import {
   Card,
@@ -30,8 +31,8 @@ const CardContainer = styled.View`
 
 export default function ShelterMatchCard({ match }) {
   const shelter = useContext(UserContext);
-  const [adopter, setAdopter] = useState({});
-  const [pet, setPet] = useState({});
+  const [adopter, setAdopter] = useState([]);
+  const [pet, setPet] = useState([]);
 
   const getAdopter = async () => {
     const adopterDocRef = doc(db, 'adopters', `${match.adopterRefId}`);
@@ -49,7 +50,7 @@ export default function ShelterMatchCard({ match }) {
     getAdopter();
     getPet();
   }, []);
-
+  const navigation = useNavigation();
   return (
     <SafeAreaView>
       <Container>
@@ -70,7 +71,7 @@ export default function ShelterMatchCard({ match }) {
               <Paragraph>Pet History: {adopter.petHistory}</Paragraph>
             </Card.Content>
             <Card.Actions>
-              <Button icon="chat">See Messages</Button>
+              <Button icon="chat" onPress={()=> navigation.navigate('ShelterMessages', {match, pet, adopter})}>See Messages</Button>
             </Card.Actions>
           </Card>
         </CardContainer>

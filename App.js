@@ -13,6 +13,8 @@ import {
   Loading,
   AdopterChat,
   AdopterMessages,
+  ShelterChat,
+  ShelterMessages,
 } from './src/screens';
 import { decode, encode } from 'base-64';
 import { auth, db } from './src/firebase/config';
@@ -93,6 +95,16 @@ export default function App() {
             <Stack.Screen
               name="ShelterSidebar"
               component={ShelterSidebar}
+              options={{ title: 'Petential' }}
+            />
+            <Stack.Screen
+              name="ShelterChat"
+              component={ShelterChat}
+              options={{ title: 'Petential' }}
+            />
+             <Stack.Screen
+              name="ShelterMessages"
+              component={ShelterMessages}
               options={{ title: 'Petential' }}
             />
           </>
