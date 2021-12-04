@@ -31,3 +31,5 @@ export { default as ShelterRequests } from './Matches/ShelterRequests';
 export { default as ShelterMatches } from './Matches/ShelterMatches';
 
 export { default as AdopterChat } from './Chat/AdopterChat';
+
+export { default as AdopterMessages } from './Chat/AdopterMessages';

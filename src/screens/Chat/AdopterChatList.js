@@ -1,6 +1,6 @@
 import React, {useState, useContext, useEffect} from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Text, TouchableOpacity, Image } from "react-native";
+import { Text, TouchableOpacity, Image, View } from "react-native";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import GlobalStyles from '../../../GlobalStyles.js';
 import styled from "styled-components/native";
@@ -8,15 +8,7 @@ import styles from './styles'
 import { db } from '../../firebase/config';
 import { doc, getDocs, collection, getDoc } from 'firebase/firestore';
 import { UserContext } from '../../../App';
-import {
-    Card,
-    Title,
-    Paragraph,
-    Button,
-    Divider,
-    Subheading,
-  } from "react-native-paper";
-import { useNavigation } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import tailwind from "tailwind-rn";
 
   const Container = styled.View`
@@ -40,6 +32,7 @@ const CardContainer = styled.View`
 
 
 export default function AdopterChatList({match}) {
+    const navigation = useNavigation();
     console.log(match)
     const adopter = useContext(UserContext);
   const [shelter, setShelter] = useState([]);
@@ -70,37 +63,17 @@ export default function AdopterChatList({match}) {
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always"
       >
-          <TouchableOpacity style={[tailwind('flex-row items-center py-3 bg-white mx-3 my-1 rounded-lg'), styles.cardShadow,]}>
-              <Image style={tailwind('rounded-full h-16 w-16 mr-10')}source={{ uri: pet?.imageUrl }}/>
+          <TouchableOpacity onPress={()=> navigation.navigate('AdopterMessages', {adopter, match, pet, shelter})} style={[tailwind('flex-row items-center py-3 bg-white mx-3 my-3 rounded-lg'), styles.cardShadow,]}>
+              <Image style={tailwind('rounded-full h-16 w-16 mr-10  mx-3 my-3')}source={{ uri: pet?.imageUrl }}/>
+              <View>
+<Text style={tailwind('text-lg font-semibold')}>
+{pet.name}
+</Text>
+<Text>
+    Connect with a rep from {shelter.name}!
+</Text>
+              </View>
           </TouchableOpacity>
-         {/* <Container>
-          <CardContainer>
-                    <Card styles={{ marginBottom: 50 }}>
-            <Card.Cover source={{ uri: pet.imageUrl }} />
-            <Card.Content>
-              <Title>
-                You matched with {pet.name} at {shelter.name}!
-              </Title>
-              <Divider />
-              <Paragraph>{pet.description}</Paragraph>
-              <Paragraph>
-                Location: {pet.city}, {pet.state}
-              </Paragraph>
-              <Paragraph>Species: {pet.species}</Paragraph>
-              <Paragraph>Breed: {pet.breed}</Paragraph>
-              <Paragraph>Age: {pet.age}</Paragraph>
-            </Card.Content>
-                    <Card.Actions>
-                    <Button
-                      icon="chat"
-                      onPress={() => navigation.navigate('AdopterSidebar', { screen: 'AdopterChat' })}
-                    >
-                      Send a message!
-                    </Button>
-                  </Card.Actions>
-                    </Card>
-                    </CardContainer>
-    </Container> */}
         </KeyboardAwareScrollView>
        </SafeAreaView>
     );
