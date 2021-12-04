@@ -6,7 +6,7 @@ import GlobalStyles from '../../../GlobalStyles.js';
 import styled from "styled-components/native";
 import styles from './styles'
 import { db } from '../../firebase/config';
-import { doc, getDocs, collection, getDoc } from 'firebase/firestore';
+import { doc, getDocs, collection, getDoc, onSnapshot, query, where, orderBy } from 'firebase/firestore';
 import { UserContext } from '../../../App';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import tailwind from "tailwind-rn";
@@ -58,6 +58,11 @@ export default function AdopterChatList({match}) {
     getPet();
   }, []);
 
+  useEffect(() => 
+  onSnapshot(query(collection(db, 'messages'), orderBy('timestamp', 'desc'), where('petRefId', '==', `${match.petRefId}`), where('adopterRefId', '==', `${adopter.id}`)),
+  (snapshot)=> setLatestMessage(snapshot.docs[0].data().message),)
+  , []);
+
 
     return (
 <SafeAreaView style={GlobalStyles.droidSafeArea}>
@@ -72,7 +77,7 @@ export default function AdopterChatList({match}) {
 {pet.name}
 </Text>
 <Text>
-    Say hi...
+   {latestMessage || 'Say hi...'}
 </Text>
               </View>
           </TouchableOpacity>

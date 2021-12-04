@@ -6,7 +6,7 @@ import GlobalStyles from '../../../GlobalStyles.js';
 import styled from "styled-components/native";
 import styles from './styles'
 import { db } from '../../firebase/config';
-import { doc, getDocs, collection, getDoc } from 'firebase/firestore';
+import { doc, getDocs, collection, getDoc, onSnapshot, query, where, orderBy } from 'firebase/firestore';
 import { UserContext } from '../../../App';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import tailwind from "tailwind-rn";
@@ -37,6 +37,7 @@ export default function ShelterChatList({match}) {
     const shelter = useContext(UserContext);
   const [adopter, setAdopter] = useState([]);
   const [pet, setPet] = useState([]);
+  const [latestMessage, setLatestMessage] = useState('')
 
   const getAdopter = async () => {
     const adopterDocRef = doc(db, 'adopters', `${match.adopterRefId}`);
@@ -57,6 +58,11 @@ export default function ShelterChatList({match}) {
     getPet();
   }, []);
 
+  useEffect(() => 
+  onSnapshot(query(collection(db, 'messages'), orderBy('timestamp', 'desc'), where('petRefId', '==', `${match.petRefId}`), where('adopterRefId', '==', `${match.adopterRefId}`)),
+  (snapshot)=> setLatestMessage(snapshot.docs[0]?.data()?.message),)
+  , []);
+
     return (
 <SafeAreaView style={GlobalStyles.droidSafeArea}>
       {/* <KeyboardAwareScrollView
@@ -70,7 +76,7 @@ export default function ShelterChatList({match}) {
 {adopter.name}
 </Text>
 <Text>
-    Say hi...
+    {latestMessage || 'Say hi...'}
 </Text>
               </View>
           </TouchableOpacity>
