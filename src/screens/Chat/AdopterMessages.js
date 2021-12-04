@@ -50,9 +50,11 @@ id: doc.id,
             shelterName: shelter.name,
             shelterRefId: shelter.id,
             message: input,
+            sender: adopter.id,
         })
         setInput('');
     };
+    console.log(messages)
 	return (
 		<SafeAreaView style={tailwind('flex-1')}>
 			{/* <KeyboardAwareScrollView
@@ -71,7 +73,7 @@ id: doc.id,
                             inverted={-1}
 							keyExtractor={(item) => item.id}
 							renderItem={({ item: message }) =>
-								messages.userId === adopter.uid ? (
+								message.sender === adopter.id ? (
 									<SenderMessage key={message.id} message={message} />
 								) : (
 									<ReceiverMessage key={message.id} message={message} />
