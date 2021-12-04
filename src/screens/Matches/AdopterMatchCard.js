@@ -81,7 +81,7 @@ export default function AdopterMatchCard({ match }) {
                     <Card.Actions>
                     <Button
                       icon="chat"
-                      onPress={()=> navigation.navigate('AdopterMessages', {adopter, match, pet, shelter})}
+                      onPress={()=> navigation.navigate('AdopterMessages', {match, pet, shelter})}
                     >
                       Send a message!
                     </Button>

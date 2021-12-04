@@ -8,6 +8,7 @@ import styles from "../Home/styles";
 import { db } from '../../firebase/config';
 import { doc, getDocs, collection, getDoc } from 'firebase/firestore';
 import { UserContext } from '../../../App';
+import Header from '../Sidebar/Header';
 
 export default function AdopterChat() {
   const adopter = useContext(UserContext);
@@ -33,6 +34,7 @@ export default function AdopterChat() {
         style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"
       >
+        <Header/>
       <Text style={styles.title}></Text>
       {matches.length === 0 ? (
         <Text>No chats to display!</Text>
