@@ -13,6 +13,7 @@ import {
     Subheading,
   } from "react-native-paper";
   import styles from "../Home/styles";
+import { useNavigation } from '@react-navigation/native';
 
   const Container = styled.View`
   display: flex;
@@ -34,6 +35,7 @@ const CardContainer = styled.View`
 `;
 
 export default function AdopterMatchCard({ match }) {
+    const navigation = useNavigation();
   const adopter = useContext(UserContext);
   const [shelter, setShelter] = useState([]);
   const [pet, setPet] = useState([]);
@@ -61,16 +63,25 @@ export default function AdopterMatchCard({ match }) {
     <SafeAreaView>
       <Container>
           <CardContainer>
-        <Card>
-        <Card.Content>
-                    <Title>
-                      You have matched with {pet.name}, a {pet.species}, at {shelter.name}!
-                    </Title>
-                    </Card.Content>
+                    <Card styles={{ marginBottom: 50 }}>
+            <Card.Cover source={{ uri: pet.imageUrl }} />
+            <Card.Content>
+              <Title>
+                You matched with {pet.name} at {shelter.name}!
+              </Title>
+              <Divider />
+              <Paragraph>{pet.description}</Paragraph>
+              <Paragraph>
+                Location: {pet.city}, {pet.state}
+              </Paragraph>
+              <Paragraph>Species: {pet.species}</Paragraph>
+              <Paragraph>Breed: {pet.breed}</Paragraph>
+              <Paragraph>Age: {pet.age}</Paragraph>
+            </Card.Content>
                     <Card.Actions>
                     <Button
                       icon="chat"
-                      onPress={() => console.log("Not yet!")}
+                      onPress={() => navigation.navigate('AdopterSidebar', { screen: 'AdopterChat' })}
                     >
                       Send a message!
                     </Button>

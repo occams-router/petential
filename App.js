@@ -11,6 +11,7 @@ import {
   AdopterSidebar,
   Login,
   Loading,
+  AdopterChat,
 } from './src/screens';
 import { decode, encode } from 'base-64';
 import { auth, db } from './src/firebase/config';
@@ -101,6 +102,11 @@ export default function App() {
             <Stack.Screen
               name="AdopterSidebar"
               component={AdopterSidebar}
+              options={{ title: 'Petential' }}
+            />
+            <Stack.Screen
+              name="AdopterChat"
+              component={AdopterChat}
               options={{ title: 'Petential' }}
             />
           </>
