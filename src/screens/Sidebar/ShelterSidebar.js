@@ -1,9 +1,9 @@
-import React from "react";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import { NavigationContainer } from "@react-navigation/native";
-import { ShelterHome, ShelterProfile, PetProfile, Header } from "../index.js";
-import GlobalStyles from "../../../GlobalStyles.js";
-import { SafeAreaView } from "react-native-safe-area-context";
+import React from 'react';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
+import { ShelterHome, ShelterProfile, Header } from '../index.js';
+import GlobalStyles from '../../../GlobalStyles.js';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Drawer = createDrawerNavigator();
 
@@ -14,7 +14,7 @@ export default function ShelterSidebar() {
         drawerType="front"
         initialRouteName="Home"
         drawerContentOptions={{
-          activeTintColor: "#e91e63",
+          activeTintColor: '#e91e63',
           itemStyle: { marginVertical: 10 },
         }}
       >
@@ -27,11 +27,6 @@ export default function ShelterSidebar() {
           name="Profile"
           options={{ headerShown: true, header: () => <Header /> }}
           component={ShelterProfile}
-        />
-        <Drawer.Screen
-          name="PetProfile"
-          options={{ headerShown: true, header: () => <Header /> }}
-          component={PetProfile}
         />
         {/* <Drawer.Screen
         name="Requests"

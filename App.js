@@ -9,6 +9,7 @@ import {
   ProfileOptions,
   ShelterSidebar,
   AdopterSidebar,
+  PetProfile,
   Login,
   Loading,
 } from './src/screens';
@@ -105,7 +106,13 @@ export default function App() {
             />
           </>
         ) : (
-          (screen = <Stack.Screen name="Loading" component={Loading} options={{ title: '' }}/>)
+          (screen = (
+            <Stack.Screen
+              name="Loading"
+              component={Loading}
+              options={{ title: '' }}
+            />
+          ))
         );
     } else if (user === null) {
       screen = (
@@ -133,28 +140,34 @@ export default function App() {
         </>
       );
     } else {
-      screen = <Stack.Screen name="Loading" component={Loading} options={{ title: '' }}/>;
+      screen = (
+        <Stack.Screen
+          name="Loading"
+          component={Loading}
+          options={{ title: '' }}
+        />
+      );
     }
   }
   return (
     <SafeAreaProvider>
-    <NavigationContainer>
-      <UserContext.Provider value={specificUser}>
-        <PaperProvider>
-          <Stack.Navigator
-            screenOptions={{
-              headerShown: false,
-              headerStyle: {
-                backgroundColor: '#218d8f',
-                // height: 50,
-              },
-            }}
-          >
-            {screen}
-          </Stack.Navigator>
-        </PaperProvider>
-      </UserContext.Provider>
-    </NavigationContainer>
+      <NavigationContainer>
+        <UserContext.Provider value={specificUser}>
+          <PaperProvider>
+            <Stack.Navigator
+              screenOptions={{
+                headerShown: false,
+                headerStyle: {
+                  backgroundColor: '#218d8f',
+                  // height: 50,
+                },
+              }}
+            >
+              {screen}
+            </Stack.Navigator>
+          </PaperProvider>
+        </UserContext.Provider>
+      </NavigationContainer>
     </SafeAreaProvider>
   );
 }

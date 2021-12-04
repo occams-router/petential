@@ -1,20 +1,17 @@
-import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  Image,
-  SafeAreaView,
-  TouchableOpacity,
-} from "react-native";
+import React from 'react';
+// import {
+//   View,
+//   Text,
+//   StyleSheet,
+//   Dimensions,
+//   Image,
+//   SafeAreaView,
+//   TouchableOpacity,
+// } from "react-native";
+import { Card, Title, Button } from 'react-native-paper';
+import { CardContainer, Container } from './cardstyles';
 
-import { Card, Title, Button } from "react-native-paper";
-import { CardContainer, Container } from "./cardstyles";
-
-export default function PetCard({ pets, navigation }) {
-  // console.log(props);
-  // const { navigate } = props;
+export default function PetCard({ navigation }) {
   return (
     <Container>
       <CardContainer>
@@ -26,7 +23,7 @@ export default function PetCard({ pets, navigation }) {
           <Card.Actions>
             <Button
               mode="contained"
-              style={{ backgroundColor: "#788eec" }}
+              style={{ backgroundColor: '#788eec' }}
               // onPress={navigation.navigate("PetProfile", { pet: pets })}
             >
               Edit Pet

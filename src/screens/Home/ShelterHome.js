@@ -1,13 +1,16 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Text, TouchableOpacity, SafeAreaView, FlatList } from "react-native";
-import { auth, db } from "../../firebase/config";
-import styles from "./styles";
-import { signOut } from "@firebase/auth";
-import { collection, getDocs } from "firebase/firestore";
-import PetCard from "../PetCards/ShelterPetCard";
-import { UserContext } from "../../../App";
-import { NavigationActions } from "react-navigation";
-import GlobalStyles from "../../../GlobalStyles";
+import React, { useState, useEffect, useContext } from 'react';
+import { Text, TouchableOpacity, SafeAreaView, FlatList } from 'react-native';
+import { auth, db } from '../../firebase/config';
+import styles from './styles';
+import { signOut } from '@firebase/auth';
+import { collection, getDocs } from 'firebase/firestore';
+import PetCard from '../PetCards/ShelterPetCard';
+import { UserContext } from '../../../App';
+import { NavigationActions } from 'react-navigation';
+import GlobalStyles from '../../../GlobalStyles';
+
+import { Card, Title, Button } from 'react-native-paper';
+import { CardContainer, Container } from '../PetCards/cardstyles';
 
 export default function ShelterHome({ navigation }) {
   const shelter = useContext(UserContext);
@@ -15,9 +18,9 @@ export default function ShelterHome({ navigation }) {
   const logout = async () => {
     try {
       await signOut(auth);
-      alert("You are logged out.");
+      alert('You are logged out.');
     } catch (error) {
-      alert("Log-out was unsuccessful.");
+      alert('Log-out was unsuccessful.');
       console.log(error.message);
     }
   };
@@ -33,7 +36,7 @@ export default function ShelterHome({ navigation }) {
       });
       setPetData([...list]);
     } catch (e) {
-      console.log("No pets in shelter");
+      console.log('No pets in shelter');
     }
   };
 
@@ -48,7 +51,7 @@ export default function ShelterHome({ navigation }) {
       <TouchableOpacity style={styles.button}>
         <Text
           style={styles.buttonTitle}
-          onPress={navigation.navigate("PetProfile", { pet: "" })}
+          onPress={navigation.navigate('PetProfile', { pet: '' })}
         >
           Add a Pet
         </Text>
@@ -62,7 +65,25 @@ export default function ShelterHome({ navigation }) {
         data={petData}
         keyextractor={(item, index) => item.key}
         renderItem={({ item }) => (
-          <PetCard navigation={navigation.navigate} pets={item} />
+          <Container>
+            <CardContainer>
+              <Card>
+                <Card.Cover source={{ uri: item.imageUrl }}></Card.Cover>
+                <Title>{item.name}</Title>
+                <Text>Breed: {item.breed}</Text>
+                <Text>Age: {item.age}</Text>
+                <Card.Actions>
+                  <Button
+                    mode="contained"
+                    style={{ backgroundColor: '#788eec' }}
+                    onPress={navigation.navigate('PetProfile', { pet: item })}
+                  >
+                    Edit Pet
+                  </Button>
+                </Card.Actions>
+              </Card>
+            </CardContainer>
+          </Container>
         )}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 150 }}
@@ -71,4 +92,6 @@ export default function ShelterHome({ navigation }) {
   );
 }
 
-// navigation={navigate}
+{
+  /* <PetCard navigation={props.navigation} pets={item} />; */
+}
