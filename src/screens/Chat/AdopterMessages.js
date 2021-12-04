@@ -13,28 +13,52 @@ import {
 	FlatList,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import GlobalStyles from '../../../GlobalStyles.js';
 import tailwind from 'tailwind-rn';
 import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../../../App.js';
 import Header from '../Sidebar/Header';
 import styles from '../Login/styles.js';
-import PetCard from '../PetCards/ShelterPetCard.js';
+import SenderMessage from './SenderMessage.js';
+import ReceiverMessage from './ReceiverMessage.js';
+import { addDoc, onSnapshot, orderBy, serverTimestamp, doc, query, collection, where } from '@firebase/firestore';
+import { db } from '../../firebase/config.js';
+
 export default function AdopterMessages(props) {
 	const pet = props.route.params.pet;
 	const shelter = props.route.params.shelter;
+    const match = props.route.params.match;
 	const adopter = useContext(UserContext);
 	const [input, setInput] = useState('');
 	const [messages, setMessages] = useState([]);
 
-	const sendMessage = () => {};
+    useEffect(() => 
+onSnapshot(query(collection(db, 'messages'), where('petRefId', '==', `${pet.id}`),
+),  snapshot => setMessages(snapshot.docs.map(doc => ({
+id: doc.id,
+...doc.data(),
+})))
+), [])
+
+	const sendMessage = () => {
+        addDoc(collection(db, 'messages'), {
+            timestamp: serverTimestamp(),
+            adopterRefId: adopter.id,
+            // adopterUId: adopter.uid,
+            // shelterUId: shelter.uid,
+            adopterName: adopter.name,
+            petRefId: pet.id,
+            shelterName: shelter.name,
+            shelterRefId: shelter.id,
+            message: input,
+        })
+        setInput('');
+    };
 	return (
-		<SafeAreaView>
-			<KeyboardAwareScrollView
+		<SafeAreaView style={tailwind('flex-1')}>
+			{/* <KeyboardAwareScrollView
 				style={{ flex: 1, width: '100%' }}
-				keyboardShouldPersistTaps="always">
+				keyboardShouldPersistTaps="always"> */}
 				<Header title="chat" />
-				<Text style={styles.title}></Text>
 				<Text style={styles.title}>Your Chat regarding {pet.name}</Text>
 				<KeyboardAvoidingView
 					behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -42,7 +66,7 @@ export default function AdopterMessages(props) {
 					keyboardVerticalOffset={10}>
 					<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 						<FlatList
-							date={messages}
+							data={messages}
 							style={tailwind('pl-4')}
 							keyExtractor={(item) => item.id}
 							renderItem={({ item: message }) =>
@@ -55,9 +79,17 @@ export default function AdopterMessages(props) {
 						/>
 					</TouchableWithoutFeedback>
 					<View
+                   stele={{width: '100%',
+                    height: 50,
+                    backgroundColor: '#EE5407',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    position: 'absolute', 
+                    bottom: 0}}
 						style={tailwind(
-							'flex-row bg-white justify-between border-t border-gray-200 px-5 py-2'
-						)}>
+							'flex-row justify-between border-t border-gray-200 px-5 py-2'
+						)}
+                        >
 						<TextInput
 							style={tailwind('h-10 text-lg')}
 							placeholder="Send message..."
@@ -68,7 +100,7 @@ export default function AdopterMessages(props) {
 						<Button onPress={sendMessage} title="Send" color="#56d9db" />
 					</View>
 				</KeyboardAvoidingView>
-			</KeyboardAwareScrollView>
+			{/* </KeyboardAwareScrollView> */}
 		</SafeAreaView>
 	);
 }

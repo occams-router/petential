@@ -30,10 +30,10 @@ export default function AdopterChat() {
   console.log(matches);
     return (
 <SafeAreaView>
-      <KeyboardAwareScrollView
+      {/* <KeyboardAwareScrollView
         style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"
-      >
+      > */}
         <Header/>
       <Text style={styles.title}></Text>
       {matches.length === 0 ? (
@@ -47,7 +47,7 @@ export default function AdopterChat() {
         <Text style={styles.title}></Text>
         </>
       )}
-      </KeyboardAwareScrollView>
+      {/* </KeyboardAwareScrollView> */}
     </SafeAreaView>
     );
 }

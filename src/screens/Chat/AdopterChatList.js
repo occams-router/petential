@@ -59,10 +59,10 @@ export default function AdopterChatList({match}) {
 
     return (
 <SafeAreaView style={GlobalStyles.droidSafeArea}>
-      <KeyboardAwareScrollView
+      {/* <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always"
-      >
+      > */}
           <TouchableOpacity onPress={()=> navigation.navigate('AdopterMessages', {match, pet, shelter})} style={[tailwind('flex-row items-center py-3 bg-white mx-3 my-3 rounded-lg'), styles.cardShadow,]}>
               <Image style={tailwind('rounded-full h-16 w-16 mr-10  mx-3 my-3')}source={{ uri: pet?.imageUrl }}/>
               <View>
@@ -70,11 +70,11 @@ export default function AdopterChatList({match}) {
 {pet.name}
 </Text>
 <Text>
-    Connect with a rep from {shelter.name}!
+    Say hi...
 </Text>
               </View>
           </TouchableOpacity>
-        </KeyboardAwareScrollView>
+        {/* </KeyboardAwareScrollView> */}
        </SafeAreaView>
     );
 }

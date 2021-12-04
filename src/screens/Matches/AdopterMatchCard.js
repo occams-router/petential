@@ -15,23 +15,18 @@ import {
   import styles from "../Home/styles";
 import { useNavigation } from '@react-navigation/native';
 
-  const Container = styled.View`
+const Container = styled.View`
   display: flex;
   align-items: center;
   width: 100%;
   justify-content: space-between;
-  align-content: space-around;
-  margin: 10px;
 `;
 
 const CardContainer = styled.View`
   width: 90%;
   max-width: 750px;
-  align-items: center;
   height: auto;
-  justify-content: space-between;
-  align-content: space-around;
-  margin: 10px;
+  margin-bottom: 20px;
 `;
 
 export default function AdopterMatchCard({ match }) {
