@@ -61,7 +61,7 @@ id: doc.id,
 				style={{ flex: 1, width: '100%' }}
 				keyboardShouldPersistTaps="always"> */}
 				<Header title="chat" />
-				<Text style={styles.title}>Your Chat with {adopter.name} regarding {pet.name}</Text>
+				<Text style={styles.title}>{adopter.name} regarding {pet.name}</Text>
 				<KeyboardAvoidingView
 					behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 					style={tailwind('flex-1')}
