@@ -59,7 +59,10 @@ export default function AdopterProfile() {
         keyboardShouldPersistTaps="always"
       >
         <Text style={styles.title}> Welcome, {user.name}!</Text>
-        <Image style={styles.logo} source={user.imageUrl} />
+        {user.imageUrl ? (
+        <Image style={styles.logo} source={{
+            uri: user.imageUrl
+          }}/>) : null}
         <TextInput
           style={styles.input}
           label="Name"

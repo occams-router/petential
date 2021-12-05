@@ -34,7 +34,6 @@ export default function ShelterHome({ navigation }) {
 
   return (
     <SafeAreaView style={GlobalStyles.droidSafeArea}>
-      <Text style={styles.title}></Text>
       <Text style={styles.title}>Current Pets</Text>
       <TouchableOpacity style={styles.button}>
         {/* {change screen name place holder} */}
