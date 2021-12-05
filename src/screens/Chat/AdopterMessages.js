@@ -17,7 +17,7 @@ import Header from '../Sidebar/Header';
 import styles from '../Login/styles.js';
 import SenderMessage from './SenderMessage.js';
 import ReceiverMessage from './ReceiverMessage.js';
-import { addDoc, onSnapshot, orderBy, serverTimestamp, doc, query, collection, where } from '@firebase/firestore';
+import { addDoc, onSnapshot, orderBy, serverTimestamp, doc, query, collection, where, updateDoc } from '@firebase/firestore';
 import { db } from '../../firebase/config.js';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import GlobalStyles from '../../../GlobalStyles.js';
@@ -30,6 +30,8 @@ export default function AdopterMessages(props) {
 	const [input, setInput] = useState('');
 	const [messages, setMessages] = useState([]);
     const scrollViewRef = useRef();
+    let messageDoc;
+    let docRefId;
 
     useEffect(() => 
 onSnapshot(query(collection(db, 'messages'), where('petRefId', '==', `${pet.id}`), where('adopterRefId', '==', `${adopter.id}`),orderBy('timestamp', 'desc'),
@@ -40,8 +42,15 @@ id: doc.id,
 )
 , [])
 
-	const sendMessage = () => {
-        addDoc(collection(db, 'messages'), {
+useEffect( async () => 
+onSnapshot(query(collection(db, 'messages'), where('petRefId', '==', `${match.petRefId}`), where('adopterRefId', '==', `${match.adopterRefId}`), where('sender', '==', `${shelter.id}`)),
+  (snapshot)=> snapshot.docs.map(dac => (
+    messageDoc = doc(db, 'messages', dac.id),
+   updateDoc(messageDoc, {unread: false})))),
+[])
+
+	const sendMessage = async () => {
+        const docRef = await addDoc(collection(db, 'messages'), {
             timestamp: serverTimestamp(),
             adopterRefId: adopter.id,
             adopterName: adopter.name,
@@ -50,7 +59,10 @@ id: doc.id,
             shelterRefId: shelter.id,
             message: input,
             sender: adopter.id,
+            unread: true,
         })
+        await updateDoc(docRef, {id: docRef.id})
+        docRefId = docRef.id
         setInput('');
     };
 	return (

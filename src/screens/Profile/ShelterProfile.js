@@ -48,7 +48,7 @@ export default function ShelterProfile() {
       >
         <Text style={styles.title}></Text>
         <Text style={styles.title}>Welcome, {shelter.name}!</Text>
-        <Image style={styles.logo} source={imageUrl} />
+        <Image style={styles.logo} source={shelter.imageUrl || imageUrl} />
         <TextInput
           style={styles.input}
           placeholder="Name of Shelter"
