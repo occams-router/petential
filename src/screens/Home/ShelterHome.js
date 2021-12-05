@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Text, TouchableOpacity, SafeAreaView, FlatList } from 'react-native';
-import styles from './styles';
 import { NavigationActions } from 'react-navigation';
 import GlobalStyles from '../../../GlobalStyles';
 import { db } from '../../firebase/config';
 import { collection, getDocs } from 'firebase/firestore';
-import PetCard from '../PetCards/ShelterPetCard';
+// import PetCard from '../PetCards/ShelterPetCard';
 import { UserContext } from '../../../App';
-
+import styles from './styles';
 import { Card, Title, Button } from 'react-native-paper';
 import { CardContainer, Container } from '../PetCards/cardstyles';
 
@@ -54,7 +53,7 @@ export default function ShelterHome({ navigation }) {
           <Container>
             <CardContainer>
               <Card>
-                <Card.Cover source={{ uri: item.imageUrl }}></Card.Cover>
+                <Card.Cover source={{ uri: `${item.imageUrl}` }}></Card.Cover>
                 <Title>{item.name}</Title>
                 <Text>Breed: {item.breed}</Text>
                 <Text>Age: {item.age}</Text>
@@ -74,12 +73,8 @@ export default function ShelterHome({ navigation }) {
           </Container>
         )}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 150 }}
+        contentContainerStyle={{ paddingBottom: 50 }}
       />
     </SafeAreaView>
   );
-}
-
-{
-  /* <PetCard navigation={props.navigation} pets={item} />; */
 }
