@@ -8,8 +8,9 @@ import {
   ShelterRequests,
   ShelterMatches,
   Header,
-} from "../index.js";
-import GlobalStyles from "../../../GlobalStyles.js";
+  ShelterChat,
+} from '../index.js';
+import GlobalStyles from '../../../GlobalStyles.js';
 
 const Drawer = createDrawerNavigator();
 
@@ -44,6 +45,12 @@ export default function ShelterSidebar() {
           options={{ headerShown: true, header: () => <Header /> }}
           component={ShelterMatches}
         />
+        <Drawer.Screen
+        name="Chat"
+        style={{position: 'absolute'}}
+        options={{ headerShown: true, headerMode: 'screen', header: () => <Header style={{position: 'absolute'}}/> }}
+        component={ShelterChat}
+      />
       </Drawer.Navigator>
     </SafeAreaView>
   );
