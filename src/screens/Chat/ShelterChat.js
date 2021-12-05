@@ -28,7 +28,6 @@ export default function ShelterChat() {
   console.log(matches);
     return (
 <SafeAreaView>
-        <Header/>
       {matches.length === 0 ? (
         <Text>No chats to display!</Text>
       ) : (
