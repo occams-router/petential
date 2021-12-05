@@ -141,14 +141,11 @@ export default function AdopterPetCard(props) {
                     <ButtonContainer>
                       <Button
                         icon="thumb-down-outline"
-                        onPress={() => console.log("You choose to pass.")}
+                        onPress={() => swiped("left", pet)}
                       >
                         Pass
                       </Button>
-                      <Button
-                        icon="heart"
-                        onPress={() => console.log("You choose to like.")}
-                      >
+                      <Button icon="heart" onPress={() => swiped("right", pet)}>
                         Like
                       </Button>
                     </ButtonContainer>
