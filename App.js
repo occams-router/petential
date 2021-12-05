@@ -9,6 +9,7 @@ import {
   ProfileOptions,
   ShelterSidebar,
   AdopterSidebar,
+  PetProfile,
   Login,
   Loading,
   AdopterChat,
@@ -93,12 +94,13 @@ export default function App() {
               component={ShelterSidebar}
               options={{ title: 'Petential' }}
             />
+            <Stack.Screen name="PetProfile" component={PetProfile} />
             <Stack.Screen
               name="ShelterChat"
               component={ShelterChat}
               options={{ title: 'Petential' }}
             />
-             <Stack.Screen
+            <Stack.Screen
               name="ShelterMessages"
               component={ShelterMessages}
               options={{ title: 'Petential' }}
@@ -118,14 +120,20 @@ export default function App() {
               component={AdopterChat}
               options={{ title: 'Petential' }}
             />
-             <Stack.Screen
+            <Stack.Screen
               name="AdopterMessages"
               component={AdopterMessages}
               options={{ title: 'Petential' }}
             />
           </>
         ) : (
-          (screen = <Stack.Screen name="Loading" component={Loading} options={{ title: '' }}/>)
+          (screen = (
+            <Stack.Screen
+              name="Loading"
+              component={Loading}
+              options={{ title: '' }}
+            />
+          ))
         );
     } else if (user === null) {
       screen = (
@@ -153,27 +161,33 @@ export default function App() {
         </>
       );
     } else {
-      screen = <Stack.Screen name="Loading" component={Loading} options={{ title: '' }}/>;
+      screen = (
+        <Stack.Screen
+          name="Loading"
+          component={Loading}
+          options={{ title: '' }}
+        />
+      );
     }
   }
   return (
     <SafeAreaProvider>
-    <NavigationContainer>
-      <UserContext.Provider value={specificUser}>
-        <PaperProvider>
-          <Stack.Navigator
-            screenOptions={{
-              headerShown: false,
-              headerStyle: {
-                backgroundColor: '#218d8f',
-              },
-            }}
-          >
-            {screen}
-          </Stack.Navigator>
-        </PaperProvider>
-      </UserContext.Provider>
-    </NavigationContainer>
+      <NavigationContainer>
+        <UserContext.Provider value={specificUser}>
+          <PaperProvider>
+            <Stack.Navigator
+              screenOptions={{
+                headerShown: false,
+                headerStyle: {
+                  backgroundColor: '#218d8f',
+                },
+              }}
+            >
+              {screen}
+            </Stack.Navigator>
+          </PaperProvider>
+        </UserContext.Provider>
+      </NavigationContainer>
     </SafeAreaProvider>
   );
 }
