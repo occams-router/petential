@@ -1,7 +1,7 @@
-import React from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import { NavigationContainer } from "@react-navigation/native";
+import React from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
 import {
   ShelterHome,
   ShelterProfile,
@@ -21,7 +21,7 @@ export default function ShelterSidebar() {
         drawerType="front"
         initialRouteName="Home"
         drawerContentOptions={{
-          activeTintColor: "#e91e63",
+          activeTintColor: '#e91e63',
           itemStyle: { marginVertical: 10 },
         }}
       >
@@ -46,11 +46,15 @@ export default function ShelterSidebar() {
           component={ShelterMatches}
         />
         <Drawer.Screen
-        name="Chat"
-        style={{position: 'absolute'}}
-        options={{ headerShown: true, headerMode: 'screen', header: () => <Header style={{position: 'absolute'}}/> }}
-        component={ShelterChat}
-      />
+          name="Chat"
+          style={{ position: 'absolute' }}
+          options={{
+            headerShown: true,
+            headerMode: 'screen',
+            header: () => <Header style={{ position: 'absolute' }} />,
+          }}
+          component={ShelterChat}
+        />
       </Drawer.Navigator>
     </SafeAreaView>
   );
