@@ -109,7 +109,7 @@ export default function AdopterPetCard(props) {
                 onCardLeftScreen={() => outOfFrame(pet.name)}
                 preventSwipe={["up", "down"]}
               >
-                <Card style={{ padding: 10 }}>
+                <Card style={{ padding: 10, marginBottom: 20 }}>
                   <Card.Cover source={{ uri: pet.imageUrl }}></Card.Cover>
 
                   <Card.Content>
@@ -142,6 +142,7 @@ export default function AdopterPetCard(props) {
                   </Card.Actions>
                 </Card>
               </TinderCard>
+              <InfoText>Swipe or press pass/like!</InfoText>
             </>
           ))(petsList[0])
         ) : (
