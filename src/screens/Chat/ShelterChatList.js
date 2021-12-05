@@ -67,8 +67,8 @@ export default function ShelterChatList({match}) {
           <TouchableOpacity onPress={()=> navigation.navigate('ShelterMessages', {match, pet, adopter})} style={[tailwind('flex-row items-center py-3 bg-white mx-3 my-3 rounded-lg'), styles.cardShadow,]}>
               <Image style={tailwind('rounded-full h-16 w-16 mr-10  mx-3 my-3')}source={{ uri: adopter?.imageUrl }}/>
               <View>
-<Text style={tailwind('text-lg font-semibold')}>
-{adopter.name}
+<Text style={tailwind('text-sm font-semibold')}>
+{adopter.name} inquiring about {pet.name}
 </Text>
 <Text>
     {latestMessage || 'Say hi...'}
