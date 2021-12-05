@@ -55,13 +55,12 @@ export default function Login({ navigation }) {
         style={{ paddingLeft: 40, paddingRight: 40 }}
         keyboardShouldPersistTaps="always"
       >
-        <Text style={styles.title}>Petential</Text>
         <Image
           style={styles.logo}
-          source={{
-            uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2gT4BUTqAaMh6kIvJdw8Wf6pQQGbm6HI0Yg&usqp=CAU",
-          }}
+          source={require("../../../assets/corgi-logo.png")}
         />
+        <Text style={styles.title}>Petential</Text>
+        <Text style={styles.subtitle}>find your furever friend</Text>
         <TextInput
           style={styles.input}
           placeholder="E-mail"

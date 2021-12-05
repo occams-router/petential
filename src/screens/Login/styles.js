@@ -7,16 +7,23 @@ export default StyleSheet.create({
   },
   title: {
     alignSelf: "center",
-    margin: 30,
+    color: "#404040",
+    marginBottom: 10,
     fontSize: 30,
     fontWeight: "bold",
+  },
+  subtitle: {
+    alignSelf: "center",
+    fontSize: 18,
+    marginBottom: 20,
+    color: "#404040",
   },
   logo: {
     flex: 1,
     height: 120,
     width: 90,
     alignSelf: "center",
-    margin: 30,
+    marginTop: 30,
   },
   input: {
     height: 48,
