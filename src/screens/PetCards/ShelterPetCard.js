@@ -11,7 +11,8 @@ import React from 'react';
 import { Card, Title, Button } from 'react-native-paper';
 import { CardContainer, Container } from './cardstyles';
 
-export default function PetCard({ navigation }) {
+export default function PetCard(props) {
+  const { navigation } = props;
   return (
     <Container>
       <CardContainer>
@@ -24,7 +25,7 @@ export default function PetCard({ navigation }) {
             <Button
               mode="contained"
               style={{ backgroundColor: '#788eec' }}
-              // onPress={navigation.navigate("PetProfile", { pet: pets })}
+              onPress={() => navigation.navigate('PetProfile', { pet: pets })}
             >
               Edit Pet
             </Button>

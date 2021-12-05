@@ -1,14 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Text, SafeAreaView, View, Image } from 'react-native';
 import styled from 'styled-components/native';
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  addDoc,
-  where,
-} from 'firebase/firestore';
+import { collection, getDocs, addDoc } from 'firebase/firestore';
 import { db } from '../../firebase/config';
 import TinderCard from '../../react-tinder-card/reactTinderCard';
 import {
@@ -39,6 +31,7 @@ const InfoText = styled.Text`
   justify-content: center;
   display: flex;
   z-index: -100;
+  text-align: center;
 `;
 
 export default function AdopterPetCard(props) {
@@ -72,8 +65,8 @@ export default function AdopterPetCard(props) {
       );
 
       const requestData = {
-        petDocRef: pet.id,
-        userDocRef: user.id,
+        petRefId: pet.id,
+        adopterRefId: user.id,
         shelterRefId: pet.shelterRefId,
         status: 'pending',
       };

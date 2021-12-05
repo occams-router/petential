@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Text, TouchableOpacity, SafeAreaView, FlatList } from 'react-native';
-import { auth, db } from '../../firebase/config';
 import styles from './styles';
-import { signOut } from '@firebase/auth';
+import { NavigationActions } from 'react-navigation';
+import GlobalStyles from '../../../GlobalStyles';
+import { db } from '../../firebase/config';
 import { collection, getDocs } from 'firebase/firestore';
 import PetCard from '../PetCards/ShelterPetCard';
 import { UserContext } from '../../../App';
-import { NavigationActions } from 'react-navigation';
-import GlobalStyles from '../../../GlobalStyles';
 
 import { Card, Title, Button } from 'react-native-paper';
 import { CardContainer, Container } from '../PetCards/cardstyles';
@@ -15,15 +14,6 @@ import { CardContainer, Container } from '../PetCards/cardstyles';
 export default function ShelterHome({ navigation }) {
   const shelter = useContext(UserContext);
   const [petData, setPetData] = useState([]);
-  const logout = async () => {
-    try {
-      await signOut(auth);
-      alert('You are logged out.');
-    } catch (error) {
-      alert('Log-out was unsuccessful.');
-      console.log(error.message);
-    }
-  };
 
   const getPets = async () => {
     try {
@@ -51,14 +41,10 @@ export default function ShelterHome({ navigation }) {
       <TouchableOpacity style={styles.button}>
         <Text
           style={styles.buttonTitle}
-          onPress={navigation.navigate('PetProfile', { pet: '' })}
+          onPress={() => navigation.navigate('PetProfile', { pet: '' })}
         >
           Add a Pet
         </Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => logout()}>
-        <Text style={styles.buttonTitle}>Log out</Text>
       </TouchableOpacity>
 
       <FlatList
@@ -76,7 +62,9 @@ export default function ShelterHome({ navigation }) {
                   <Button
                     mode="contained"
                     style={{ backgroundColor: '#788eec' }}
-                    onPress={navigation.navigate('PetProfile', { pet: item })}
+                    onPress={() =>
+                      navigation.navigate('PetProfile', { pet: item })
+                    }
                   >
                     Edit Pet
                   </Button>

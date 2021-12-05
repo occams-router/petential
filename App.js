@@ -94,6 +94,11 @@ export default function App() {
               component={ShelterSidebar}
               options={{ title: 'Petential' }}
             />
+            <Stack.Screen
+              name="PetProfile"
+              component={PetProfile}
+              options={{ title: 'Petential' }}
+            />
           </>
         ) : userType === 'adopter' &&
           specificUser !== {} &&
