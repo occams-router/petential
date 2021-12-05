@@ -12,6 +12,10 @@ import {
   PetProfile,
   Login,
   Loading,
+  AdopterChat,
+  AdopterMessages,
+  ShelterChat,
+  ShelterMessages,
 } from './src/screens';
 import { decode, encode } from 'base-64';
 import { auth, db } from './src/firebase/config';
@@ -34,7 +38,6 @@ if (!global.btoa) {
 if (!global.atob) {
   global.atob = decode;
 }
-import { Text, View, Image } from 'react-native';
 const Stack = createStackNavigator();
 
 let UserContext;
@@ -75,9 +78,6 @@ export default function App() {
     });
     setLoading(false);
   }, []);
-  // console.log('user:', user);
-  // console.log('userType:', userType);
-  // console.log('specific user:', specificUser);
 
   UserContext = createContext(specificUser);
 
@@ -94,9 +94,15 @@ export default function App() {
               component={ShelterSidebar}
               options={{ title: 'Petential' }}
             />
+            <Stack.Screen name="PetProfile" component={PetProfile} />
             <Stack.Screen
-              name="PetProfile"
-              component={PetProfile}
+              name="ShelterChat"
+              component={ShelterChat}
+              options={{ title: 'Petential' }}
+            />
+            <Stack.Screen
+              name="ShelterMessages"
+              component={ShelterMessages}
               options={{ title: 'Petential' }}
             />
           </>
@@ -107,6 +113,16 @@ export default function App() {
             <Stack.Screen
               name="AdopterSidebar"
               component={AdopterSidebar}
+              options={{ title: 'Petential' }}
+            />
+            <Stack.Screen
+              name="AdopterChat"
+              component={AdopterChat}
+              options={{ title: 'Petential' }}
+            />
+            <Stack.Screen
+              name="AdopterMessages"
+              component={AdopterMessages}
               options={{ title: 'Petential' }}
             />
           </>
@@ -164,7 +180,6 @@ export default function App() {
                 headerShown: false,
                 headerStyle: {
                   backgroundColor: '#218d8f',
-                  // height: 50,
                 },
               }}
             >

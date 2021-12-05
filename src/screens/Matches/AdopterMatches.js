@@ -28,13 +28,13 @@ export default function AdopterMatches() {
 
   return (
     <SafeAreaView style={GlobalStyles.droidSafeArea}>
-      <Text style={styles.title}></Text>
       <Text style={styles.title}>Your Matches</Text>
       {matches.length === 0 ? (
         <Text>No matches to display!</Text>
       ) : (
         <FlatList
           data={matches}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => <MatchCard match={item} />}
         />
       )}

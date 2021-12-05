@@ -1,29 +1,36 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Text, FlatList, TouchableOpacity } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import MatchCard from './ShelterMatchCard';
-import styles from '../Home/styles';
-import GlobalStyles from '../../../GlobalStyles';
-import { db } from '../../firebase/config';
-import { collection, getDocs } from 'firebase/firestore';
-import { UserContext } from '../../../App';
+import React, { useContext, useState, useEffect } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Text, FlatList, TouchableOpacity } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import MatchCard from "./ShelterMatchCard";
+import styles from "../Home/styles";
+import GlobalStyles from "../../../GlobalStyles";
+import { db } from "../../firebase/config";
+import { collection, getDocs, onSnapshot } from "firebase/firestore";
+import { UserContext } from "../../../App";
 
 export default function ShelterMatches() {
   const shelter = useContext(UserContext);
   const [matches, setMatches] = useState([]);
 
-  const getMatches = async () => {
-    const matchList = [];
-    const docs = await getDocs(
-      collection(db, 'shelters', `${shelter.id}`, 'matches')
+  useEffect(async () => {
+    const matchesCollectionRef = collection(
+      db,
+      "shelters",
+      `${shelter.id}`,
+      "matches"
     );
-    docs.forEach((doc) => matchList.push(doc.data()));
-    setMatches([...matchList]);
-  };
 
-  useEffect(() => {
-    getMatches();
+    const unsub = onSnapshot(matchesCollectionRef, async () => {
+      const matchDocs = await getDocs(matchesCollectionRef);
+      const matchData = matchDocs.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setMatches(matchData);
+    });
+
+    return unsub;
   }, []);
 
   return (
@@ -35,6 +42,7 @@ export default function ShelterMatches() {
         <FlatList
           data={matches}
           renderItem={({ item }) => <MatchCard match={item} />}
+          keyExtractor={(item) => item.id}
         />
       )}
     </SafeAreaView>

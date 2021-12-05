@@ -1,8 +1,15 @@
 import React, { useContext, useState, useEffect } from "react";
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Text } from "react-native";
 import { db } from "../../firebase/config";
-import { doc, getDoc } from "firebase/firestore";
+import {
+  doc,
+  updateDoc,
+  addDoc,
+  getDocs,
+  getDoc,
+  collection,
+} from "firebase/firestore";
 import { UserContext } from "../../../App";
 import styled from "styled-components/native";
 import {
@@ -12,6 +19,7 @@ import {
   Button,
   Divider,
   Subheading,
+  Avatar,
 } from "react-native-paper";
 import styles from "./styles";
 
@@ -20,27 +28,57 @@ const Container = styled.View`
   align-items: center;
   width: 100%;
   justify-content: space-between;
-  align-content: space-around;
-  margin: 10px;
 `;
 
 const CardContainer = styled.View`
   width: 90%;
   max-width: 750px;
-  align-items: center;
   height: auto;
-  justify-content: space-between;
-  align-content: space-around;
-  margin: 10px;
+  margin-bottom: 20px;
+`;
+
+const AvatarContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-bottom: 15px;
+  margin-top: 15px;
+`;
+
+const InfoContainer = styled.View`
+  margin-bottom: 20px;
 `;
 
 export default function ShelterRequestCard({ request }) {
   const shelter = useContext(UserContext);
 
-  const onButtonPress = (choice) => {
+  const onButtonPress = async (choice, request) => {
+    const requestDocRef = doc(
+      db,
+      "shelters",
+      `${shelter.id}`,
+      "requests",
+      request.requestId
+    );
+
     if (choice === "accept") {
-      console.log("accepted!");
       // update status in requests subcollection
+      await updateDoc(requestDocRef, { status: "accepted" });
+
+      // create a new document in shelters/matches & adopters/matches
+      await addDoc(collection(db, "shelters", `${shelter.id}`, "matches"), {
+        shelterRefId: shelter.id,
+        adopterRefId: request.userId,
+        petRefId: request.petId,
+      });
+
+      await addDoc(collection(db, "adopters", `${request.userId}`, "matches"), {
+        shelterRefId: shelter.id,
+        adopterRefId: request.userId,
+        petRefId: request.petId,
+      });
+    } else {
+      await updateDoc(requestDocRef, { status: "rejected" });
     }
   };
 
@@ -49,30 +87,51 @@ export default function ShelterRequestCard({ request }) {
       <Container>
         <CardContainer>
           <Card styles={{ marginBottom: 50 }}>
-            <Card.Cover source={{ uri: request.userImageUrl }} />
             <Card.Content>
               <Title>
                 {request.userName} wants to meet {request.petName}!
               </Title>
-              <Divider />
-              <Paragraph>{request.userDescription}</Paragraph>
-              <Paragraph>
-                Location: {request.userCity}, {request.userState}
-              </Paragraph>
-              <Paragraph>Housing: {request.userHousing}</Paragraph>
-              <Paragraph>Lifestyle: {request.userLifestyle}</Paragraph>
-              <Paragraph>Pet History: {request.userPetHistory}</Paragraph>
+              <AvatarContainer>
+                <Avatar.Image
+                  size={120}
+                  source={{ uri: request.userImageUrl }}
+                />
+                <Avatar.Image
+                  size={120}
+                  source={{ uri: request.petImageUrl }}
+                />
+              </AvatarContainer>
+
+              <InfoContainer>
+                <Subheading>About {request.userName}</Subheading>
+                <Divider />
+                <Paragraph>{request.userDescription}</Paragraph>
+                <Paragraph>
+                  Location: {request.userCity}, {request.userState}
+                </Paragraph>
+                <Paragraph>Housing: {request.userHousing}</Paragraph>
+                <Paragraph>Lifestyle: {request.userLifestyle}</Paragraph>
+                <Paragraph>Pet History: {request.userPetHistory}</Paragraph>
+              </InfoContainer>
+
+              <InfoContainer>
+                <Subheading>About {request.petName}</Subheading>
+                <Divider />
+                <Paragraph>Species: {request.petSpecies}</Paragraph>
+                <Paragraph>Breed: {request.petBreed}</Paragraph>
+                <Paragraph>Age: {request.petAge}</Paragraph>
+              </InfoContainer>
             </Card.Content>
             <Card.Actions style={styles.requestButtonContainer}>
               <Button
                 icon="check-circle"
-                onPress={() => onButtonPress("accept")}
+                onPress={() => onButtonPress("accept", request)}
               >
                 Accept
               </Button>
               <Button
                 icon="block-helper"
-                onPress={() => onButtonPress("reject")}
+                onPress={() => onButtonPress("reject", request)}
               >
                 Reject
               </Button>
