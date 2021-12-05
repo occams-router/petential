@@ -36,7 +36,9 @@ export default function ShelterChatList({match}) {
     const shelter = useContext(UserContext);
   const [adopter, setAdopter] = useState([]);
   const [pet, setPet] = useState([]);
-  const [latestMessage, setLatestMessage] = useState('')
+  const [latestMessage, setLatestMessage] = useState('');
+  const [lastMessageStatus, setLastMessageStatus] = useState('');
+  const [lastMessageSender, setLastMessageSender] = useState('')
 
   const getAdopter = async () => {
     const adopterDocRef = doc(db, 'adopters', `${match.adopterRefId}`);
@@ -62,6 +64,16 @@ export default function ShelterChatList({match}) {
   (snapshot)=> setLatestMessage(snapshot.docs[0]?.data()?.message),)
   , []);
 
+  useEffect(() => 
+  onSnapshot(query(collection(db, 'messages'), orderBy('timestamp', 'desc'), where('petRefId', '==', `${match.petRefId}`), where('adopterRefId', '==', `${match.adopterRefId}`)),
+  (snapshot)=> setLastMessageStatus(snapshot.docs[0]?.data()?.unread),)
+  , []);
+
+  useEffect(() => 
+  onSnapshot(query(collection(db, 'messages'), orderBy('timestamp', 'desc'), where('petRefId', '==', `${match.petRefId}`), where('adopterRefId', '==', `${match.adopterRefId}`)),
+  (snapshot)=> setLastMessageSender(snapshot.docs[0]?.data()?.sender),)
+  , []);
+
     return (
 <SafeAreaView style={GlobalStyles.droidSafeArea}>
           <TouchableOpacity onPress={()=> navigation.navigate('ShelterMessages', {match, pet, adopter})} style={[tailwind('flex-row items-center py-3 bg-white mx-3 my-3 rounded-lg'), styles.cardShadow,]}>
@@ -73,6 +85,10 @@ export default function ShelterChatList({match}) {
 <Text>
     {latestMessage || 'Say hi...'}
 </Text>
+{lastMessageStatus && lastMessageSender !== shelter.id ? (
+<Text style={tailwind('text-xs font-semibold text-blue-400')}>
+   New
+</Text>): null}
               </View>
           </TouchableOpacity>
        </SafeAreaView>

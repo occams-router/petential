@@ -8,7 +8,6 @@ import AdopterPetCard from '../PetCards/AdopterPetCard';
 export default function AdopterHome() {
   return (
     <SafeAreaView style={GlobalStyles.droidSafeArea}>
-      <Text style={styles.title}></Text>
       <Text style={styles.title}>Adopter Feed</Text>
 
       <AdopterPetCard />

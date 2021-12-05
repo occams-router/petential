@@ -17,7 +17,7 @@ import Header from '../Sidebar/Header';
 import styles from '../Login/styles.js';
 import SenderMessage from './SenderMessage.js';
 import ReceiverMessage from './ReceiverMessage.js';
-import { addDoc, onSnapshot, orderBy, serverTimestamp, doc, query, collection, where } from '@firebase/firestore';
+import { addDoc, onSnapshot, orderBy, serverTimestamp, doc, query, collection, where, updateDoc, updateDocs } from '@firebase/firestore';
 import { db } from '../../firebase/config.js';
 import { ScrollView } from 'react-native';
 
@@ -29,6 +29,8 @@ export default function ShelterMessages(props) {
 	const [input, setInput] = useState('');
 	const [messages, setMessages] = useState([]);
     const scrollViewRef = useRef();
+    let docRefId;
+    let messageDoc;
 
     useEffect(() => 
 onSnapshot(query(collection(db, 'messages'), where('petRefId', '==', `${pet.id}`), where('adopterRefId', '==', `${adopter.id}`), orderBy('timestamp', 'desc'),
@@ -36,10 +38,19 @@ onSnapshot(query(collection(db, 'messages'), where('petRefId', '==', `${pet.id}`
 id: doc.id,
 ...doc.data(),
 })))
-), [])
+),
+[])
 
-	const sendMessage = () => {
-        addDoc(collection(db, 'messages'), {
+useEffect( async () => 
+onSnapshot(query(collection(db, 'messages'), where('petRefId', '==', `${match.petRefId}`), where('adopterRefId', '==', `${match.adopterRefId}`), where('sender', '==', `${adopter.id}`)),
+  (snapshot)=> snapshot.docs.map(dac => (
+    messageDoc = doc(db, 'messages', dac.id),
+   updateDoc(messageDoc, {unread: false})))),
+[])
+
+
+	const sendMessage = async () => {
+       let docRef = await addDoc(collection(db, 'messages'), {
             timestamp: serverTimestamp(),
             adopterRefId: adopter.id,
             adopterName: adopter.name,
@@ -48,8 +59,11 @@ id: doc.id,
             shelterRefId: shelter.id,
             message: input,
             sender: shelter.id,
+            unread: true,
         })
-        setInput('');
+        await updateDoc(docRef, {id: docRef.id})
+        docRefId = docRef.id
+        setInput('');  
     };
 	return (
 		<SafeAreaView style={tailwind('flex-1')}>
