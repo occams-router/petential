@@ -6,35 +6,32 @@ import { doc, getDoc } from 'firebase/firestore';
 import { UserContext } from '../../../App';
 import styled from 'styled-components/native';
 import {
-  Card,
-  Title,
-  Paragraph,
-  Button,
-  Divider,
-  Subheading,
-} from 'react-native-paper';
-import styles from '../Home/styles';
+    Card,
+    Title,
+    Paragraph,
+    Button,
+    Divider,
+    Subheading,
+  } from "react-native-paper";
+  import styles from "../Home/styles";
+import { useNavigation } from '@react-navigation/native';
 
 const Container = styled.View`
   display: flex;
   align-items: center;
   width: 100%;
   justify-content: space-between;
-  align-content: space-around;
-  margin: 10px;
 `;
 
 const CardContainer = styled.View`
   width: 90%;
   max-width: 750px;
-  align-items: center;
   height: auto;
-  justify-content: space-between;
-  align-content: space-around;
-  margin: 10px;
+  margin-bottom: 20px;
 `;
 
 export default function AdopterMatchCard({ match }) {
+    const navigation = useNavigation();
   const adopter = useContext(UserContext);
   const [shelter, setShelter] = useState([]);
   const [pet, setPet] = useState([]);
@@ -61,22 +58,33 @@ export default function AdopterMatchCard({ match }) {
   return (
     <SafeAreaView>
       <Container>
-        <CardContainer>
-          <Card>
+          <CardContainer>
+                    <Card styles={{ marginBottom: 50 }}>
+            <Card.Cover source={{ uri: pet.imageUrl }} />
             <Card.Content>
               <Title>
-                You have matched with {pet.name}, a {pet.species}, at{' '}
-                {shelter.name}!
+                You matched with {pet.name} at {shelter.name}!
               </Title>
+              <Divider />
+              <Paragraph>{pet.description}</Paragraph>
+              <Paragraph>
+                Location: {pet.city}, {pet.state}
+              </Paragraph>
+              <Paragraph>Species: {pet.species}</Paragraph>
+              <Paragraph>Breed: {pet.breed}</Paragraph>
+              <Paragraph>Age: {pet.age}</Paragraph>
             </Card.Content>
-            <Card.Actions>
-              <Button icon="chat" onPress={() => console.log('Not yet!')}>
-                Send a message!
-              </Button>
-            </Card.Actions>
-          </Card>
-        </CardContainer>
-      </Container>
+                    <Card.Actions>
+                    <Button
+                      icon="chat"
+                      onPress={()=> navigation.navigate('AdopterMessages', {match, pet, shelter})}
+                    >
+                      Send a message!
+                    </Button>
+                  </Card.Actions>
+                    </Card>
+                    </CardContainer>
+    </Container>
     </SafeAreaView>
   );
 }
