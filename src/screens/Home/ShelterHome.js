@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Text, TouchableOpacity, SafeAreaView, FlatList } from 'react-native';
-import { NavigationActions } from 'react-navigation';
-import GlobalStyles from '../../../GlobalStyles';
-import { db } from '../../firebase/config';
-import { collection, getDocs } from 'firebase/firestore';
+import React, { useState, useEffect, useContext } from "react";
+import { Text, TouchableOpacity, SafeAreaView, FlatList } from "react-native";
+import { NavigationActions } from "react-navigation";
+import GlobalStyles from "../../../GlobalStyles";
+import { db } from "../../firebase/config";
+import { collection, getDocs } from "firebase/firestore";
 // import PetCard from '../PetCards/ShelterPetCard';
-import { UserContext } from '../../../App';
-import styles from './styles';
-import { Card, Title, Button } from 'react-native-paper';
-import { CardContainer, Container } from '../PetCards/cardstyles';
+import { UserContext } from "../../../App";
+import styles from "./styles";
+import { Card, Title, Button } from "react-native-paper";
+import { CardContainer, Container } from "../PetCards/cardstyles";
 
 export default function ShelterHome({ navigation }) {
   const shelter = useContext(UserContext);
@@ -25,7 +25,7 @@ export default function ShelterHome({ navigation }) {
       });
       setPetData([...list]);
     } catch (e) {
-      console.log('No pets in shelter');
+      console.log("No pets in shelter");
     }
   };
 
@@ -40,7 +40,7 @@ export default function ShelterHome({ navigation }) {
       <TouchableOpacity style={styles.button}>
         <Text
           style={styles.buttonTitle}
-          onPress={() => navigation.navigate('PetProfile', { pet: '' })}
+          onPress={() => navigation.navigate("PetProfile", { pet: "" })}
         >
           Add a Pet
         </Text>
@@ -60,9 +60,9 @@ export default function ShelterHome({ navigation }) {
                 <Card.Actions>
                   <Button
                     mode="contained"
-                    style={{ backgroundColor: '#788eec' }}
+                    style={{ backgroundColor: "#24a6a8" }}
                     onPress={() =>
-                      navigation.navigate('PetProfile', { pet: item })
+                      navigation.navigate("PetProfile", { pet: item })
                     }
                   >
                     Edit Pet

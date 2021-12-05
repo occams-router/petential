@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 // import {
 //   View,
 //   Text,
@@ -8,8 +8,8 @@ import React from 'react';
 //   SafeAreaView,
 //   TouchableOpacity,
 // } from "react-native";
-import { Card, Title, Button } from 'react-native-paper';
-import { CardContainer, Container } from './cardstyles';
+import { Card, Title, Button } from "react-native-paper";
+import { CardContainer, Container } from "./cardstyles";
 
 export default function PetCard(props) {
   const { navigation } = props;
@@ -24,8 +24,8 @@ export default function PetCard(props) {
           <Card.Actions>
             <Button
               mode="contained"
-              style={{ backgroundColor: '#788eec' }}
-              onPress={() => navigation.navigate('PetProfile', { pet: pets })}
+              style={{ backgroundColor: "#24a6a8" }}
+              onPress={() => navigation.navigate("PetProfile", { pet: pets })}
             >
               Edit Pet
             </Button>

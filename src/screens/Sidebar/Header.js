@@ -3,6 +3,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { SafeAreaView, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { Button } from "react-native-paper";
 
 export default function Header() {
   const navigation = useNavigation();
@@ -19,12 +20,16 @@ export default function Header() {
 
   return (
     <SafeAreaView style={headerStyles.container}>
-      <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-        <Text>Menu</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => logout()}>
-        <Text>Log Out</Text>
-      </TouchableOpacity>
+      <Button
+        icon="menu"
+        onPress={() => navigation.toggleDrawer()}
+        color="#fff"
+      >
+        Menu
+      </Button>
+      <Button icon="logout" onPress={() => logout()} color="#fff">
+        Log Out
+      </Button>
     </SafeAreaView>
   );
 }
@@ -35,7 +40,7 @@ const headerStyles = StyleSheet.create({
     left: 0,
     right: 0,
     width: "100%",
-    backgroundColor: "#56d9db",
+    backgroundColor: "#24a6a8",
     // elevation: 5,
     height: 50,
     display: "flex",
