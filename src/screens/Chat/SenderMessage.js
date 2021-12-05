@@ -1,7 +1,7 @@
 import React from "react";
 import {View, Text} from 'react-native';
 import tailwind from "tailwind-rn";
-import Moment from 'react-moment'
+import moment from "moment";
 
 export default function SenderMessage({message}) {
     return (
@@ -14,8 +14,8 @@ export default function SenderMessage({message}) {
         </View>
         <View style={[tailwind('px-5 py-3'), {alignSelf: "flex-start", marginLeft: 'auto'}]}>
         <Text>
-<Moment fromNow>{message.timestamp.toDate()}</Moment>
-        </Text>
+        {moment(message.timestamp.toDate()).fromNow()}
+</Text>
     </View>
     </View>
     )
