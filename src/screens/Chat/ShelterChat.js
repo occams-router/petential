@@ -28,17 +28,15 @@ export default function ShelterChat() {
   console.log(matches);
     return (
 <SafeAreaView>
-        <Header/>
-      <Text style={styles.title}></Text>
       {matches.length === 0 ? (
         <Text>No chats to display!</Text>
       ) : (
           <>
         <FlatList
           data={matches}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => <ShelterChatList match={item} />}
         />
-        <Text style={styles.title}></Text>
         </>
       )}
     </SafeAreaView>

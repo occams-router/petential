@@ -27,22 +27,17 @@ export default function AdopterMatches() {
   }, []);
 
   return (
-    <SafeAreaView>
-      {/* <KeyboardAwareScrollView
-        style={{ flex: 1, width: "100%" }}
-        keyboardShouldPersistTaps="always"
-      > */}
-      <Text style={styles.title}></Text>
+    <SafeAreaView style={GlobalStyles.droidSafeArea}>
       <Text style={styles.title}>Your Matches</Text>
       {matches.length === 0 ? (
         <Text>No matches to display!</Text>
       ) : (
         <FlatList
           data={matches}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => <MatchCard match={item} />}
         />
       )}
-      {/* </KeyboardAwareScrollView> */}
     </SafeAreaView>
   );
 }

@@ -11,7 +11,7 @@ import {
 	FlatList,
 } from 'react-native';
 import tailwind from 'tailwind-rn';
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import { UserContext } from '../../../App.js';
 import Header from '../Sidebar/Header';
 import styles from '../Login/styles.js';
@@ -19,6 +19,7 @@ import SenderMessage from './SenderMessage.js';
 import ReceiverMessage from './ReceiverMessage.js';
 import { addDoc, onSnapshot, orderBy, serverTimestamp, doc, query, collection, where } from '@firebase/firestore';
 import { db } from '../../firebase/config.js';
+import { ScrollView } from 'react-native';
 
 export default function ShelterMessages(props) {
 	const pet = props.route.params.pet;
@@ -27,6 +28,7 @@ export default function ShelterMessages(props) {
 	const shelter = useContext(UserContext);
 	const [input, setInput] = useState('');
 	const [messages, setMessages] = useState([]);
+    const scrollViewRef = useRef();
 
     useEffect(() => 
 onSnapshot(query(collection(db, 'messages'), where('petRefId', '==', `${pet.id}`), where('adopterRefId', '==', `${adopter.id}`), orderBy('timestamp', 'desc'),
@@ -57,6 +59,9 @@ id: doc.id,
 					keyboardVerticalOffset={10}>
                         <Header title="chat" />
 				<Text style={styles.title}>{adopter.name} regarding {pet.name}</Text>
+                <ScrollView
+      ref={scrollViewRef}
+      onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}>
 					<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 						<FlatList
 							data={messages}
@@ -72,6 +77,7 @@ id: doc.id,
 							}
 						/>
 					</TouchableWithoutFeedback>
+                    </ScrollView>
 					<View
                    stele={{width: '100%',
                     height: 50,
