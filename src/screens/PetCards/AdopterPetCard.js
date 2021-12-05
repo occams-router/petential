@@ -22,7 +22,6 @@ const Container = styled.View`
 
 const CardContainer = styled.View`
   width: 90%;
-  max-width: 260px;
   height: auto;
 `;
 
@@ -115,7 +114,7 @@ export default function AdopterPetCard(props) {
                 onCardLeftScreen={() => outOfFrame(pet.name)}
                 preventSwipe={["up", "down"]}
               >
-                <Card>
+                <Card style={{ padding: 10 }}>
                   <Card.Cover source={{ uri: pet.imageUrl }}></Card.Cover>
 
                   <Card.Content>

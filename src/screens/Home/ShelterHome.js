@@ -36,14 +36,14 @@ export default function ShelterHome({ navigation }) {
   return (
     <SafeAreaView style={GlobalStyles.droidSafeArea}>
       <Text style={styles.title}>Current Pets</Text>
-      <TouchableOpacity style={styles.button}>
-        <Text
-          style={styles.buttonTitle}
-          onPress={() => navigation.navigate("PetProfile", { pet: "" })}
-        >
-          Add a Pet
-        </Text>
-      </TouchableOpacity>
+
+      <Button
+        mode="contained"
+        style={{ marginLeft: 80, marginRight: 80, marginBottom: 20 }}
+        onPress={() => navigation.navigate("PetProfile", { pet: "" })}
+      >
+        Add a Pet
+      </Button>
 
       <FlatList
         data={petData}
@@ -51,14 +51,17 @@ export default function ShelterHome({ navigation }) {
         renderItem={({ item }) => (
           <Container>
             <CardContainer>
-              <Card>
+              <Card style={{ padding: 10 }}>
                 <Card.Cover source={{ uri: `${item.imageUrl}` }}></Card.Cover>
                 <Title>{item.name}</Title>
                 <Text>Breed: {item.breed}</Text>
                 <Text>Age: {item.age}</Text>
-                <Card.Actions>
+                <Card.Actions
+                  style={{ display: "flex", justifyContent: "center" }}
+                >
                   <Button
                     mode="contained"
+                    icon="account-edit-outline"
                     style={{ backgroundColor: "#24a6a8" }}
                     onPress={() =>
                       navigation.navigate("PetProfile", { pet: item })

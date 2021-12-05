@@ -81,15 +81,11 @@ export default function Login({ navigation }) {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-        {/* <TouchableOpacity style={styles.button} onPress={() => onLoginPress()}>
-          <Text style={styles.buttonTitle}>Log in</Text>
-        </TouchableOpacity> */}
         <Button
           mode="contained"
           style={{ marginTop: 10 }}
           onPress={() => onLoginPress()}
         >
-          {/* <Text style={styles.buttonTitle}>Log in</Text> */}
           Log in
         </Button>
         <View style={styles.footerView}>

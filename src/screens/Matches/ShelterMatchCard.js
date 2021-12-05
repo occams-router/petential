@@ -1,6 +1,6 @@
-import React, { useContext, useState, useEffect} from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { SafeAreaView, Text } from 'react-native';
+import React, { useContext, useState, useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView, Text } from "react-native";
 import {
   Card,
   Avatar,
@@ -8,12 +8,12 @@ import {
   Paragraph,
   Button,
   Divider,
-} from 'react-native-paper';
-import styled from 'styled-components/native';
-import styles from '../Home/styles';
-import { db } from '../../firebase/config';
-import { doc, getDoc } from 'firebase/firestore';
-import { UserContext } from '../../../App';
+} from "react-native-paper";
+import styled from "styled-components/native";
+import styles from "../Home/styles";
+import { db } from "../../firebase/config";
+import { doc, getDoc } from "firebase/firestore";
+import { UserContext } from "../../../App";
 
 const Container = styled.View`
   display: flex;
@@ -35,13 +35,13 @@ export default function ShelterMatchCard({ match }) {
   const [pet, setPet] = useState([]);
 
   const getAdopter = async () => {
-    const adopterDocRef = doc(db, 'adopters', `${match.adopterRefId}`);
+    const adopterDocRef = doc(db, "adopters", `${match.adopterRefId}`);
     const adopterDoc = await getDoc(adopterDocRef);
     setAdopter(adopterDoc.data());
   };
 
   const getPet = async () => {
-    const petDocRef = doc(db, 'pets', `${match.petRefId}`);
+    const petDocRef = doc(db, "pets", `${match.petRefId}`);
     const petDoc = await getDoc(petDocRef);
     setPet(petDoc.data());
   };
@@ -55,7 +55,7 @@ export default function ShelterMatchCard({ match }) {
     <SafeAreaView>
       <Container>
         <CardContainer>
-          <Card styles={{ marginBottom: 50 }}>
+          <Card style={{ marginBottom: 10, padding: 10 }}>
             <Card.Cover source={{ uri: adopter.imageUrl }} />
             <Card.Content>
               <Title>
@@ -71,7 +71,18 @@ export default function ShelterMatchCard({ match }) {
               <Paragraph>Pet History: {adopter.petHistory}</Paragraph>
             </Card.Content>
             <Card.Actions>
-              <Button icon="chat" onPress={()=> navigation.navigate('ShelterMessages', {match, pet, adopter})}>See Messages</Button>
+              <Button
+                icon="chat"
+                onPress={() =>
+                  navigation.navigate("ShelterMessages", {
+                    match,
+                    pet,
+                    adopter,
+                  })
+                }
+              >
+                See Messages
+              </Button>
             </Card.Actions>
           </Card>
         </CardContainer>

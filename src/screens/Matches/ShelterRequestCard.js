@@ -86,7 +86,7 @@ export default function ShelterRequestCard({ request }) {
     <SafeAreaView>
       <Container>
         <CardContainer>
-          <Card styles={{ marginBottom: 50 }}>
+          <Card style={{ marginBottom: 10, padding: 10 }}>
             <Card.Content>
               <Title>
                 {request.userName} wants to meet {request.petName}!
