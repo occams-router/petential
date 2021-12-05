@@ -14,7 +14,7 @@ export default function SenderMessage({message}) {
         </View>
         <View style={[tailwind('px-5 py-3'), {alignSelf: "flex-start", marginLeft: 'auto'}]}>
         <Text>
-        {moment(message.timestamp.toDate()).fromNow()}
+        {moment(message.timestamp?.toDate()).fromNow()}
 </Text>
     </View>
     </View>
