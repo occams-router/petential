@@ -10,6 +10,7 @@ import {
   Button,
   Divider,
   Subheading,
+  Avatar,
 } from "react-native-paper";
 import { UserContext } from "../../../App";
 
@@ -41,7 +42,6 @@ const ButtonContainer = styled.View`
 `;
 
 export default function AdopterPetCard(props) {
-  const [lastDirection, setLastDirection] = useState();
   const [petsList, setPetsList] = useState([]);
   const user = useContext(UserContext);
 
@@ -81,7 +81,6 @@ export default function AdopterPetCard(props) {
     }
 
     setPetsList(petsList.slice(1));
-    setLastDirection(direction);
   };
 
   const outOfFrame = (name) => {
@@ -97,10 +96,6 @@ export default function AdopterPetCard(props) {
 
     setPetsList(petsData);
   }, []);
-
-  const onButtonPress = (choice) => {
-    alert(`You choose to ${choice}.`);
-  };
 
   return (
     <Container>
@@ -119,21 +114,17 @@ export default function AdopterPetCard(props) {
 
                   <Card.Content>
                     <Title>
-                      {pet.name} ({pet.age} {pet.age > 1 ? "years" : "year"}{" "}
-                      old)
+                      {pet.name} • Age {pet.age}
                     </Title>
+                    <Subheading style={{ fontWeight: "bold" }}>
+                      {pet.shelterName}
+                    </Subheading>
                     <Divider />
-                    <Title>{pet.shelterName}</Title>
-                    <Divider />
+                    <Paragraph>{pet.description}</Paragraph>
                     <Paragraph>
                       Location: {pet.city}, {pet.state}
                     </Paragraph>
-                    <Divider />
-                    <Paragraph>Species: {pet.species}</Paragraph>
-                    <Divider />
                     <Paragraph>Breed: {pet.breed}</Paragraph>
-                    <Divider />
-                    <Paragraph>About: {pet.description}</Paragraph>
                   </Card.Content>
 
                   <Card.Actions>
