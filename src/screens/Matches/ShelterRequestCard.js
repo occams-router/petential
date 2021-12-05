@@ -93,11 +93,11 @@ export default function ShelterRequestCard({ request }) {
               </Title>
               <AvatarContainer>
                 <Avatar.Image
-                  size={150}
+                  size={120}
                   source={{ uri: request.userImageUrl }}
                 />
                 <Avatar.Image
-                  size={150}
+                  size={120}
                   source={{ uri: request.petImageUrl }}
                 />
               </AvatarContainer>
