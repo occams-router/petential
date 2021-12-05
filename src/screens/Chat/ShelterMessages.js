@@ -56,6 +56,7 @@ id: doc.id,
 					style={tailwind('flex-1')}
 					keyboardVerticalOffset={10}>
                         <Header title="chat" />
+                        <Text style={styles.title}></Text>
 				<Text style={styles.title}>{adopter.name} regarding {pet.name}</Text>
 					<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 						<FlatList

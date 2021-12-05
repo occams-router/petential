@@ -58,7 +58,8 @@ id: doc.id,
 					style={tailwind('flex-1')}
 					keyboardVerticalOffset={10}>
                         <Header title="chat" />
-                <Text style={GlobalStyles.droidSafeArea} style={styles.title}>{pet.name} at {shelter.name}</Text>
+                        <Text style={styles.title}></Text>
+                        <Text style={GlobalStyles.droidSafeArea} style={styles.title}>{pet.name} at {shelter.name}</Text>
 					<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 						<FlatList
 							data={messages}
