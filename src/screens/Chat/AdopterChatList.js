@@ -68,8 +68,8 @@ export default function AdopterChatList({match}) {
           <TouchableOpacity onPress={()=> navigation.navigate('AdopterMessages', {match, pet, shelter})} style={[tailwind('flex-row items-center py-3 bg-white mx-3 my-3 rounded-lg'), styles.cardShadow,]}>
               <Image style={tailwind('rounded-full h-16 w-16 mr-10  mx-3 my-3')}source={{ uri: pet?.imageUrl }}/>
               <View>
-<Text style={tailwind('text-lg font-semibold')}>
-{pet.name}
+<Text style={tailwind('text-sm font-semibold')}>
+{pet.name} at {shelter.name}
 </Text>
 <Text>
    {latestMessage || 'Say hi...'}

@@ -31,7 +31,7 @@ export default function AdopterMessages(props) {
 	const [messages, setMessages] = useState([]);
 
     useEffect(() => 
-onSnapshot(query(collection(db, 'messages'), where('petRefId', '==', `${pet.id}`), orderBy('timestamp', 'desc'),
+onSnapshot(query(collection(db, 'messages'), where('petRefId', '==', `${pet.id}`), where('adopterRefId', '==', `${adopter.id}`),orderBy('timestamp', 'desc'),
 ),  snapshot => setMessages(snapshot.docs.map(doc => ({
 id: doc.id,
 ...doc.data(),

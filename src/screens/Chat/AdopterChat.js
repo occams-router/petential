@@ -29,16 +29,15 @@ export default function AdopterChat() {
     return (
 <SafeAreaView>
         <Header/>
-      <Text style={styles.title}></Text>
       {matches.length === 0 ? (
         <Text>No chats to display!</Text>
       ) : (
           <>
         <FlatList
           data={matches}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => <AdopterChatList match={item} />}
         />
-        <Text style={styles.title}></Text>
         </>
       )}
     </SafeAreaView>
