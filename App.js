@@ -1,8 +1,8 @@
-import "react-native-gesture-handler";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import React, { createContext, useEffect, useState } from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import 'react-native-gesture-handler';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import React, { createContext, useEffect, useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
   ShelterSignup,
   AdopterSignup,
@@ -16,10 +16,10 @@ import {
   AdopterMessages,
   ShelterChat,
   ShelterMessages,
-} from "./src/screens";
-import { decode, encode } from "base-64";
-import { auth, db } from "./src/firebase/config";
-import { onAuthStateChanged } from "@firebase/auth";
+} from './src/screens';
+import { decode, encode } from 'base-64';
+import { auth, db } from './src/firebase/config';
+import { onAuthStateChanged } from '@firebase/auth';
 import {
   collection,
   getDocs,
@@ -29,9 +29,9 @@ import {
   limit,
   doc,
   getDoc,
-} from "@firebase/firestore";
-import { Provider as PaperProvider } from "react-native-paper";
-import theme from "./src/PaperTheme";
+} from '@firebase/firestore';
+import { Provider as PaperProvider } from 'react-native-paper';
+import theme from './src/PaperTheme';
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -52,7 +52,7 @@ export default function App() {
   useEffect(async () => {
     setLoading(true);
     let userData;
-    onSnapshot(collection(db, "users"), (snapshot) => {
+    onSnapshot(collection(db, 'users'), (snapshot) => {
       userData = snapshot.docs.map((doc) => doc.data());
       onAuthStateChanged(auth, async (currentUser) => {
         if (currentUser) {
@@ -88,51 +88,27 @@ export default function App() {
   } else {
     if (user) {
       screen =
-        userType === "shelter" && specificUser !== {} && loading === false ? (
+        userType === 'shelter' && specificUser !== {} && loading === false ? (
           <>
-            <Stack.Screen
-              name="ShelterSidebar"
-              component={ShelterSidebar}
-              options={{ title: "Petential" }}
-            />
+            <Stack.Screen name="ShelterSidebar" component={ShelterSidebar} />
             <Stack.Screen name="PetProfile" component={PetProfile} />
-            <Stack.Screen
-              name="ShelterChat"
-              component={ShelterChat}
-              options={{ title: "Petential" }}
-            />
-            <Stack.Screen
-              name="ShelterMessages"
-              component={ShelterMessages}
-              options={{ title: "Petential" }}
-            />
+            <Stack.Screen name="ShelterChat" component={ShelterChat} />
+            <Stack.Screen name="ShelterMessages" component={ShelterMessages} />
           </>
-        ) : userType === "adopter" &&
+        ) : userType === 'adopter' &&
           specificUser !== {} &&
           loading === false ? (
           <>
-            <Stack.Screen
-              name="AdopterSidebar"
-              component={AdopterSidebar}
-              options={{ title: "Petential" }}
-            />
-            <Stack.Screen
-              name="AdopterChat"
-              component={AdopterChat}
-              options={{ title: "Petential" }}
-            />
-            <Stack.Screen
-              name="AdopterMessages"
-              component={AdopterMessages}
-              options={{ title: "Petential" }}
-            />
+            <Stack.Screen name="AdopterSidebar" component={AdopterSidebar} />
+            <Stack.Screen name="AdopterChat" component={AdopterChat} />
+            <Stack.Screen name="AdopterMessages" component={AdopterMessages} />
           </>
         ) : (
           (screen = (
             <Stack.Screen
               name="Loading"
               component={Loading}
-              options={{ title: "" }}
+              options={{ title: '' }}
             />
           ))
         );
@@ -142,22 +118,22 @@ export default function App() {
           <Stack.Screen
             name="Login"
             component={Login}
-            options={{ title: "" }}
+            // options={{ title: "" }}
           />
           <Stack.Screen
             name="ProfileOptions"
             component={ProfileOptions}
-            options={{ title: "Petential" }}
+            // options={{ title: "Petential" }}
           />
           <Stack.Screen
             name="AdopterSignup"
             component={AdopterSignup}
-            options={{ title: "Petential" }}
+            // options={{ title: "Petential" }}
           />
           <Stack.Screen
             name="ShelterSignup"
             component={ShelterSignup}
-            options={{ title: "Petential" }}
+            // options={{ title: "Petential" }}
           />
         </>
       );
@@ -166,7 +142,7 @@ export default function App() {
         <Stack.Screen
           name="Loading"
           component={Loading}
-          options={{ title: "" }}
+          options={{ title: '' }}
         />
       );
     }
@@ -179,9 +155,6 @@ export default function App() {
             <Stack.Navigator
               screenOptions={{
                 headerShown: false,
-                headerStyle: {
-                  backgroundColor: "#218d8f",
-                },
               }}
             >
               {screen}
