@@ -106,7 +106,7 @@ export default function AdopterMessages(props) {
         style={tailwind('flex-1')}
         keyboardVerticalOffset={10}
       >
-        <HeaderBack title="chat" />
+        <HeaderBack />
         <Text style={GlobalStyles.droidSafeArea} style={styles.title}>
           {pet.name} at {shelter.name}
         </Text>

@@ -106,7 +106,7 @@ export default function ShelterMessages(props) {
         style={tailwind('flex-1')}
         keyboardVerticalOffset={10}
       >
-        <HeaderBack title="chat" />
+        <HeaderBack />
         <Text style={styles.title}>
           {adopter.name} regarding {pet.name}
         </Text>
