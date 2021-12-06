@@ -8,7 +8,11 @@ export { default as ProfileOptions } from './Signup/ProfileOptions';
 
 export { default as ShelterSignup } from './Signup/ShelterSignup';
 
+export { default as ShelterSignup2 } from './Signup/ShelterSignup2';
+
 export { default as AdopterSignup } from './Signup/AdopterSignup';
+
+export { default as AdopterSignup2 } from './Signup/AdopterSignup2';
 
 export { default as AdopterProfile } from './Profile/AdopterProfile';
 
@@ -24,7 +28,7 @@ export { default as ShelterSidebar } from './Sidebar/ShelterSidebar';
 
 export { default as Loading } from './Loading';
 
-export { default as AdopterMatches } from "./Matches/AdopterMatches";
+export { default as AdopterMatches } from './Matches/AdopterMatches';
 
 export { default as ShelterRequests } from './Matches/ShelterRequests';
 
