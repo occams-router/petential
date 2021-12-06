@@ -19,19 +19,6 @@ export default function AdopterChat() {
 	const adopter = useContext(UserContext);
 	const [matches, setMatches] = useState([]);
 
-	// const getMatches = async () => {
-	//   const matchList = [];
-	//   const docs = await getDocs(
-	//     collection(db, "adopters", `${adopter.id}`, "matches")
-	//   );
-	//   docs.forEach((doc) => matchList.push(doc.data()));
-	//   setMatches([...matchList]);
-	// };
-
-	// useEffect(() => {
-	//   getMatches();
-	// }, []);
-
 	useEffect(
 		() =>
 			onSnapshot(
