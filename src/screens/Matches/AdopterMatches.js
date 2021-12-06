@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Text, FlatList, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import MatchCard from "./AdopterMatchCard";
+import AdopterMatchCard from "./AdopterMatchCard";
 import styles from "../Home/styles";
 import GlobalStyles from "../../../GlobalStyles";
 import { db } from "../../firebase/config";
@@ -34,7 +34,7 @@ export default function AdopterMatches() {
         <FlatList
           data={matches}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <MatchCard match={item} />}
+          renderItem={({ item }) => <AdopterMatchCard match={item} />}
         />
       )}
     </View>

@@ -3,7 +3,7 @@ import { Text, TouchableOpacity, SafeAreaView, FlatList } from "react-native";
 import { NavigationActions } from "react-navigation";
 import GlobalStyles from "../../../GlobalStyles";
 import { db } from "../../firebase/config";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 // import PetCard from '../PetCards/ShelterPetCard';
 import { UserContext } from "../../../App";
 import styles from "./styles";
@@ -14,24 +14,34 @@ export default function ShelterHome({ navigation }) {
   const shelter = useContext(UserContext);
   const [petData, setPetData] = useState([]);
 
-  const getPets = async () => {
-    try {
-      const list = [];
-      const docsSnap = await getDocs(
-        collection(db, `shelters/${shelter.id}/shelterPets`)
-      );
-      docsSnap.forEach((doc) => {
-        list.push(doc.data());
-      });
-      setPetData([...list]);
-    } catch (e) {
-      console.log("No pets in shelter");
-    }
-  };
+  // const getPets = async () => {
+  //   try {
+  //     const list = [];
+  //     const docsSnap = await getDocs(
+  //       collection(db, `shelters/${shelter.id}/shelterPets`)
+  //     );
+  //     docsSnap.forEach((doc) => {
+  //       list.push(doc.data());
+  //     });
+  //     setPetData([...list]);
+  //   } catch (e) {
+  //     console.log("No pets in shelter");
+  //   }
+  // };
 
-  useEffect(() => {
-    getPets();
-  }, []);
+
+  // useEffect(() => {
+  //   getPets();
+  // }, []);
+
+  useEffect(() => 
+  onSnapshot(query(collection(db, 'shelters', `${shelter.id}`, 'shelterPets'),
+  ),  snapshot => setPetData(snapshot.docs.map(doc => ({
+  id: doc.id,
+  ...doc.data(),
+  })))
+  )
+  , []);
 
   return (
     <SafeAreaView style={GlobalStyles.droidSafeArea}>
