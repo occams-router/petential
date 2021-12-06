@@ -1,33 +1,38 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import GlobalStyles from '../../../GlobalStyles';
 import { db } from '../../firebase/config';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc, onSnapshot, query } from 'firebase/firestore';
 import { UserContext } from '../../../App';
 
 export default function ShelterProfile() {
   const shelter = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
 
   const [nameOfShelter, setNameOfShelter] = useState(shelter.name || '');
+  const [city, setCity] = useState(shelter.city || '');
+  const [state, setState] = useState(shelter.state || '');
+  const [phone, setPhone] = useState(shelter.phone || '');
   const [imageUrl, setImageUrl] = useState(
     shelter.imageUrl ||
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2gT4BUTqAaMh6kIvJdw8Wf6pQQGbm6HI0Yg&usqp=CAU'
   );
-  const [city, setCity] = useState(shelter.city || '');
-  const [state, setState] = useState(shelter.state || '');
-  const [phone, setPhone] = useState(shelter.phone || '');
   const [description, setDescription] = useState(shelter.description || '');
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   const onSavePress = async () => {
     try {
       const data = {
         name: nameOfShelter,
-        imageUrl,
         city,
         state,
         phone,
+        imageUrl,
         description,
       };
       const shelterRef = doc(db, 'shelters', shelter.id);
@@ -39,7 +44,24 @@ export default function ShelterProfile() {
     }
   };
 
-  return (
+  useEffect(
+    async () =>
+      onSnapshot(query(doc(db, 'shelters', shelter.id)), (snapshot) => {
+        setNameOfShelter(snapshot.data().name);
+        setCity(snapshot.data().city);
+        setState(snapshot.data().state);
+        setPhone(snapshot.data().phone);
+        setImageUrl(snapshot.data().imageUrl);
+        setDescription(snapshot.data().description);
+      }),
+    []
+  );
+
+  return loading ? (
+    <View style={GlobalStyles.droidSafeArea}>
+      <Text>Loading...</Text>
+    </View>
+  ) : (
     <View style={GlobalStyles.droidSafeArea}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
@@ -60,15 +82,6 @@ export default function ShelterProfile() {
           value={nameOfShelter}
           underlineColorAndroid="transparent"
           autoCapitalize="words"
-        />
-        <TextInput
-          style={styles.input}
-          placeholderTextColor="#aaaaaa"
-          placeholder="Image URL"
-          onChangeText={(text) => setImageUrl(text)}
-          value={imageUrl}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
         />
         <TextInput
           style={styles.input}
@@ -94,6 +107,15 @@ export default function ShelterProfile() {
           placeholder="Phone No."
           onChangeText={(text) => setPhone(text)}
           value={phone}
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          placeholderTextColor="#aaaaaa"
+          placeholder="Image URL"
+          onChangeText={(text) => setImageUrl(text)}
+          value={imageUrl}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
