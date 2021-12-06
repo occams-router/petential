@@ -1,34 +1,19 @@
 import React from 'react';
-import { signOut } from 'firebase/auth';
-import { auth } from '../../firebase/config';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from 'react-native-paper';
 
-export default function Header() {
+export default function HeaderBack() {
   const navigation = useNavigation();
-
-  const logout = async () => {
-    try {
-      await signOut(auth);
-      alert('You are logged out.');
-    } catch (error) {
-      alert('Log-out was unsuccessful.');
-      console.log(error.message);
-    }
-  };
 
   return (
     <SafeAreaView style={headerStyles.container}>
       <Button
-        icon="menu"
-        onPress={() => navigation.toggleDrawer()}
+        icon="arrow-left"
+        onPress={() => navigation.goBack()}
         color="#fff"
       >
-        Menu
-      </Button>
-      <Button icon="logout" onPress={() => logout()} color="#fff">
-        Log Out
+        Back
       </Button>
     </SafeAreaView>
   );
@@ -46,6 +31,6 @@ const headerStyles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 0,
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
   },
 });
