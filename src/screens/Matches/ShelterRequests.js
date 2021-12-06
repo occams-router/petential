@@ -103,7 +103,7 @@ export default function ShelterRequests() {
     <SafeAreaView style={GlobalStyles.droidSafeArea}>
       <Text style={styles.title}>My Requests</Text>
       {adoptersAndPets.length === 0 ? (
-        <Text>No requests to display!</Text>
+        <Text style={{ alignSelf: "center" }}>No requests to display!</Text>
       ) : (
         <FlatList
           data={adoptersAndPets}

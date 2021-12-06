@@ -10,6 +10,7 @@ import {
   Button,
   Divider,
   Subheading,
+  Text,
   Avatar,
 } from "react-native-paper";
 import { UserContext } from "../../../App";
@@ -24,14 +25,6 @@ const Container = styled.View`
 const CardContainer = styled.View`
   width: 90%;
   height: auto;
-`;
-
-const InfoText = styled.Text`
-  height: 28px;
-  justify-content: center;
-  display: flex;
-  z-index: -100;
-  text-align: center;
 `;
 
 const ButtonContainer = styled.View`
@@ -142,11 +135,13 @@ export default function AdopterPetCard(props) {
                   </Card.Actions>
                 </Card>
               </TinderCard>
-              <InfoText>Swipe or press pass/like!</InfoText>
+              <Text style={{ alignSelf: "center" }}>
+                Swipe or press pass/like!
+              </Text>
             </>
           ))(petsList[0])
         ) : (
-          <InfoText>No pets to display!</InfoText>
+          <Text style={{ alignSelf: "center" }}>No pets to display!</Text>
         )}
       </CardContainer>
     </Container>
