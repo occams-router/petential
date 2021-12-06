@@ -56,7 +56,7 @@ export default function ShelterMatchCard({ match }) {
       <Container>
         <CardContainer>
           <Card style={{ marginBottom: 10, padding: 10 }}>
-            <Card.Cover source={{ uri: adopter.imageUrl }} />
+            <Card.Cover source={{ uri: adopter?.imageUrl }} />
             <Card.Content>
               <Title>
                 {adopter.name} matched with {pet.name}!
