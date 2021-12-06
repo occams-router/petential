@@ -1,75 +1,51 @@
 import React, { useState, useContext } from 'react';
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Text, TextInput, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import GlobalStyles from '../../../GlobalStyles';
-import { db } from '../../firebase/config';
 import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../../firebase/config';
 import { UserContext } from '../../../App';
 
-export default function ShelterProfile() {
+const ShelterSignup2 = ({ navigation }) => {
   const shelter = useContext(UserContext);
 
-  const [nameOfShelter, setNameOfShelter] = useState(shelter.name || '');
-  const [imageUrl, setImageUrl] = useState(
-    shelter.imageUrl ||
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2gT4BUTqAaMh6kIvJdw8Wf6pQQGbm6HI0Yg&usqp=CAU'
-  );
-  const [city, setCity] = useState(shelter.city || '');
-  const [state, setState] = useState(shelter.state || '');
-  const [phone, setPhone] = useState(shelter.phone || '');
-  const [description, setDescription] = useState(shelter.description || '');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [phone, setPhone] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+  const [description, setDescription] = useState('');
 
   const onSavePress = async () => {
     try {
-      const data = {
-        name: nameOfShelter,
-        imageUrl,
+      const shelterData = {
         city,
         state,
         phone,
+        imageUrl,
         description,
       };
       const shelterRef = doc(db, 'shelters', shelter.id);
-      await updateDoc(shelterRef, data);
-      alert('Update was successful!');
+      await updateDoc(shelterRef, shelterData);
+      alert('Profile updated!');
+      navigation.navigate('ShelterSidebar');
     } catch (error) {
+      alert('Profile not updated');
       console.log(error);
-      alert('Update failed');
     }
   };
 
   return (
-    <View style={GlobalStyles.droidSafeArea}>
+    <SafeAreaView style={GlobalStyles.droidSafeArea}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always"
       >
-        <Text style={styles.title}>Welcome, {shelter.name}!</Text>
-        <Image
-          style={styles.logo}
-          source={{
-            uri: shelter.imageUrl || imageUrl,
-          }}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Name of Shelter"
-          placeholderTextColor="#aaaaaa"
-          onChangeText={(text) => setNameOfShelter(text)}
-          value={nameOfShelter}
-          underlineColorAndroid="transparent"
-          autoCapitalize="words"
-        />
-        <TextInput
-          style={styles.input}
-          placeholderTextColor="#aaaaaa"
-          placeholder="Image URL"
-          onChangeText={(text) => setImageUrl(text)}
-          value={imageUrl}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-        />
+        <Text style={styles.text}>Help us get to know you better!</Text>
+        <Text style={styles.text}>
+          The more you fill out, the better your changes of getting a match!
+        </Text>
         <TextInput
           style={styles.input}
           placeholderTextColor="#aaaaaa"
@@ -99,6 +75,15 @@ export default function ShelterProfile() {
         />
         <TextInput
           style={styles.input}
+          placeholderTextColor="#aaaaaa"
+          placeholder="Image URL"
+          onChangeText={(text) => setImageUrl(text)}
+          value={imageUrl}
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
           multiline
           numberOfLines={5}
           placeholderTextColor="#aaaaaa"
@@ -109,9 +94,11 @@ export default function ShelterProfile() {
           autoCapitalize="sentences"
         />
         <TouchableOpacity style={styles.button} onPress={() => onSavePress()}>
-          <Text style={styles.buttonTitle}>Save</Text>
+          <Text style={styles.buttonTitle}>Save Profile</Text>
         </TouchableOpacity>
       </KeyboardAwareScrollView>
-    </View>
+    </SafeAreaView>
   );
-}
+};
+
+export default ShelterSignup2;
