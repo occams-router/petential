@@ -5,7 +5,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import styles from "./styles";
 import GlobalStyles from "../../../GlobalStyles";
 import { db } from "../../firebase/config";
-import { collection, doc, addDoc, updateDoc } from "firebase/firestore";
+import { collection, doc, addDoc, updateDoc , deleteDoc} from "firebase/firestore";
 import { UserContext } from "../../../App";
 
 export default function PetProfile(props) {
@@ -80,6 +80,27 @@ export default function PetProfile(props) {
     }
   };
 
+  const onDelete = async () => {
+    try {
+        // Delete doc in main pet collection using refId from pet
+        const petRef = doc(db, "pets", pet.refId);
+        await deleteDoc(petRef);
+        // Delete doc in subcollection
+        const subPetRef = doc(
+          db,
+          "shelters",
+          `${shelter.id}`,
+          "shelterPets",
+          `${pet.id}`
+        );
+        await deleteDoc(subPetRef);
+      alert("Successfully deleted!");
+    } catch (error) {
+      console.log(error);
+      alert("Could not delete pet");
+    }
+  };
+
   return (
     <SafeAreaView style={GlobalStyles.droidSafeArea}>
       <KeyboardAwareScrollView
@@ -88,6 +109,9 @@ export default function PetProfile(props) {
       >
         <Text style={styles.title}>{name}</Text>
         <Image style={styles.logo} source={{ uri: imageUrl }} />
+        <TouchableOpacity style={styles.button} onPress={() => onDelete()}>
+          <Text style={styles.buttonTitle}>Delete Pet</Text>
+        </TouchableOpacity>
         <TextInput
           style={styles.input}
           placeholder="Name"
