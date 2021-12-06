@@ -1,26 +1,25 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Text, Image, TextInput, TouchableOpacity } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { db } from '../../firebase/config';
-import { doc, updateDoc } from 'firebase/firestore';
-import styles from './styles';
-import GlobalStyles from '../../../GlobalStyles';
-import { UserContext } from '../../../App';
+import React, { useContext, useState, useEffect } from "react";
+import { Text, Image, TextInput, TouchableOpacity, View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { db } from "../../firebase/config";
+import { doc, updateDoc } from "firebase/firestore";
+import styles from "./styles";
+import GlobalStyles from "../../../GlobalStyles";
+import { UserContext } from "../../../App";
 
 export default function AdopterProfile() {
   const user = useContext(UserContext);
   const id = user.id;
   const [loading, setLoading] = useState(true);
-  const [name, setName] = useState(user.name || '');
-  const [city, setCity] = useState(user.city || '');
-  const [state, setState] = useState(user.state || '');
-  const [phone, setPhone] = useState(user.phone || '');
-  const [description, setDescription] = useState(user.description || '');
-  const [imageUrl, setImageUrl] = useState(user.imageUrl || '');
-  const [housing, setHousing] = useState(user.housing || '');
-  const [lifestyle, setLifestyle] = useState(user.lifestyle || '');
-  const [petHistory, setPetHistory] = useState(user.petHistory || '');
+  const [name, setName] = useState(user.name || "");
+  const [city, setCity] = useState(user.city || "");
+  const [state, setState] = useState(user.state || "");
+  const [phone, setPhone] = useState(user.phone || "");
+  const [description, setDescription] = useState(user.description || "");
+  const [imageUrl, setImageUrl] = useState(user.imageUrl || "");
+  const [housing, setHousing] = useState(user.housing || "");
+  const [lifestyle, setLifestyle] = useState(user.lifestyle || "");
+  const [petHistory, setPetHistory] = useState(user.petHistory || "");
 
   useEffect(() => {
     setLoading(false);
@@ -28,7 +27,7 @@ export default function AdopterProfile() {
 
   const updateAdopter = async () => {
     try {
-      const adopterRef = doc(db, 'adopters', id);
+      const adopterRef = doc(db, "adopters", id);
       const updates = {
         lifestyle,
         name,
@@ -41,28 +40,32 @@ export default function AdopterProfile() {
         petHistory,
       };
       await updateDoc(adopterRef, updates);
-      alert('Update was successful!');
+      alert("Update was successful!");
     } catch (error) {
-      alert('Update failed.');
-      console.log('Update adopter', error);
+      alert("Update failed.");
+      console.log("Update adopter", error);
     }
   };
 
   return loading ? (
-    <SafeAreaView style={GlobalStyles.droidSafeArea}>
+    <View style={GlobalStyles.droidSafeArea}>
       <Text>Loading...</Text>
-    </SafeAreaView>
+    </View>
   ) : (
-    <SafeAreaView style={GlobalStyles.droidSafeArea}>
+    <View style={GlobalStyles.droidSafeArea}>
       <KeyboardAwareScrollView
-        style={{ flex: 1, width: '100%' }}
+        style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"
       >
         <Text style={styles.title}> Welcome, {user.name}!</Text>
         {user.imageUrl ? (
-        <Image style={styles.logo} source={{
-            uri: user.imageUrl
-          }}/>) : null}
+          <Image
+            style={styles.logo}
+            source={{
+              uri: user.imageUrl,
+            }}
+          />
+        ) : null}
         <TextInput
           style={styles.input}
           label="Name"
@@ -157,6 +160,6 @@ export default function AdopterProfile() {
           <Text style={styles.buttonTitle}>Update Profile</Text>
         </TouchableOpacity>
       </KeyboardAwareScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
