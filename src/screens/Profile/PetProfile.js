@@ -81,6 +81,27 @@ export default function PetProfile(props) {
     }
   };
 
+  const onDelete = async () => {
+    try {
+      // Delete doc in main pet collection using refId from pet
+      const petRef = doc(db, 'pets', pet.refId);
+      await deleteDoc(petRef);
+      // Delete doc in subcollection
+      const subPetRef = doc(
+        db,
+        'shelters',
+        `${shelter.id}`,
+        'shelterPets',
+        `${pet.id}`
+      );
+      await deleteDoc(subPetRef);
+      alert('Successfully deleted!');
+    } catch (error) {
+      console.log(error);
+      alert('Could not delete pet');
+    }
+  };
+
   return (
     <SafeAreaView style={GlobalStyles.droidSafeArea}>
       <KeyboardAwareScrollView
@@ -90,6 +111,9 @@ export default function PetProfile(props) {
         <HeaderBack />
         <Text style={styles.title}>{name}</Text>
         <Image style={styles.logo} source={{ uri: imageUrl }} />
+        <TouchableOpacity style={styles.button} onPress={() => onDelete()}>
+          <Text style={styles.buttonTitle}>Delete Pet</Text>
+        </TouchableOpacity>
         <TextInput
           style={styles.input}
           placeholder="Name"
