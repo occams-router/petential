@@ -13,11 +13,11 @@ export default function ShelterSignup({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [phone, setPhone] = useState('');
-  const [description, setDescription] = useState('');
+  // const [imageUrl, setImageUrl] = useState('');
+  // const [city, setCity] = useState('');
+  // const [state, setState] = useState('');
+  // const [phone, setPhone] = useState('');
+  // const [description, setDescription] = useState('');
 
   const onFooterLinkPress = () => {
     navigation.navigate('Login');
@@ -39,11 +39,11 @@ export default function ShelterSignup({ navigation }) {
         name: nameOfShelter,
         email,
         password,
-        imageUrl,
-        city,
-        state,
-        phone,
-        description,
+        // imageUrl,
+        // city,
+        // state,
+        // phone,
+        // description,
       };
       const docRef = await addDoc(collection(db, 'shelters'), data);
       const shelterRef = doc(db, 'shelters', docRef.id);
@@ -54,7 +54,7 @@ export default function ShelterSignup({ navigation }) {
         docId: docRef.id,
         type: 'shelter',
       });
-      navigation.navigate('ShelterSidebar');
+      navigation.navigate('ShelterSignup2');
     } catch (error) {
       console.log(error);
     }
@@ -66,6 +66,7 @@ export default function ShelterSignup({ navigation }) {
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always"
       >
+        <Text style={styles.title}>Welcome!</Text>
         <Image
           style={styles.logo}
           source={require('../../../assets/icon.png')}
@@ -108,7 +109,7 @@ export default function ShelterSignup({ navigation }) {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-        <TextInput
+        {/* <TextInput
           style={styles.input}
           placeholderTextColor="#aaaaaa"
           placeholder="Image URL"
@@ -154,7 +155,7 @@ export default function ShelterSignup({ navigation }) {
           value={description}
           underlineColorAndroid="transparent"
           autoCapitalize="sentences"
-        />
+        /> */}
         <TouchableOpacity
           style={styles.button}
           onPress={() => onRegisterPress()}
