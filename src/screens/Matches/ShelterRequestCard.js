@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { db } from "../../firebase/config";
 import {
   doc,
@@ -22,6 +21,7 @@ import {
   Avatar,
 } from "react-native-paper";
 import styles from "./styles";
+import GlobalStyles from "../../../GlobalStyles";
 
 const Container = styled.View`
   display: flex;
@@ -83,7 +83,7 @@ export default function ShelterRequestCard({ request }) {
   };
 
   return (
-    <SafeAreaView>
+    <View style={GlobalStyles.droidSafeArea}>
       <Container>
         <CardContainer>
           <Card style={{ marginBottom: 10, padding: 10 }}>
@@ -139,6 +139,6 @@ export default function ShelterRequestCard({ request }) {
           </Card>
         </CardContainer>
       </Container>
-    </SafeAreaView>
+    </View>
   );
 }

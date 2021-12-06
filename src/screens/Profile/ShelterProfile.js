@@ -1,25 +1,24 @@
-import React, { useState, useContext } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Image, Text, TextInput, TouchableOpacity } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import styles from './styles';
-import GlobalStyles from '../../../GlobalStyles';
-import { db } from '../../firebase/config';
-import { doc, updateDoc } from 'firebase/firestore';
-import { UserContext } from '../../../App';
+import React, { useState, useContext } from "react";
+import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import styles from "./styles";
+import GlobalStyles from "../../../GlobalStyles";
+import { db } from "../../firebase/config";
+import { doc, updateDoc } from "firebase/firestore";
+import { UserContext } from "../../../App";
 
 export default function ShelterProfile() {
   const shelter = useContext(UserContext);
 
-  const [nameOfShelter, setNameOfShelter] = useState(shelter.name || '');
+  const [nameOfShelter, setNameOfShelter] = useState(shelter.name || "");
   const [imageUrl, setImageUrl] = useState(
     shelter.imageUrl ||
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2gT4BUTqAaMh6kIvJdw8Wf6pQQGbm6HI0Yg&usqp=CAU'
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2gT4BUTqAaMh6kIvJdw8Wf6pQQGbm6HI0Yg&usqp=CAU"
   );
-  const [city, setCity] = useState(shelter.city || '');
-  const [state, setState] = useState(shelter.state || '');
-  const [phone, setPhone] = useState(shelter.phone || '');
-  const [description, setDescription] = useState(shelter.description || '');
+  const [city, setCity] = useState(shelter.city || "");
+  const [state, setState] = useState(shelter.state || "");
+  const [phone, setPhone] = useState(shelter.phone || "");
+  const [description, setDescription] = useState(shelter.description || "");
 
   const onSavePress = async () => {
     try {
@@ -31,25 +30,28 @@ export default function ShelterProfile() {
         phone,
         description,
       };
-      const shelterRef = doc(db, 'shelters', shelter.id);
+      const shelterRef = doc(db, "shelters", shelter.id);
       await updateDoc(shelterRef, data);
-      alert('Update was successful!');
+      alert("Update was successful!");
     } catch (error) {
       console.log(error);
-      alert('Update failed');
+      alert("Update failed");
     }
   };
 
   return (
-    <SafeAreaView style={GlobalStyles.droidSafeArea}>
+    <View style={GlobalStyles.droidSafeArea}>
       <KeyboardAwareScrollView
-        style={{ flex: 1, width: '100%' }}
+        style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"
       >
         <Text style={styles.title}>Welcome, {shelter.name}!</Text>
-        <Image style={styles.logo} source={{
+        <Image
+          style={styles.logo}
+          source={{
             uri: shelter.imageUrl || imageUrl,
-          }} />
+          }}
+        />
         <TextInput
           style={styles.input}
           placeholder="Name of Shelter"
@@ -110,6 +112,6 @@ export default function ShelterProfile() {
           <Text style={styles.buttonTitle}>Save</Text>
         </TouchableOpacity>
       </KeyboardAwareScrollView>
-    </SafeAreaView>
+    </View>
   );
 }

@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Text, FlatList, TouchableOpacity } from "react-native";
+import { Text, FlatList, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import AdopterMatchCard from "./AdopterMatchCard";
 import styles from "../Home/styles";
@@ -27,7 +26,7 @@ export default function AdopterMatches() {
   }, []);
 
   return (
-    <SafeAreaView style={GlobalStyles.droidSafeArea}>
+    <View style={GlobalStyles.droidSafeArea}>
       <Text style={styles.title}>Your Matches</Text>
       {matches.length === 0 ? (
         <Text style={{ alignSelf: "center" }}>No matches to display!</Text>
@@ -38,6 +37,6 @@ export default function AdopterMatches() {
           renderItem={({ item }) => <AdopterMatchCard match={item} />}
         />
       )}
-    </SafeAreaView>
+    </View>
   );
 }

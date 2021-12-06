@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Text } from "react-native";
+import { View } from "react-native";
 import { db } from "../../firebase/config";
 import { doc, getDoc } from "firebase/firestore";
 import { UserContext } from "../../../App";
@@ -15,6 +14,7 @@ import {
 } from "react-native-paper";
 import styles from "../Home/styles";
 import { useNavigation } from "@react-navigation/native";
+import GlobalStyles from "../../../GlobalStyles";
 
 const Container = styled.View`
   display: flex;
@@ -56,7 +56,7 @@ export default function AdopterMatchCard({ match }) {
   }, []);
 
   return (
-    <SafeAreaView>
+    <View style={GlobalStyles.droidSafeArea}>
       <Container>
         <CardContainer>
           <Card style={{ marginBottom: 10, padding: 10 }}>
@@ -91,6 +91,6 @@ export default function AdopterMatchCard({ match }) {
           </Card>
         </CardContainer>
       </Container>
-    </SafeAreaView>
+    </View>
   );
 }

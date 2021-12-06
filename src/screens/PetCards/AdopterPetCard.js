@@ -11,7 +11,6 @@ import {
   Divider,
   Subheading,
   Text,
-  Avatar,
 } from "react-native-paper";
 import { UserContext } from "../../../App";
 
@@ -37,8 +36,6 @@ const ButtonContainer = styled.View`
 export default function AdopterPetCard(props) {
   const [petsList, setPetsList] = useState([]);
   const user = useContext(UserContext);
-
-  const petsCollectionRef = collection(db, "pets");
 
   const swiped = async (direction, pet) => {
     console.log("removing:", pet.name);
@@ -81,11 +78,32 @@ export default function AdopterPetCard(props) {
   };
 
   useEffect(async () => {
+    const petsCollectionRef = collection(db, "pets");
+    // retrieve all pets
     const allPets = await getDocs(petsCollectionRef);
     let petsData = allPets.docs.map((doc) => ({
       ...doc.data(),
       id: doc.id,
     }));
+
+    const matchesCollectionRef = collection(
+      db,
+      "adopters",
+      `${user.id}`,
+      "matches"
+    );
+    // retrieve all matches
+    const adopterMatches = await getDocs(matchesCollectionRef);
+    const matchesData = adopterMatches.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    }));
+
+    // store pet ids
+    const petIds = matchesData.map((data) => data.petRefId);
+
+    // filter out pets which exist in this user's matches collection
+    petsData = petsData.filter((pet) => !petIds.includes(pet.id));
 
     setPetsList(petsData);
   }, []);
