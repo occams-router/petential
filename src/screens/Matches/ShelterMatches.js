@@ -37,7 +37,7 @@ export default function ShelterMatches() {
     <SafeAreaView style={GlobalStyles.droidSafeArea}>
       <Text style={styles.title}>My Matches</Text>
       {matches.length === 0 ? (
-        <Text>No matches to display!</Text>
+        <Text style={{ alignSelf: "center" }}>No matches to display!</Text>
       ) : (
         <FlatList
           data={matches}

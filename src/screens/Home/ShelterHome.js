@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Text, TouchableOpacity, SafeAreaView, FlatList } from 'react-native';
-import { NavigationActions } from 'react-navigation';
-import GlobalStyles from '../../../GlobalStyles';
-import { db } from '../../firebase/config';
-import { collection, getDocs } from 'firebase/firestore';
+import React, { useState, useEffect, useContext } from "react";
+import { Text, TouchableOpacity, SafeAreaView, FlatList } from "react-native";
+import { NavigationActions } from "react-navigation";
+import GlobalStyles from "../../../GlobalStyles";
+import { db } from "../../firebase/config";
+import { collection, getDocs } from "firebase/firestore";
 // import PetCard from '../PetCards/ShelterPetCard';
-import { UserContext } from '../../../App';
-import styles from './styles';
-import { Card, Title, Button } from 'react-native-paper';
-import { CardContainer, Container } from '../PetCards/cardstyles';
+import { UserContext } from "../../../App";
+import styles from "./styles";
+import { Card, Title, Button } from "react-native-paper";
+import { CardContainer, Container } from "../PetCards/cardstyles";
 
 export default function ShelterHome({ navigation }) {
   const shelter = useContext(UserContext);
@@ -25,7 +25,7 @@ export default function ShelterHome({ navigation }) {
       });
       setPetData([...list]);
     } catch (e) {
-      console.log('No pets in shelter');
+      console.log("No pets in shelter");
     }
   };
 
@@ -36,14 +36,14 @@ export default function ShelterHome({ navigation }) {
   return (
     <SafeAreaView style={GlobalStyles.droidSafeArea}>
       <Text style={styles.title}>Current Pets</Text>
-      <TouchableOpacity style={styles.button}>
-        <Text
-          style={styles.buttonTitle}
-          onPress={() => navigation.navigate('PetProfile', { pet: '' })}
-        >
-          Add a Pet
-        </Text>
-      </TouchableOpacity>
+
+      <Button
+        mode="contained"
+        style={{ marginLeft: 80, marginRight: 80, marginBottom: 20 }}
+        onPress={() => navigation.navigate("PetProfile", { pet: "" })}
+      >
+        Add a Pet
+      </Button>
 
       <FlatList
         data={petData}
@@ -51,17 +51,20 @@ export default function ShelterHome({ navigation }) {
         renderItem={({ item }) => (
           <Container>
             <CardContainer>
-              <Card>
+              <Card style={{ padding: 10 }}>
                 <Card.Cover source={{ uri: `${item.imageUrl}` }}></Card.Cover>
                 <Title>{item.name}</Title>
                 <Text>Breed: {item.breed}</Text>
                 <Text>Age: {item.age}</Text>
-                <Card.Actions>
+                <Card.Actions
+                  style={{ display: "flex", justifyContent: "center" }}
+                >
                   <Button
                     mode="contained"
-                    style={{ backgroundColor: '#788eec' }}
+                    icon="account-edit-outline"
+                    style={{ backgroundColor: "#24a6a8" }}
                     onPress={() =>
-                      navigation.navigate('PetProfile', { pet: item })
+                      navigation.navigate("PetProfile", { pet: item })
                     }
                   >
                     Edit Pet
