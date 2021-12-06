@@ -1,7 +1,7 @@
-import React from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import { NavigationContainer } from "@react-navigation/native";
+import React from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
 import {
   ShelterHome,
   ShelterProfile,
@@ -9,8 +9,8 @@ import {
   ShelterMatches,
   Header,
   ShelterChat,
-} from "../index.js";
-import GlobalStyles from "../../../GlobalStyles.js";
+} from '../index.js';
+import GlobalStyles from '../../../GlobalStyles.js';
 
 const Drawer = createDrawerNavigator();
 
@@ -21,7 +21,7 @@ export default function ShelterSidebar() {
         drawerType="front"
         initialRouteName="Home"
         drawerContentOptions={{
-          activeTintColor: "#24a6a8",
+          activeTintColor: '#24a6a8',
           itemStyle: { marginVertical: 10 },
         }}
       >
@@ -29,7 +29,7 @@ export default function ShelterSidebar() {
           name="Home"
           options={{
             headerShown: true,
-            drawerActiveTintColor: "#24a6a8",
+            drawerActiveTintColor: '#24a6a8',
             header: () => <Header />,
           }}
           component={ShelterHome}
@@ -38,7 +38,7 @@ export default function ShelterSidebar() {
           name="Profile"
           options={{
             headerShown: true,
-            drawerActiveTintColor: "#24a6a8",
+            drawerActiveTintColor: '#24a6a8',
             header: () => <Header />,
           }}
           component={ShelterProfile}
@@ -47,7 +47,7 @@ export default function ShelterSidebar() {
           name="Requests"
           options={{
             headerShown: true,
-            drawerActiveTintColor: "#24a6a8",
+            drawerActiveTintColor: '#24a6a8',
             header: () => <Header />,
           }}
           component={ShelterRequests}
@@ -56,19 +56,17 @@ export default function ShelterSidebar() {
           name="Matches"
           options={{
             headerShown: true,
-            drawerActiveTintColor: "#24a6a8",
+            drawerActiveTintColor: '#24a6a8',
             header: () => <Header />,
           }}
           component={ShelterMatches}
         />
         <Drawer.Screen
           name="Chat"
-          style={{ position: "absolute" }}
           options={{
             headerShown: true,
-            drawerActiveTintColor: "#24a6a8",
-            headerMode: "screen",
-            header: () => <Header style={{ position: "absolute" }} />,
+            drawerActiveTintColor: '#24a6a8',
+            header: () => <Header />,
           }}
           component={ShelterChat}
         />
