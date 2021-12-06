@@ -50,7 +50,7 @@ export default function ShelterHome({ navigation }) {
       <Button
         mode="contained"
         style={{ marginLeft: 80, marginRight: 80, marginBottom: 20 }}
-        onPress={() => navigation.navigate("PetProfile", { pet })}
+        onPress={() => navigation.navigate("PetProfile", { pet: "" })}
       >
         Add a Pet
       </Button>
