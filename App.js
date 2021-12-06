@@ -5,7 +5,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {
   ShelterSignup,
+  ShelterSignup2,
   AdopterSignup,
+  AdopterSignup2,
   ProfileOptions,
   ShelterSidebar,
   AdopterSidebar,
@@ -91,6 +93,7 @@ export default function App() {
         userType === 'shelter' && specificUser !== {} && loading === false ? (
           <>
             <Stack.Screen name="ShelterSidebar" component={ShelterSidebar} />
+            <Stack.Screen name="ShelterSignup2" component={ShelterSignup2} />
             <Stack.Screen name="PetProfile" component={PetProfile} />
             <Stack.Screen name="ShelterChat" component={ShelterChat} />
             <Stack.Screen name="ShelterMessages" component={ShelterMessages} />
@@ -100,51 +103,24 @@ export default function App() {
           loading === false ? (
           <>
             <Stack.Screen name="AdopterSidebar" component={AdopterSidebar} />
+            <Stack.Screen name="AdopterSignup2" component={AdopterSignup2} />
             <Stack.Screen name="AdopterChat" component={AdopterChat} />
             <Stack.Screen name="AdopterMessages" component={AdopterMessages} />
           </>
         ) : (
-          (screen = (
-            <Stack.Screen
-              name="Loading"
-              component={Loading}
-              options={{ title: '' }}
-            />
-          ))
+          (screen = <Stack.Screen name="Loading" component={Loading} />)
         );
     } else if (user === null) {
       screen = (
         <>
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            // options={{ title: "" }}
-          />
-          <Stack.Screen
-            name="ProfileOptions"
-            component={ProfileOptions}
-            // options={{ title: "Petential" }}
-          />
-          <Stack.Screen
-            name="AdopterSignup"
-            component={AdopterSignup}
-            // options={{ title: "Petential" }}
-          />
-          <Stack.Screen
-            name="ShelterSignup"
-            component={ShelterSignup}
-            // options={{ title: "Petential" }}
-          />
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="ProfileOptions" component={ProfileOptions} />
+          <Stack.Screen name="AdopterSignup" component={AdopterSignup} />
+          <Stack.Screen name="ShelterSignup" component={ShelterSignup} />
         </>
       );
     } else {
-      screen = (
-        <Stack.Screen
-          name="Loading"
-          component={Loading}
-          options={{ title: '' }}
-        />
-      );
+      screen = <Stack.Screen name="Loading" component={Loading} />;
     }
   }
   return (
