@@ -38,8 +38,6 @@ export default function AdopterPetCard(props) {
   const user = useContext(UserContext);
 
   const swiped = async (direction, pet) => {
-    console.log("removing:", pet.name);
-
     // check if the pet already exists in the user's 'seen' subcollection
     const seenSubRef = collection(db, "adopters", `${user.id}`, "seen");
     const seenPetsDocs = await getDocs(seenSubRef);
