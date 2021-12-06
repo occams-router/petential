@@ -5,25 +5,40 @@ import AdopterMatchCard from "./AdopterMatchCard";
 import styles from "../Home/styles";
 import GlobalStyles from "../../../GlobalStyles";
 import { db } from "../../firebase/config";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 import { UserContext } from "../../../App";
 
 export default function AdopterMatches() {
   const adopter = useContext(UserContext);
   const [matches, setMatches] = useState([]);
 
-  const getMatches = async () => {
-    const matchList = [];
-    const docs = await getDocs(
-      collection(db, "adopters", `${adopter.id}`, "matches")
-    );
-    docs.forEach((doc) => matchList.push(doc.data()));
-    setMatches([...matchList]);
-  };
+  // const getMatches = async () => {
+  //   const matchList = [];
+  //   const docs = await getDocs(
+  //     collection(db, "adopters", `${adopter.id}`, "matches")
+  //   );
+  //   docs.forEach((doc) => matchList.push(doc.data()));
+  //   setMatches([...matchList]);
+  // };
 
-  useEffect(() => {
-    getMatches();
-  }, []);
+  // useEffect(() => {
+  //   getMatches();
+  // }, []);
+
+  useEffect(
+		() =>
+			onSnapshot(
+				query(collection(db, 'adopters', `${adopter.id}`, 'matches')),
+				(snapshot) =>
+					setMatches(
+						snapshot.docs.map((doc) => ({
+							id: doc.id,
+							...doc.data(),
+						}))
+					)
+			),
+		[]
+	);
 
   return (
     <View style={GlobalStyles.droidSafeArea}>
