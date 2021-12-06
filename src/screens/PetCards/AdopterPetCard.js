@@ -66,6 +66,22 @@ export default function AdopterPetCard(props) {
       };
 
       await addDoc(requestsSubRef, requestData);
+
+      // add pet to user's 'requests' subcollection
+      const userRequestsSubRef = collection(
+        db,
+        "adopters",
+        `${user.id}`,
+        "requests"
+      );
+
+      const userRequestData = {
+        petRefId: pet.id,
+        adopterRefId: user.id,
+        shelterRefId: pet.shelterRefId,
+      };
+
+      await addDoc(userRequestsSubRef, userRequestData);
     }
 
     setPetsList(petsList.slice(1));
@@ -84,23 +100,23 @@ export default function AdopterPetCard(props) {
       id: doc.id,
     }));
 
-    const matchesCollectionRef = collection(
+    const userRequestsSubRef = collection(
       db,
       "adopters",
       `${user.id}`,
-      "matches"
+      "requests"
     );
-    // retrieve all matches
-    const adopterMatches = await getDocs(matchesCollectionRef);
-    const matchesData = adopterMatches.docs.map((doc) => ({
+    // retrieve all of this user's sent requests
+    const adopterRequests = await getDocs(userRequestsSubRef);
+    const requestsData = adopterRequests.docs.map((doc) => ({
       ...doc.data(),
       id: doc.id,
     }));
 
     // store pet ids
-    const petIds = matchesData.map((data) => data.petRefId);
+    const petIds = requestsData.map((data) => data.petRefId);
 
-    // filter out pets which exist in this user's matches collection
+    // filter out pets which exist in this user's requests subcollection
     petsData = petsData.filter((pet) => !petIds.includes(pet.id));
 
     setPetsList(petsData);
