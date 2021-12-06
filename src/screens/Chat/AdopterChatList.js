@@ -75,7 +75,7 @@ export default function AdopterChatList({ match }) {
           where("petRefId", "==", `${match.petRefId}`),
           where("adopterRefId", "==", `${adopter.id}`)
         ),
-        (snapshot) => setLatestMessage(snapshot.docs[0].data().message)
+        (snapshot) => setLatestMessage(snapshot.docs[0]?.data()?.message)
       ),
     []
   );
