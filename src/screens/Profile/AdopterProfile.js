@@ -49,7 +49,7 @@ export default function AdopterProfile() {
 
   useEffect(
     async () =>
-      onSnapshot(query(doc(db, 'shelters', adopter.id)), (snapshot) => {
+      onSnapshot(query(doc(db, 'adopters', adopter.id)), (snapshot) => {
         setName(snapshot.data().name);
         setCity(snapshot.data().city);
         setState(snapshot.data().state);
