@@ -6,7 +6,7 @@ import styles from './styles';
 import GlobalStyles from '../../../GlobalStyles';
 import HeaderBack from '../Sidebar/HeaderBack';
 import { db } from '../../firebase/config';
-import { collection, doc, addDoc, updateDoc } from 'firebase/firestore';
+import { collection, doc, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { UserContext } from '../../../App';
 
 export default function PetProfile(props) {
@@ -104,6 +104,7 @@ export default function PetProfile(props) {
 
   return (
     <SafeAreaView style={GlobalStyles.droidSafeArea}>
+      {pet ? (
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always"
@@ -200,7 +201,103 @@ export default function PetProfile(props) {
         <TouchableOpacity style={styles.button} onPress={() => onSavePress()}>
           <Text style={styles.buttonTitle}>Save</Text>
         </TouchableOpacity>
-      </KeyboardAwareScrollView>
+        </KeyboardAwareScrollView>
+        ) : (
+          <KeyboardAwareScrollView
+        style={{ flex: 1, width: '100%' }}
+        keyboardShouldPersistTaps="always"
+      >
+        <HeaderBack />
+        <Text style={styles.title}>{name}</Text>
+        <Image style={styles.logo} source={{ uri: imageUrl }} />
+        <TextInput
+          style={styles.input}
+          placeholder="Name"
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => setName(text)}
+          value={name}
+          underlineColorAndroid="transparent"
+          autoCapitalize="words"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Age"
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => setAge(text)}
+          value={age}
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Species"
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => setSpecies(text)}
+          value={species}
+          underlineColorAndroid="transparent"
+          autoCapitalize="words"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Breed"
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => setBreed(text)}
+          value={breed}
+          underlineColorAndroid="transparent"
+          autoCapitalize="words"
+        />
+        <TextInput
+          style={styles.input}
+          placeholderTextColor="#aaaaaa"
+          placeholder="Image URL"
+          onChangeText={(text) => setImageUrl(text)}
+          value={imageUrl}
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Shelter Name"
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => setShelterName(text)}
+          value={shelterName}
+          underlineColorAndroid="transparent"
+          autoCapitalize="words"
+        />
+        <TextInput
+          style={styles.input}
+          placeholderTextColor="#aaaaaa"
+          placeholder="City"
+          onChangeText={(text) => setCity(text)}
+          value={city}
+          underlineColorAndroid="transparent"
+          autoCapitalize="words"
+        />
+        <TextInput
+          style={styles.input}
+          placeholderTextColor="#aaaaaa"
+          placeholder="State"
+          onChangeText={(text) => setState(text)}
+          value={state}
+          underlineColorAndroid="transparent"
+          autoCapitalize="words"
+        />
+        <TextInput
+          style={styles.input}
+          multiline
+          numberOfLines={5}
+          placeholderTextColor="#aaaaaa"
+          placeholder="Description"
+          onChangeText={(text) => setDescription(text)}
+          value={description}
+          underlineColorAndroid="transparent"
+          autoCapitalize="sentences"
+        />
+        <TouchableOpacity style={styles.button} onPress={() => onSavePress()}>
+          <Text style={styles.buttonTitle}>Save</Text>
+        </TouchableOpacity>
+        </KeyboardAwareScrollView>
+        )}
     </SafeAreaView>
   );
 }
