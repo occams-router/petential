@@ -1,11 +1,7 @@
-import { storage } from "./firebase/config";
+import { storage, bucket } from "./firebase/config";
 import * as ImagePicker from "expo-image-picker";
-import {
-  uploadBytes,
-  getDownloadURL,
-  uploadString,
-  ref,
-} from "firebase/storage";
+import * as ImageManipulator from "expo-image-manipulator";
+import { uploadBytes, getDownloadURL, ref } from "firebase/storage";
 
 const selectImage = async () => {
   if (Platform.OS !== "web") {
@@ -15,32 +11,60 @@ const selectImage = async () => {
     }
   }
 
-  let result = await ImagePicker.launchImageLibraryAsync({
+  let pickerResult = await ImagePicker.launchImageLibraryAsync({
     mediaTypes: ImagePicker.MediaTypeOptions.Images,
     quality: 1,
   });
 
-  console.log("result:", result.uri);
-  if (result.cancelled === false) {
-    const response = await fetch(result.uri);
+  if (pickerResult.cancelled === false) {
+    const response = await fetch(pickerResult.uri);
+
+    // convert response into a blob
     const blob = await response.blob();
-    uploadImage(blob, result.uri);
-    return result.uri;
+
+    // upload image to cloud using blob data and uri as filename
+    const finalImage = await uploadImage(blob, pickerResult.uri);
+
+    return finalImage;
   }
 };
 
 const uploadImage = async (file, uri) => {
-  // extract filename from uri
+  let resized = await ImageManipulator.manipulateAsync(uri, [
+    {
+      resize: {
+        width: 500,
+      },
+    },
+  ]);
 
-  const index = uri.lastIndexOf("/") + 1;
-  const fileName = uri.substr(index);
+  const resizedUri = resized.uri;
+
+  // convert to blob
+  const response = await fetch(resizedUri);
+  const resizedBlob = await response.blob();
+
+  // extract filename from uri
+  const index = resizedUri.lastIndexOf("/") + 1;
+  const fileName = resizedUri.substr(index);
   const imagesRef = ref(storage, `images/${fileName}`);
 
-  console.log("uploading image");
+  console.log("uploading to cloud...");
+  await uploadBytes(imagesRef, resizedBlob);
+  console.log("uploaded to cloud");
 
-  uploadBytes(imagesRef, file).then((snapshot) => {
-    console.log("uploaded");
-  });
+  return resizedUri;
 };
 
-export default selectImage;
+const retrieveImage = async (uri) => {
+  // extract filename from uri
+  const index = uri.lastIndexOf("/") + 1;
+  const fileName = uri.substr(index);
+  const imageRef = ref(storage, `images/${fileName}`);
+
+  const retrievedUrl = await getDownloadURL(imageRef);
+
+  return retrievedUrl;
+};
+
+export { selectImage, retrieveImage };

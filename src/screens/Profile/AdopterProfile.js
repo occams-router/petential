@@ -18,7 +18,7 @@ import {
   TextInput as PaperInput,
   IconButton,
 } from "react-native-paper";
-import selectImage from "../../ImageUpload";
+import { selectImage, retrieveImage } from "../../ImageUpload";
 
 export default function AdopterProfile() {
   const adopter = useContext(UserContext);
@@ -150,8 +150,12 @@ export default function AdopterProfile() {
               onPress={async () => {
                 const imageResult = await selectImage();
                 if (imageResult) {
+                  const retrieved = await retrieveImage(imageResult);
+
+                  console.log("retrieved:", retrieved);
+
                   // update in db
-                  updateImageInDb(imageResult);
+                  updateImageInDb(retrieved);
                 }
               }}
             />
