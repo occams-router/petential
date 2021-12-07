@@ -28,7 +28,10 @@ export default function AdopterProfile() {
   const [city, setCity] = useState(adopter.city || "");
   const [state, setState] = useState(adopter.state || "");
   const [phone, setPhone] = useState(adopter.phone || "");
-  const [imageUrl, setImageUrl] = useState(adopter.imageUrl || "");
+  const [imageUrl, setImageUrl] = useState(
+    adopter.imageUrl ||
+      "https://blog.greendot.org/wp-content/uploads/sites/13/2021/09/placeholder-image.png"
+  );
   const [description, setDescription] = useState(adopter.description || "");
   const [housing, setHousing] = useState(adopter.housing || "");
   const [lifestyle, setLifestyle] = useState(adopter.lifestyle || "");
