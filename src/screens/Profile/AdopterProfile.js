@@ -73,15 +73,8 @@ export default function AdopterProfile() {
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always"
       >
-        <Text style={styles.title}> Welcome, {adopter.name}!</Text>
-        {adopter.imageUrl ? (
-          <Image
-            style={styles.logo}
-            source={{
-              uri: adopter.imageUrl,
-            }}
-          />
-        ) : null}
+        <Text style={styles.title}> Welcome, {name}!</Text>
+        <Image style={styles.logo} source={{ uri: imageUrl }} />
         <TextInput
           style={styles.input}
           label="Name"
