@@ -18,29 +18,26 @@ const selectImage = async () => {
   let result = await ImagePicker.launchImageLibraryAsync({
     mediaTypes: ImagePicker.MediaTypeOptions.Images,
     quality: 1,
-    base64: true,
   });
 
   console.log("result:", result.uri);
   if (result.cancelled === false) {
-    uploadImage(result);
+    const response = await fetch(result.uri);
+    const blob = await response.blob();
+    uploadImage(blob, result.uri);
     return result.uri;
   }
 };
 
-const uploadImage = async (file) => {
+const uploadImage = async (file, uri) => {
   // extract filename from uri
-  const index = file.uri.lastIndexOf("/") + 1;
-  const fileName = file.uri.substr(index);
+
+  const index = uri.lastIndexOf("/") + 1;
+  const fileName = uri.substr(index);
   const imagesRef = ref(storage, `images/${fileName}`);
 
   console.log("uploading image");
-  /*
-  const dataString = `data:image/jpeg;base64,${file.base64}`;
-  uploadString(imagesRef, dataString, "data_url").then((snapshot) => {
-    console.log("uploaded");
-  });
-  */
+
   uploadBytes(imagesRef, file).then((snapshot) => {
     console.log("uploaded");
   });

@@ -34,12 +34,11 @@ export default function AdopterProfile() {
   const [lifestyle, setLifestyle] = useState(adopter.lifestyle || "");
   const [petHistory, setPetHistory] = useState(adopter.petHistory || "");
 
-  const [selectedPic, setSelectedPic] = useState("");
-  const [galleryPermission, setGalleryPermission] = useState(null);
-
   useEffect(() => {
     setLoading(false);
   }, []);
+
+  const adopterRef = doc(db, "adopters", adopter.id);
 
   const updateAdopter = async () => {
     try {
@@ -78,6 +77,11 @@ export default function AdopterProfile() {
       }),
     []
   );
+
+  const updateImageInDb = async (image) => {
+    console.log("image:", image);
+    await updateDoc(adopterRef, { imageUrl: image });
+  };
 
   return loading ? (
     <View style={GlobalStyles.droidSafeArea}>
@@ -143,9 +147,12 @@ export default function AdopterProfile() {
           right={
             <PaperInput.Icon
               name="camera"
-              onPress={() => {
-                const imageResult = selectImage();
-                if (imageResult) setSelectedPic(imageResult);
+              onPress={async () => {
+                const imageResult = await selectImage();
+                if (imageResult) {
+                  // update in db
+                  updateImageInDb(imageResult);
+                }
               }}
             />
           }

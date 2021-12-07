@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { Dimensions } from 'react-native';
-import styled from 'styled-components/native';
-import { collection, getDocs, addDoc } from 'firebase/firestore';
-import { db } from '../../firebase/config';
-import TinderCard from 'react-tinder-card';
+import React, { useEffect, useState, useContext } from "react";
+import { Dimensions } from "react-native";
+import styled from "styled-components/native";
+import { collection, getDocs, addDoc } from "firebase/firestore";
+import { db } from "../../firebase/config";
+import TinderCard from "react-tinder-card";
 import {
   Card,
   Title,
@@ -12,8 +12,8 @@ import {
   Divider,
   Subheading,
   Text,
-} from 'react-native-paper';
-import { UserContext } from '../../../App';
+} from "react-native-paper";
+import { UserContext } from "../../../App";
 
 const Container = styled.View`
   display: flex;
@@ -34,7 +34,7 @@ const ButtonContainer = styled.View`
   width: 100%;
 `;
 
-const deviceWidth = Dimensions.get('window').width;
+const deviceWidth = Dimensions.get("window").width;
 
 export default function AdopterPetCard(props) {
   const [petsList, setPetsList] = useState([]);
@@ -42,7 +42,7 @@ export default function AdopterPetCard(props) {
 
   const swiped = async (direction, pet) => {
     // check if the pet already exists in the user's 'seen' subcollection
-    const seenSubRef = collection(db, 'adopters', `${user.id}`, 'seen');
+    const seenSubRef = collection(db, "adopters", `${user.id}`, "seen");
     const seenPetsDocs = await getDocs(seenSubRef);
     const seenPetsArr = seenPetsDocs.docs.map((doc) => ({ ...doc.data() }));
     const petExists = seenPetsArr.find((element) => element.id === pet.id);
@@ -53,19 +53,19 @@ export default function AdopterPetCard(props) {
     }
 
     // if right swipe, add pet to its shelter's 'requests' subcollection
-    if (direction === 'right') {
+    if (direction === "right") {
       const requestsSubRef = collection(
         db,
-        'shelters',
+        "shelters",
         `${pet.shelterRefId}`,
-        'requests'
+        "requests"
       );
 
       const requestData = {
         petRefId: pet.id,
         adopterRefId: user.id,
         shelterRefId: pet.shelterRefId,
-        status: 'pending',
+        status: "pending",
       };
 
       await addDoc(requestsSubRef, requestData);
@@ -73,9 +73,9 @@ export default function AdopterPetCard(props) {
       // add pet to user's 'requests' subcollection
       const userRequestsSubRef = collection(
         db,
-        'adopters',
+        "adopters",
         `${user.id}`,
-        'requests'
+        "requests"
       );
 
       const userRequestData = {
@@ -91,11 +91,11 @@ export default function AdopterPetCard(props) {
   };
 
   const outOfFrame = (name) => {
-    console.log(name + ' left the screen!');
+    console.log(name + " left the screen!");
   };
 
   useEffect(async () => {
-    const petsCollectionRef = collection(db, 'pets');
+    const petsCollectionRef = collection(db, "pets");
     // retrieve all pets
     const allPets = await getDocs(petsCollectionRef);
     let petsData = allPets.docs.map((doc) => ({
@@ -105,9 +105,9 @@ export default function AdopterPetCard(props) {
 
     const userRequestsSubRef = collection(
       db,
-      'adopters',
+      "adopters",
       `${user.id}`,
-      'requests'
+      "requests"
     );
     // retrieve all of this user's sent requests
     const adopterRequests = await getDocs(userRequestsSubRef);
@@ -135,7 +135,7 @@ export default function AdopterPetCard(props) {
                 key={pet.id}
                 onSwipe={(dir) => swiped(dir, pet)}
                 onCardLeftScreen={() => outOfFrame(pet.name)}
-                preventSwipe={['up', 'down']}
+                preventSwipe={["up", "down"]}
                 swipeRequirementType="position"
                 swipeThreshold={deviceWidth / 1.5}
               >
@@ -146,7 +146,7 @@ export default function AdopterPetCard(props) {
                     <Title>
                       {pet.name} • Age {pet.age}
                     </Title>
-                    <Subheading style={{ fontWeight: 'bold' }}>
+                    <Subheading style={{ fontWeight: "bold" }}>
                       {pet.shelterName}
                     </Subheading>
                     <Divider />
@@ -156,29 +156,31 @@ export default function AdopterPetCard(props) {
                     </Paragraph>
                     <Paragraph>Breed: {pet.breed}</Paragraph>
                   </Card.Content>
-
-                  <Card.Actions>
-                    <ButtonContainer>
-                      <Button
-                        icon="thumb-down-outline"
-                        onPress={() => swiped('left', pet)}
-                      >
-                        Pass
-                      </Button>
-                      <Button icon="heart" onPress={() => swiped('right', pet)}>
-                        Like
-                      </Button>
-                    </ButtonContainer>
-                  </Card.Actions>
                 </Card>
               </TinderCard>
-              <Text style={{ alignSelf: 'center' }}>
+              <ButtonContainer>
+                <Button
+                  icon="thumb-down-outline"
+                  mode="contained"
+                  onPress={() => swiped("left", pet)}
+                >
+                  Pass
+                </Button>
+                <Button
+                  mode="contained"
+                  icon="heart"
+                  onPress={() => swiped("right", pet)}
+                >
+                  Like
+                </Button>
+              </ButtonContainer>
+              <Text style={{ alignSelf: "center", marginTop: 25 }}>
                 Swipe or press pass/like!
               </Text>
             </>
           ))(petsList[0])
         ) : (
-          <Text style={{ alignSelf: 'center' }}>No pets to display!</Text>
+          <Text style={{ alignSelf: "center" }}>No pets to display!</Text>
         )}
       </CardContainer>
     </Container>
