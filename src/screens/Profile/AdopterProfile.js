@@ -82,7 +82,6 @@ export default function AdopterProfile() {
   );
 
   const updateImageInDb = async (image) => {
-    console.log("image:", image);
     await updateDoc(adopterRef, { imageUrl: image });
   };
 
@@ -153,9 +152,8 @@ export default function AdopterProfile() {
               onPress={async () => {
                 const imageResult = await selectImage();
                 if (imageResult) {
+                  // retrieve image url from cloud
                   const retrieved = await retrieveImage(imageResult);
-
-                  console.log("retrieved:", retrieved);
 
                   // update in db
                   updateImageInDb(retrieved);
