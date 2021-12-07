@@ -89,6 +89,7 @@ export default function AdopterProfile() {
         style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"
       >
+<<<<<<< HEAD
         <Text style={styles.title}> Welcome, {adopter.name}!</Text>
         {adopter.imageUrl ? (
           <Image
@@ -101,6 +102,10 @@ export default function AdopterProfile() {
 
         {/* <Button onPress={() => selectImage()}>Select Image</Button> */}
 
+=======
+        <Text style={styles.title}> Welcome, {name}!</Text>
+        <Image style={styles.logo} source={{ uri: imageUrl }} />
+>>>>>>> 1a382553bb268b5d6868d388581928850dfc56ae
         <TextInput
           style={styles.input}
           label="Name"

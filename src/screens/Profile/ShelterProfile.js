@@ -15,10 +15,7 @@ export default function ShelterProfile() {
   const [city, setCity] = useState(shelter.city || '');
   const [state, setState] = useState(shelter.state || '');
   const [phone, setPhone] = useState(shelter.phone || '');
-  const [imageUrl, setImageUrl] = useState(
-    shelter.imageUrl ||
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2gT4BUTqAaMh6kIvJdw8Wf6pQQGbm6HI0Yg&usqp=CAU'
-  );
+  const [imageUrl, setImageUrl] = useState(shelter.imageUrl || '');
   const [description, setDescription] = useState(shelter.description || '');
 
   useEffect(() => {
@@ -67,13 +64,8 @@ export default function ShelterProfile() {
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always"
       >
-        <Text style={styles.title}>Welcome, {shelter.name}!</Text>
-        <Image
-          style={styles.logo}
-          source={{
-            uri: shelter.imageUrl || imageUrl,
-          }}
-        />
+        <Text style={styles.title}>Welcome, {nameOfShelter}!</Text>
+        <Image style={styles.logo} source={{ uri: imageUrl }} />
         <TextInput
           style={styles.input}
           placeholder="Name of Shelter"
