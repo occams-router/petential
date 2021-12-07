@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
+import { Dimensions } from "react-native";
 import styled from "styled-components/native";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
-import TinderCard from "../../react-tinder-card/reactTinderCard";
+import TinderCard from "react-tinder-card";
+import { Loading } from "..";
 import {
   Card,
   Title,
@@ -33,9 +35,12 @@ const ButtonContainer = styled.View`
   width: 100%;
 `;
 
+const deviceWidth = Dimensions.get("window").width;
+
 export default function AdopterPetCard(props) {
   const [petsList, setPetsList] = useState([]);
   const user = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
 
   const swiped = async (direction, pet) => {
     // check if the pet already exists in the user's 'seen' subcollection
@@ -92,6 +97,7 @@ export default function AdopterPetCard(props) {
   };
 
   useEffect(async () => {
+    setLoading(true);
     const petsCollectionRef = collection(db, "pets");
     // retrieve all pets
     const allPets = await getDocs(petsCollectionRef);
@@ -120,12 +126,15 @@ export default function AdopterPetCard(props) {
     petsData = petsData.filter((pet) => !petIds.includes(pet.id));
 
     setPetsList(petsData);
+    setLoading(false);
   }, []);
 
   return (
     <Container>
       <CardContainer>
-        {petsList.length ? (
+        {loading ? (
+          <Loading />
+        ) : petsList.length ? (
           ((pet) => (
             <>
               <TinderCard
@@ -133,6 +142,8 @@ export default function AdopterPetCard(props) {
                 onSwipe={(dir) => swiped(dir, pet)}
                 onCardLeftScreen={() => outOfFrame(pet.name)}
                 preventSwipe={["up", "down"]}
+                swipeRequirementType="position"
+                swipeThreshold={deviceWidth / 1.5}
               >
                 <Card style={{ padding: 10, marginBottom: 20 }}>
                   <Card.Cover source={{ uri: pet.imageUrl }}></Card.Cover>
@@ -151,23 +162,25 @@ export default function AdopterPetCard(props) {
                     </Paragraph>
                     <Paragraph>Breed: {pet.breed}</Paragraph>
                   </Card.Content>
-
-                  <Card.Actions>
-                    <ButtonContainer>
-                      <Button
-                        icon="thumb-down-outline"
-                        onPress={() => swiped("left", pet)}
-                      >
-                        Pass
-                      </Button>
-                      <Button icon="heart" onPress={() => swiped("right", pet)}>
-                        Like
-                      </Button>
-                    </ButtonContainer>
-                  </Card.Actions>
                 </Card>
               </TinderCard>
-              <Text style={{ alignSelf: "center" }}>
+              <ButtonContainer>
+                <Button
+                  icon="thumb-down-outline"
+                  mode="contained"
+                  onPress={() => swiped("left", pet)}
+                >
+                  Pass
+                </Button>
+                <Button
+                  mode="contained"
+                  icon="heart"
+                  onPress={() => swiped("right", pet)}
+                >
+                  Like
+                </Button>
+              </ButtonContainer>
+              <Text style={{ alignSelf: "center", marginTop: 25 }}>
                 Swipe or press pass/like!
               </Text>
             </>
