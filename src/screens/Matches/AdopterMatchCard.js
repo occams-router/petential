@@ -32,14 +32,12 @@ export default function AdopterMatchCard({ match }) {
     const shelterDocRef = doc(db, 'shelters', `${match.shelterRefId}`);
     const shelterDoc = await getDoc(shelterDocRef);
     setShelter(shelterDoc.data());
-    console.log('shelterDoc', shelterDoc.data());
   };
 
   const getPet = async () => {
     const petDocRef = doc(db, 'pets', `${match.petRefId}`);
     const petDoc = await getDoc(petDocRef);
     setPet(petDoc.data());
-    console.log('PetDoc', petDoc.data());
   };
 
   useEffect(() => {
