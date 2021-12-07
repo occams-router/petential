@@ -1,20 +1,12 @@
-import React, { useContext, useState, useEffect } from "react";
-import { View } from "react-native";
-import { db } from "../../firebase/config";
-import { doc, getDoc } from "firebase/firestore";
-import { UserContext } from "../../../App";
-import styled from "styled-components/native";
-import {
-  Card,
-  Title,
-  Paragraph,
-  Button,
-  Divider,
-  Subheading,
-} from "react-native-paper";
-import styles from "../Home/styles";
-import { useNavigation } from "@react-navigation/native";
-import GlobalStyles from "../../../GlobalStyles";
+import React, { useContext, useState, useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { View } from 'react-native';
+import { Card, Title, Paragraph, Button, Divider } from 'react-native-paper';
+import styled from 'styled-components/native';
+import GlobalStyles from '../../../GlobalStyles';
+import { db } from '../../firebase/config';
+import { doc, getDoc } from 'firebase/firestore';
+import { UserContext } from '../../../App';
 
 const Container = styled.View`
   display: flex;
@@ -37,17 +29,17 @@ export default function AdopterMatchCard({ match }) {
   const [pet, setPet] = useState([]);
 
   const getShelter = async () => {
-    const shelterDocRef = doc(db, "shelters", `${match.shelterRefId}`);
+    const shelterDocRef = doc(db, 'shelters', `${match.shelterRefId}`);
     const shelterDoc = await getDoc(shelterDocRef);
     setShelter(shelterDoc.data());
-    console.log("shelterDoc", shelterDoc.data());
+    console.log('shelterDoc', shelterDoc.data());
   };
 
   const getPet = async () => {
-    const petDocRef = doc(db, "pets", `${match.petRefId}`);
+    const petDocRef = doc(db, 'pets', `${match.petRefId}`);
     const petDoc = await getDoc(petDocRef);
     setPet(petDoc.data());
-    console.log("PetDoc", petDoc.data());
+    console.log('PetDoc', petDoc.data());
   };
 
   useEffect(() => {
@@ -78,7 +70,7 @@ export default function AdopterMatchCard({ match }) {
               <Button
                 icon="chat"
                 onPress={() =>
-                  navigation.navigate("AdopterMessages", {
+                  navigation.navigate('AdopterMessages', {
                     match,
                     pet,
                     shelter,
