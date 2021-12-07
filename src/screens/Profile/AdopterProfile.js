@@ -1,25 +1,35 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Text, Image, TextInput, TouchableOpacity, View } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { db } from '../../firebase/config';
-import { doc, updateDoc, onSnapshot, query } from 'firebase/firestore';
-import styles from './styles';
-import GlobalStyles from '../../../GlobalStyles';
-import { UserContext } from '../../../App';
+import React, { useContext, useState, useEffect } from "react";
+import { Text, Image, TextInput, TouchableOpacity, View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { db } from "../../firebase/config";
+import { doc, updateDoc, onSnapshot, query } from "firebase/firestore";
+import styles from "./styles";
+import GlobalStyles from "../../../GlobalStyles";
+import { UserContext } from "../../../App";
+import * as ImagePicker from "expo-image-picker";
+
+import {
+  Button,
+  TextInput as PaperInput,
+  IconButton,
+} from "react-native-paper";
 
 export default function AdopterProfile() {
   const adopter = useContext(UserContext);
   const [loading, setLoading] = useState(true);
 
-  const [name, setName] = useState(adopter.name || '');
-  const [city, setCity] = useState(adopter.city || '');
-  const [state, setState] = useState(adopter.state || '');
-  const [phone, setPhone] = useState(adopter.phone || '');
-  const [imageUrl, setImageUrl] = useState(adopter.imageUrl || '');
-  const [description, setDescription] = useState(adopter.description || '');
-  const [housing, setHousing] = useState(adopter.housing || '');
-  const [lifestyle, setLifestyle] = useState(adopter.lifestyle || '');
-  const [petHistory, setPetHistory] = useState(adopter.petHistory || '');
+  const [name, setName] = useState(adopter.name || "");
+  const [city, setCity] = useState(adopter.city || "");
+  const [state, setState] = useState(adopter.state || "");
+  const [phone, setPhone] = useState(adopter.phone || "");
+  const [imageUrl, setImageUrl] = useState(adopter.imageUrl || "");
+  const [description, setDescription] = useState(adopter.description || "");
+  const [housing, setHousing] = useState(adopter.housing || "");
+  const [lifestyle, setLifestyle] = useState(adopter.lifestyle || "");
+  const [petHistory, setPetHistory] = useState(adopter.petHistory || "");
+
+  const [selectedPic, setSelectedPic] = useState("");
+  const [galleryPermission, setGalleryPermission] = useState(null);
 
   useEffect(() => {
     setLoading(false);
@@ -27,7 +37,7 @@ export default function AdopterProfile() {
 
   const updateAdopter = async () => {
     try {
-      const adopterRef = doc(db, 'adopters', adopter.id);
+      const adopterRef = doc(db, "adopters", adopter.id);
       const updates = {
         name,
         city,
@@ -40,16 +50,28 @@ export default function AdopterProfile() {
         petHistory,
       };
       await updateDoc(adopterRef, updates);
-      alert('Update was successful!');
+      alert("Update was successful!");
     } catch (error) {
-      alert('Update failed.');
-      console.log('Update adopter', error);
+      alert("Update failed.");
+      console.log("Update adopter", error);
+    }
+  };
+
+  const selectImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      quality: 1,
+    });
+
+    console.log("result:", result);
+    if (!result.cancelled) {
+      setSelectedPic(result.uri);
     }
   };
 
   useEffect(
     async () =>
-      onSnapshot(query(doc(db, 'adopters', adopter.id)), (snapshot) => {
+      onSnapshot(query(doc(db, "adopters", adopter.id)), (snapshot) => {
         setName(snapshot.data().name);
         setCity(snapshot.data().city);
         setState(snapshot.data().state);
@@ -70,7 +92,7 @@ export default function AdopterProfile() {
   ) : (
     <View style={GlobalStyles.droidSafeArea}>
       <KeyboardAwareScrollView
-        style={{ flex: 1, width: '100%' }}
+        style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"
       >
         <Text style={styles.title}> Welcome, {adopter.name}!</Text>
@@ -82,6 +104,9 @@ export default function AdopterProfile() {
             }}
           />
         ) : null}
+
+        {/* <Button onPress={() => selectImage()}>Select Image</Button> */}
+
         <TextInput
           style={styles.input}
           label="Name"
@@ -122,15 +147,18 @@ export default function AdopterProfile() {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-        <TextInput
+        <PaperInput
           style={styles.input}
           placeholderTextColor="#aaaaaa"
-          label="Image URL"
+          // label="Image URL"
           placeholder="Image URL"
           onChangeText={(text) => setImageUrl(text)}
           value={imageUrl}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
+          right={
+            <PaperInput.Icon name="camera" onPress={() => selectImage()} />
+          }
         />
         <TextInput
           style={styles.input}
