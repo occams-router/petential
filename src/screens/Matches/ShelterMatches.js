@@ -7,12 +7,15 @@ import GlobalStyles from "../../../GlobalStyles";
 import { db } from "../../firebase/config";
 import { collection, getDocs, onSnapshot } from "firebase/firestore";
 import { UserContext } from "../../../App";
+import { Loading } from "..";
 
 export default function ShelterMatches() {
   const shelter = useContext(UserContext);
   const [matches, setMatches] = useState([]);
+  const [loading, setLoading] = useState(false)
 
   useEffect(async () => {
+    setLoading(true);
     const matchesCollectionRef = collection(
       db,
       "shelters",
@@ -27,6 +30,7 @@ export default function ShelterMatches() {
         id: doc.id,
       }));
       setMatches(matchData);
+      setLoading(false);
     });
 
     return unsub;
@@ -35,7 +39,7 @@ export default function ShelterMatches() {
   return (
     <View style={GlobalStyles.droidSafeArea}>
       <Text style={styles.title}>My Matches</Text>
-      {matches.length === 0 ? (
+      {loading ? (<Loading/>) : matches.length === 0 ? (
         <Text style={{ alignSelf: "center" }}>No matches to display!</Text>
       ) : (
         <FlatList
