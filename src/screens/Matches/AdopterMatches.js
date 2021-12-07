@@ -1,26 +1,26 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Text, FlatList, TouchableOpacity, View } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import AdopterMatchCard from "./AdopterMatchCard";
-import styles from "../Home/styles";
-import GlobalStyles from "../../../GlobalStyles";
-import { db } from "../../firebase/config";
-import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
-import { UserContext } from "../../../App";
-import { Loading } from "..";
+import React, { useContext, useState, useEffect } from 'react';
+import { Text, FlatList, TouchableOpacity, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import styles from '../Home/styles';
+import GlobalStyles from '../../../GlobalStyles';
+import { db } from '../../firebase/config';
+import { collection, getDocs, onSnapshot } from 'firebase/firestore';
+import { UserContext } from '../../../App';
+import AdopterMatchCard from './AdopterMatchCard';
+import Loading from '../Loading';
 
 export default function AdopterMatches() {
   const adopter = useContext(UserContext);
   const [matches, setMatches] = useState([]);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   useEffect(async () => {
     setLoading(true);
     const matchesCollectionRef = collection(
       db,
-      "adopters",
+      'adopters',
       `${adopter.id}`,
-      "matches"
+      'matches'
     );
 
     const unsub = onSnapshot(matchesCollectionRef, async () => {
@@ -38,8 +38,10 @@ export default function AdopterMatches() {
   return (
     <View style={GlobalStyles.droidSafeArea}>
       <Text style={styles.title}>Your Matches</Text>
-      {loading ? (<Loading/>) : matches.length === 0 ? (
-        <Text style={{ alignSelf: "center" }}>No matches to display!</Text>
+      {loading ? (
+        <Loading />
+      ) : matches.length === 0 ? (
+        <Text style={{ alignSelf: 'center' }}>No matches to display!</Text>
       ) : (
         <FlatList
           data={matches}

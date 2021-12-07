@@ -15,7 +15,10 @@ export default function ShelterProfile() {
   const [city, setCity] = useState(shelter.city || '');
   const [state, setState] = useState(shelter.state || '');
   const [phone, setPhone] = useState(shelter.phone || '');
-  const [imageUrl, setImageUrl] = useState(shelter.imageUrl || '');
+  const [imageUrl, setImageUrl] = useState(
+    shelter.imageUrl ||
+      'https://blog.greendot.org/wp-content/uploads/sites/13/2021/09/placeholder-image.png'
+  );
   const [description, setDescription] = useState(shelter.description || '');
 
   useEffect(() => {
