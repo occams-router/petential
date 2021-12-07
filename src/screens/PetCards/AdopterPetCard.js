@@ -11,7 +11,6 @@ import {
   Divider,
   Subheading,
   Text,
-  Avatar,
 } from "react-native-paper";
 import { UserContext } from "../../../App";
 
@@ -38,11 +37,7 @@ export default function AdopterPetCard(props) {
   const [petsList, setPetsList] = useState([]);
   const user = useContext(UserContext);
 
-  const petsCollectionRef = collection(db, "pets");
-
   const swiped = async (direction, pet) => {
-    console.log("removing:", pet.name);
-
     // check if the pet already exists in the user's 'seen' subcollection
     const seenSubRef = collection(db, "adopters", `${user.id}`, "seen");
     const seenPetsDocs = await getDocs(seenSubRef);
@@ -71,6 +66,22 @@ export default function AdopterPetCard(props) {
       };
 
       await addDoc(requestsSubRef, requestData);
+
+      // add pet to user's 'requests' subcollection
+      const userRequestsSubRef = collection(
+        db,
+        "adopters",
+        `${user.id}`,
+        "requests"
+      );
+
+      const userRequestData = {
+        petRefId: pet.id,
+        adopterRefId: user.id,
+        shelterRefId: pet.shelterRefId,
+      };
+
+      await addDoc(userRequestsSubRef, userRequestData);
     }
 
     setPetsList(petsList.slice(1));
@@ -81,11 +92,32 @@ export default function AdopterPetCard(props) {
   };
 
   useEffect(async () => {
+    const petsCollectionRef = collection(db, "pets");
+    // retrieve all pets
     const allPets = await getDocs(petsCollectionRef);
     let petsData = allPets.docs.map((doc) => ({
       ...doc.data(),
       id: doc.id,
     }));
+
+    const userRequestsSubRef = collection(
+      db,
+      "adopters",
+      `${user.id}`,
+      "requests"
+    );
+    // retrieve all of this user's sent requests
+    const adopterRequests = await getDocs(userRequestsSubRef);
+    const requestsData = adopterRequests.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    }));
+
+    // store pet ids
+    const petIds = requestsData.map((data) => data.petRefId);
+
+    // filter out pets which exist in this user's requests subcollection
+    petsData = petsData.filter((pet) => !petIds.includes(pet.id));
 
     setPetsList(petsData);
   }, []);

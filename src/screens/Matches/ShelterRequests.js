@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Image, Text, TouchableOpacity, FlatList } from "react-native";
+import { Image, Text, TouchableOpacity, FlatList, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
 import { db } from "../../firebase/config";
@@ -100,7 +99,7 @@ export default function ShelterRequests() {
   }, []);
 
   return (
-    <SafeAreaView style={GlobalStyles.droidSafeArea}>
+    <View style={GlobalStyles.droidSafeArea}>
       <Text style={styles.title}>My Requests</Text>
       {adoptersAndPets.length === 0 ? (
         <Text style={{ alignSelf: "center" }}>No requests to display!</Text>
@@ -111,6 +110,6 @@ export default function ShelterRequests() {
           keyExtractor={(item) => item.requestId}
         />
       )}
-    </SafeAreaView>
+    </View>
   );
 }

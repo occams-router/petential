@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Text, FlatList, TouchableOpacity } from "react-native";
+import { Text, FlatList, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import MatchCard from "./ShelterMatchCard";
 import styles from "../Home/styles";
@@ -34,7 +33,7 @@ export default function ShelterMatches() {
   }, []);
 
   return (
-    <SafeAreaView style={GlobalStyles.droidSafeArea}>
+    <View style={GlobalStyles.droidSafeArea}>
       <Text style={styles.title}>My Matches</Text>
       {matches.length === 0 ? (
         <Text style={{ alignSelf: "center" }}>No matches to display!</Text>
@@ -45,6 +44,6 @@ export default function ShelterMatches() {
           keyExtractor={(item) => item.id}
         />
       )}
-    </SafeAreaView>
+    </View>
   );
 }

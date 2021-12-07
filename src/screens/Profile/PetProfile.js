@@ -1,39 +1,46 @@
-import React, { useState, useContext } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Image, Text, TextInput, TouchableOpacity } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import styles from "./styles";
-import GlobalStyles from "../../../GlobalStyles";
-import { db } from "../../firebase/config";
-import { collection, doc, addDoc, updateDoc } from "firebase/firestore";
-import { UserContext } from "../../../App";
+import React, { useState, useContext } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Image, Text, TextInput, TouchableOpacity } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import styles from './styles';
+import GlobalStyles from '../../../GlobalStyles';
+import HeaderBack from '../Sidebar/HeaderBack';
+import { db } from '../../firebase/config';
+import {
+  collection,
+  doc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+} from 'firebase/firestore';
+import { UserContext } from '../../../App';
 
 export default function PetProfile(props) {
   const pet = props.route.params.pet;
   const shelter = useContext(UserContext);
 
-  const [name, setName] = pet ? useState(pet.name || "") : useState("");
-  const [age, setAge] = pet ? useState(pet.age || "") : useState("");
+  const [name, setName] = pet ? useState(pet.name || '') : useState('');
+  const [age, setAge] = pet ? useState(pet.age || '') : useState('');
   const [species, setSpecies] = pet
-    ? useState(pet.species || "")
-    : useState("");
-  const [breed, setBreed] = pet ? useState(pet.breed || "") : useState("");
+    ? useState(pet.species || '')
+    : useState('');
+  const [breed, setBreed] = pet ? useState(pet.breed || '') : useState('');
   const [imageUrl, setImageUrl] = pet
     ? useState(
         pet.imageUrl ||
-          "https://blog.greendot.org/wp-content/uploads/sites/13/2021/09/placeholder-image.png"
+          'https://blog.greendot.org/wp-content/uploads/sites/13/2021/09/placeholder-image.png'
       )
     : useState(
-        "https://blog.greendot.org/wp-content/uploads/sites/13/2021/09/placeholder-image.png"
+        'https://blog.greendot.org/wp-content/uploads/sites/13/2021/09/placeholder-image.png'
       );
   const [shelterName, setShelterName] = pet
     ? useState(pet.shelter || shelter.name)
     : useState(shelter.name);
-  const [city, setCity] = pet ? useState(pet.city || "") : useState("");
-  const [state, setState] = pet ? useState(pet.state || "") : useState("");
+  const [city, setCity] = pet ? useState(pet.city || '') : useState('');
+  const [state, setState] = pet ? useState(pet.state || '') : useState('');
   const [description, setDescription] = pet
-    ? useState(pet.description || "")
-    : useState("");
+    ? useState(pet.description || '')
+    : useState('');
 
   const onSavePress = async () => {
     try {
@@ -51,43 +58,72 @@ export default function PetProfile(props) {
       };
       if (pet) {
         // Update doc in main pet collection using refId from pet
-        const petRef = doc(db, "pets", pet.refId);
+        const petRef = doc(db, 'pets', pet.refId);
         await updateDoc(petRef, data);
         // Update doc in subcollection
         const subPetRef = doc(
           db,
-          "shelters",
+          'shelters',
           `${shelter.id}`,
-          "shelterPets",
+          'shelterPets',
           `${pet.id}`
         );
         await updateDoc(subPetRef, data);
       } else {
         // Create docs in main pet collection and subcollection
-        const petRef = await addDoc(collection(db, "pets"), data);
+        const petRef = await addDoc(collection(db, 'pets'), data);
         const subPetRef = await addDoc(
-          collection(db, "shelters", `${shelter.id}`, "shelterPets"),
+          collection(db, 'shelters', `${shelter.id}`, 'shelterPets'),
           data
         );
         // Update both docs with references to themselves and each other
         await updateDoc(petRef, { id: petRef.id, refId: subPetRef.id });
         await updateDoc(subPetRef, { id: subPetRef.id, refId: petRef.id });
       }
-      alert("Successfully updated!");
+      alert('Successfully updated!');
     } catch (error) {
       console.log(error);
-      alert("Could not update pet");
+      alert('Could not update pet');
+    }
+  };
+
+  const onDelete = async () => {
+    try {
+      // Delete doc in main pet collection using refId from pet
+      const petRef = doc(db, 'pets', pet.refId);
+      await deleteDoc(petRef);
+      // Delete doc in subcollection
+      const subPetRef = doc(
+        db,
+        'shelters',
+        `${shelter.id}`,
+        'shelterPets',
+        `${pet.id}`
+      );
+      await deleteDoc(subPetRef);
+      alert('Successfully deleted!');
+    } catch (error) {
+      console.log(error);
+      alert('Could not delete pet');
     }
   };
 
   return (
     <SafeAreaView style={GlobalStyles.droidSafeArea}>
       <KeyboardAwareScrollView
-        style={{ flex: 1, width: "100%" }}
+        style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always"
       >
+        <HeaderBack />
         <Text style={styles.title}>{name}</Text>
         <Image style={styles.logo} source={{ uri: imageUrl }} />
+        {pet ? (
+          <TouchableOpacity style={styles.button} onPress={() => onDelete()}>
+            <Text style={styles.buttonTitle}>Delete Pet</Text>
+          </TouchableOpacity>
+        ) : (
+          <></>
+        )}
         <TextInput
           style={styles.input}
           placeholder="Name"

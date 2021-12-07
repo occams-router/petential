@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import GlobalStyles from '../../../GlobalStyles';
@@ -13,14 +13,14 @@ export default function AdopterSignup({ navigation }) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [phone, setPhone] = useState('');
-  const [description, setDescription] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
-  const [housing, setHousing] = useState('');
-  const [lifestyle, setLifestyle] = useState('');
-  const [petHistory, setPetHistory] = useState('');
+  // const [city, setCity] = useState('');
+  // const [state, setState] = useState('');
+  // const [phone, setPhone] = useState('');
+  // const [description, setDescription] = useState('');
+  // const [imageUrl, setImageUrl] = useState('');
+  // const [housing, setHousing] = useState('');
+  // const [lifestyle, setLifestyle] = useState('');
+  // const [petHistory, setPetHistory] = useState('');
 
   const onFooterLinkPress = () => {
     navigation.navigate('Login');
@@ -45,14 +45,14 @@ export default function AdopterSignup({ navigation }) {
         name,
         email,
         password,
-        city,
-        state,
-        phone,
-        description,
-        imageUrl,
-        housing,
-        lifestyle,
-        petHistory,
+        // city,
+        // state,
+        // phone,
+        // description,
+        // imageUrl,
+        // housing,
+        // lifestyle,
+        // petHistory,
       };
 
       const docRef = await addDoc(collection(db, 'adopters'), adopterData);
@@ -68,7 +68,7 @@ export default function AdopterSignup({ navigation }) {
 
       await addDoc(collection(db, 'users'), userData);
       console.log('Successfully added to users collection.');
-      navigation.navigate('AdopterSidebar');
+      navigation.navigate('AdopterSignup2');
     } catch (error) {
       console.error('Error adding user: ', error);
     }
@@ -81,7 +81,10 @@ export default function AdopterSignup({ navigation }) {
         keyboardShouldPersistTaps="always"
       >
         <Text style={styles.title}>Welcome!</Text>
-
+        <Image
+          style={styles.logo}
+          source={require('../../../assets/icon.png')}
+        />
         <TextInput
           style={styles.input}
           placeholder="Name"
@@ -120,7 +123,7 @@ export default function AdopterSignup({ navigation }) {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-        <TextInput
+        {/* <TextInput
           style={styles.input}
           placeholderTextColor="#aaaaaa"
           placeholder="City"
@@ -191,7 +194,7 @@ export default function AdopterSignup({ navigation }) {
           value={petHistory}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
-        />
+        /> */}
         <TouchableOpacity style={styles.button} onPress={() => onSignupPress()}>
           <Text style={styles.buttonTitle}>Sign Up</Text>
         </TouchableOpacity>
