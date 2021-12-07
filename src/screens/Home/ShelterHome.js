@@ -9,44 +9,38 @@ import { UserContext } from "../../../App";
 import styles from "./styles";
 import { Card, Title, Button } from "react-native-paper";
 import { CardContainer, Container } from "../PetCards/cardstyles";
+import { Loading } from "..";
 
 export default function ShelterHome({ navigation }) {
   const shelter = useContext(UserContext);
   const [petData, setPetData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  // const getPets = async () => {
-  //   try {
-  //     const list = [];
-  //     const docsSnap = await getDocs(
-  //       collection(db, `shelters/${shelter.id}/shelterPets`)
-  //     );
-  //     docsSnap.forEach((doc) => {
-  //       list.push(doc.data());
-  //     });
-  //     setPetData([...list]);
-  //   } catch (e) {
-  //     console.log("No pets in shelter");
-  //   }
-  // };
+    useEffect(async () => {
+      setLoading(true);
+      const petsCollectionRef = collection(
+        db,
+        "shelters",
+        `${shelter.id}`,
+        "shelterPets"
+      );
+  
+      const unsub = onSnapshot(petsCollectionRef, async () => {
+        const petDocs = await getDocs(petsCollectionRef);
+        const petData = petDocs.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        setPetData(petData);
+        setLoading(false);
+      });
+      return unsub;
+    }, []);
 
-
-  // useEffect(() => {
-  //   getPets();
-  // }, []);
-
-  useEffect(() => 
-  onSnapshot(query(collection(db, 'shelters', `${shelter.id}`, 'shelterPets'),
-  ),  snapshot => setPetData(snapshot.docs.map(doc => ({
-  id: doc.id,
-  ...doc.data(),
-  })))
-  )
-  , []);
 
   return (
     <SafeAreaView style={GlobalStyles.droidSafeArea}>
       <Text style={styles.title}>Current Pets</Text>
-
       <Button
         mode="contained"
         style={{ marginLeft: 80, marginRight: 80, marginBottom: 20 }}
@@ -54,7 +48,9 @@ export default function ShelterHome({ navigation }) {
       >
         Add a Pet
       </Button>
-
+      {loading ? (<Loading/>) : petData.length === 0 ? (
+         <Text style={{ alignSelf: 'center' }}>Currently not pets to display!</Text>
+      ) : (
       <FlatList
         data={petData}
         keyextractor={(item, index) => item.key}
@@ -87,6 +83,7 @@ export default function ShelterHome({ navigation }) {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 50 }}
       />
+  )}
     </SafeAreaView>
   );
 }

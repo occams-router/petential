@@ -4,6 +4,7 @@ import styled from "styled-components/native";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import TinderCard from "react-tinder-card";
+import { Loading } from "..";
 import {
   Card,
   Title,
@@ -39,6 +40,7 @@ const deviceWidth = Dimensions.get("window").width;
 export default function AdopterPetCard(props) {
   const [petsList, setPetsList] = useState([]);
   const user = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
 
   const swiped = async (direction, pet) => {
     // check if the pet already exists in the user's 'seen' subcollection
@@ -95,6 +97,7 @@ export default function AdopterPetCard(props) {
   };
 
   useEffect(async () => {
+    setLoading(true);
     const petsCollectionRef = collection(db, "pets");
     // retrieve all pets
     const allPets = await getDocs(petsCollectionRef);
@@ -123,12 +126,15 @@ export default function AdopterPetCard(props) {
     petsData = petsData.filter((pet) => !petIds.includes(pet.id));
 
     setPetsList(petsData);
+    setLoading(false);
   }, []);
 
   return (
     <Container>
       <CardContainer>
-        {petsList.length ? (
+        {loading ? (
+          <Loading />
+        ) : petsList.length ? (
           ((pet) => (
             <>
               <TinderCard

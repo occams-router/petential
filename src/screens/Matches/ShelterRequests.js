@@ -24,12 +24,15 @@ import {
 } from "react-native-paper";
 import ShelterRequestCard from "./ShelterRequestCard";
 import GlobalStyles from "../../../GlobalStyles";
+import { Loading } from "..";
 
 export default function ShelterRequests() {
   const shelter = useContext(UserContext);
   const [adoptersAndPets, setAdoptersAndPets] = useState([]);
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
+    setLoading(true);
     const requestsSubRef = collection(
       db,
       "shelters",
@@ -92,6 +95,7 @@ export default function ShelterRequests() {
 
       // set results in local state
       setAdoptersAndPets(results);
+      setLoading(false);
     });
 
     // unsubscribe from listener before unmounting
@@ -101,8 +105,8 @@ export default function ShelterRequests() {
   return (
     <View style={GlobalStyles.droidSafeArea}>
       <Text style={styles.title}>My Requests</Text>
-      {adoptersAndPets.length === 0 ? (
-        <Text style={{ alignSelf: "center" }}>No requests to display!</Text>
+      {loading ? (<Loading/>) : adoptersAndPets.length === 0 ? (
+        <Text style={{ alignSelf: "center" }}>No matches to display!</Text>
       ) : (
         <FlatList
           data={adoptersAndPets}
