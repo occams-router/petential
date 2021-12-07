@@ -1,18 +1,24 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Text, Image, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  Text,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Platform,
+} from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { db } from "../../firebase/config";
 import { doc, updateDoc, onSnapshot, query } from "firebase/firestore";
 import styles from "./styles";
 import GlobalStyles from "../../../GlobalStyles";
 import { UserContext } from "../../../App";
-import * as ImagePicker from "expo-image-picker";
-
 import {
   Button,
   TextInput as PaperInput,
   IconButton,
 } from "react-native-paper";
+import selectImage from "../../ImageUpload";
 
 export default function AdopterProfile() {
   const adopter = useContext(UserContext);
@@ -54,18 +60,6 @@ export default function AdopterProfile() {
     } catch (error) {
       alert("Update failed.");
       console.log("Update adopter", error);
-    }
-  };
-
-  const selectImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      quality: 1,
-    });
-
-    console.log("result:", result);
-    if (!result.cancelled) {
-      setSelectedPic(result.uri);
     }
   };
 
@@ -157,7 +151,13 @@ export default function AdopterProfile() {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
           right={
-            <PaperInput.Icon name="camera" onPress={() => selectImage()} />
+            <PaperInput.Icon
+              name="camera"
+              onPress={() => {
+                const imageResult = selectImage();
+                if (imageResult) setSelectedPic(imageResult);
+              }}
+            />
           }
         />
         <TextInput
