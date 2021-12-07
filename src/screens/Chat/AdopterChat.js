@@ -14,38 +14,47 @@ import {
 import { UserContext } from '../../../App';
 import Header from '../Sidebar/Header';
 import GlobalStyles from '../../../GlobalStyles';
+import Loading from '../Loading';
 
 export default function AdopterChat() {
 	const adopter = useContext(UserContext);
 	const [matches, setMatches] = useState([]);
+  const [loading, setLoading] = useState(true)
 
-	useEffect(
-		() =>
-			onSnapshot(
-				query(collection(db, 'adopters', `${adopter.id}`, 'matches')),
-				(snapshot) =>
-					setMatches(
-						snapshot.docs.map((doc) => ({
-							id: doc.id,
-							...doc.data(),
-						}))
-					)
-			),
-		[]
-	);
+  useEffect(async () => {
+    setLoading(true);
+    const matchesCollectionRef = collection(
+      db,
+      "adopters",
+      `${adopter.id}`,
+      "matches"
+    );
+
+    const unsub = onSnapshot(matchesCollectionRef, async () => {
+      const matchDocs = await getDocs(matchesCollectionRef);
+      const matchData = matchDocs.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setMatches(matchData);
+      setLoading(false);
+    });
+    return unsub;
+  }, []);
+
 	return (
-		<View style={GlobalStyles.droidSafeArea}>
-			{matches.length === 0 ? (
-				<Text>No chats to display!</Text>
-			) : (
-				<>
+    <View style={GlobalStyles.droidSafeArea}>
+    {loading ? (<Loading/>) : matches.length === 0 ? (
+        <Text style={{ alignSelf: "center" }}>No matches to display!</Text>
+      ) : 
+(
 					<FlatList
 						data={matches}
 						keyExtractor={(item) => item.id}
 						renderItem={({ item }) => <AdopterChatList match={item} />}
 					/>
-				</>
-			)}
+			)
+			}
 		</View>
 	);
 }
