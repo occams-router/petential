@@ -117,16 +117,16 @@ export default function ShelterRequestCard({ request }) {
             </Card.Content>
             <Card.Actions style={styles.requestButtonContainer}>
               <Button
-                icon="check-circle"
-                onPress={() => onButtonPress('accept', request)}
-              >
-                Accept
-              </Button>
-              <Button
                 icon="block-helper"
                 onPress={() => onButtonPress('reject', request)}
               >
                 Reject
+              </Button>
+              <Button
+                icon="check-circle"
+                onPress={() => onButtonPress('accept', request)}
+              >
+                Accept
               </Button>
             </Card.Actions>
           </Card>
