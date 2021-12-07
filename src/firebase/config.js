@@ -1,8 +1,8 @@
-import { initializeApp } from 'firebase/app';
-import secrets from '../../secrets';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
+import { initializeApp } from "firebase/app";
+import secrets from "../../secrets";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: secrets.API_KEY,
