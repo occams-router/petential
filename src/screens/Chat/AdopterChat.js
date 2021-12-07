@@ -36,7 +36,7 @@ export default function AdopterChat() {
 	return (
 		<View style={GlobalStyles.droidSafeArea}>
 			{matches.length === 0 ? (
-				<Text>No chats to display!</Text>
+				<Text style={{ alignSelf: "center", padding: 10, marginTop: 20, }}>No chats to display!</Text>
 			) : (
 				<>
 					<FlatList

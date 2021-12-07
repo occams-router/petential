@@ -1,7 +1,6 @@
 import ShelterChatList from './ShelterChatList';
 import React, { useState, useContext, useEffect } from 'react';
-import { Text, FlatList, View } from 'react-native';
-import styles from '../Home/styles';
+import { Text, FlatList, View} from 'react-native';
 import { db } from '../../firebase/config';
 import { doc, getDocs, collection, getDoc, onSnapshot, query } from 'firebase/firestore';
 import { UserContext } from '../../../App';
@@ -43,7 +42,7 @@ export default function ShelterChat() {
 	return (
 		<View style={GlobalStyles.droidSafeArea}>
 			{matches.length === 0 ? (
-				<Text>No chats to display!</Text>
+				<Text style={{ alignSelf: "center", padding: 10, marginTop: 20, }}>No chats to display!</Text>
 			) : (
 				<>
 					<FlatList
