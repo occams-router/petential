@@ -13,14 +13,6 @@ export default function AdopterSignup({ navigation }) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
-  // const [city, setCity] = useState('');
-  // const [state, setState] = useState('');
-  // const [phone, setPhone] = useState('');
-  // const [description, setDescription] = useState('');
-  // const [imageUrl, setImageUrl] = useState('');
-  // const [housing, setHousing] = useState('');
-  // const [lifestyle, setLifestyle] = useState('');
-  // const [petHistory, setPetHistory] = useState('');
 
   const onFooterLinkPress = () => {
     navigation.navigate('Login');
@@ -45,14 +37,6 @@ export default function AdopterSignup({ navigation }) {
         name,
         email,
         password,
-        // city,
-        // state,
-        // phone,
-        // description,
-        // imageUrl,
-        // housing,
-        // lifestyle,
-        // petHistory,
       };
 
       const docRef = await addDoc(collection(db, 'adopters'), adopterData);
@@ -83,7 +67,7 @@ export default function AdopterSignup({ navigation }) {
         <Text style={styles.title}>Welcome!</Text>
         <Image
           style={styles.logo}
-          source={require('../../../assets/icon.png')}
+          source={require('../../../assets/corgi-logo.png')}
         />
         <TextInput
           style={styles.input}
@@ -123,78 +107,6 @@ export default function AdopterSignup({ navigation }) {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-        {/* <TextInput
-          style={styles.input}
-          placeholderTextColor="#aaaaaa"
-          placeholder="City"
-          onChangeText={(text) => setCity(text)}
-          value={city}
-          underlineColorAndroid="transparent"
-          autoCapitalize="words"
-        />
-        <TextInput
-          style={styles.input}
-          placeholderTextColor="#aaaaaa"
-          placeholder="State"
-          onChangeText={(text) => setState(text)}
-          value={state}
-          underlineColorAndroid="transparent"
-          autoCapitalize="words"
-        />
-        <TextInput
-          style={styles.input}
-          placeholderTextColor="#aaaaaa"
-          placeholder="Phone No."
-          onChangeText={(text) => setPhone(text)}
-          value={phone}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.input}
-          placeholderTextColor="#aaaaaa"
-          placeholder="Description"
-          onChangeText={(text) => setDescription(text)}
-          value={description}
-          underlineColorAndroid="transparent"
-          autoCapitalize="sentences"
-        />
-        <TextInput
-          style={styles.input}
-          placeholderTextColor="#aaaaaa"
-          placeholder="Image URL"
-          onChangeText={(text) => setImageUrl(text)}
-          value={imageUrl}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.input}
-          placeholderTextColor="#aaaaaa"
-          placeholder="Housing"
-          onChangeText={(text) => setHousing(text)}
-          value={housing}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.input}
-          placeholderTextColor="#aaaaaa"
-          placeholder="Lifestyle"
-          onChangeText={(text) => setLifestyle(text)}
-          value={lifestyle}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.input}
-          placeholderTextColor="#aaaaaa"
-          placeholder="Pet History"
-          onChangeText={(text) => setPetHistory(text)}
-          value={petHistory}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-        /> */}
         <TouchableOpacity style={styles.button} onPress={() => onSignupPress()}>
           <Text style={styles.buttonTitle}>Sign Up</Text>
         </TouchableOpacity>

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from 'react';
 import {
   Text,
   Image,
@@ -6,43 +6,46 @@ import {
   TouchableOpacity,
   View,
   Platform,
-} from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { db } from "../../firebase/config";
-import { doc, updateDoc, onSnapshot, query } from "firebase/firestore";
-import styles from "./styles";
-import GlobalStyles from "../../../GlobalStyles";
-import { UserContext } from "../../../App";
+} from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { db } from '../../firebase/config';
+import { doc, updateDoc, onSnapshot, query } from 'firebase/firestore';
+import styles from './styles';
+import GlobalStyles from '../../../GlobalStyles';
+import { UserContext } from '../../../App';
 import {
   Button,
   TextInput as PaperInput,
   IconButton,
-} from "react-native-paper";
-import selectImage from "../../ImageUpload";
+} from 'react-native-paper';
+import selectImage from '../../ImageUpload';
 
 export default function AdopterProfile() {
   const adopter = useContext(UserContext);
   const [loading, setLoading] = useState(true);
 
-  const [name, setName] = useState(adopter.name || "");
-  const [city, setCity] = useState(adopter.city || "");
-  const [state, setState] = useState(adopter.state || "");
-  const [phone, setPhone] = useState(adopter.phone || "");
-  const [imageUrl, setImageUrl] = useState(adopter.imageUrl || "");
-  const [description, setDescription] = useState(adopter.description || "");
-  const [housing, setHousing] = useState(adopter.housing || "");
-  const [lifestyle, setLifestyle] = useState(adopter.lifestyle || "");
-  const [petHistory, setPetHistory] = useState(adopter.petHistory || "");
+  const [name, setName] = useState(adopter.name || '');
+  const [city, setCity] = useState(adopter.city || '');
+  const [state, setState] = useState(adopter.state || '');
+  const [phone, setPhone] = useState(adopter.phone || '');
+  const [imageUrl, setImageUrl] = useState(
+    adopter.imageUrl ||
+      'https://blog.greendot.org/wp-content/uploads/sites/13/2021/09/placeholder-image.png'
+  );
+  const [description, setDescription] = useState(adopter.description || '');
+  const [housing, setHousing] = useState(adopter.housing || '');
+  const [lifestyle, setLifestyle] = useState(adopter.lifestyle || '');
+  const [petHistory, setPetHistory] = useState(adopter.petHistory || '');
 
   useEffect(() => {
     setLoading(false);
   }, []);
 
-  const adopterRef = doc(db, "adopters", adopter.id);
+  const adopterRef = doc(db, 'adopters', adopter.id);
 
   const updateAdopter = async () => {
     try {
-      const adopterRef = doc(db, "adopters", adopter.id);
+      const adopterRef = doc(db, 'adopters', adopter.id);
       const updates = {
         name,
         city,
@@ -55,16 +58,16 @@ export default function AdopterProfile() {
         petHistory,
       };
       await updateDoc(adopterRef, updates);
-      alert("Update was successful!");
+      alert('Update was successful!');
     } catch (error) {
-      alert("Update failed.");
-      console.log("Update adopter", error);
+      alert('Update failed.');
+      console.log('Update adopter', error);
     }
   };
 
   useEffect(
     async () =>
-      onSnapshot(query(doc(db, "adopters", adopter.id)), (snapshot) => {
+      onSnapshot(query(doc(db, 'adopters', adopter.id)), (snapshot) => {
         setName(snapshot.data().name);
         setCity(snapshot.data().city);
         setState(snapshot.data().state);
@@ -79,7 +82,7 @@ export default function AdopterProfile() {
   );
 
   const updateImageInDb = async (image) => {
-    console.log("image:", image);
+    console.log('image:', image);
     await updateDoc(adopterRef, { imageUrl: image });
   };
 
@@ -90,7 +93,7 @@ export default function AdopterProfile() {
   ) : (
     <View style={GlobalStyles.droidSafeArea}>
       <KeyboardAwareScrollView
-        style={{ flex: 1, width: "100%" }}
+        style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always"
       >
         <Text style={styles.title}> Welcome, {name}!</Text>
