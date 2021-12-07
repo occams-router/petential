@@ -27,46 +27,56 @@ export default function ShelterSidebar() {
       >
         <Drawer.Screen
           name="Home"
+          style={{ position: 'absolute' }}
           options={{
             headerShown: true,
             drawerActiveTintColor: '#24a6a8',
-            header: () => <Header />,
+            headerMode: 'screen',
+            header: () => <Header style={{ position: 'absolute' }} />,
           }}
           component={ShelterHome}
         />
         <Drawer.Screen
           name="Profile"
+          style={{ position: 'absolute' }}
           options={{
             headerShown: true,
             drawerActiveTintColor: '#24a6a8',
-            header: () => <Header />,
+            headerMode: 'screen',
+            header: () => <Header style={{ position: 'absolute' }} />,
           }}
           component={ShelterProfile}
         />
         <Drawer.Screen
           name="Requests"
+          style={{ position: 'absolute' }}
           options={{
             headerShown: true,
             drawerActiveTintColor: '#24a6a8',
-            header: () => <Header />,
+            headerMode: 'screen',
+            header: () => <Header style={{ position: 'absolute' }} />,
           }}
           component={ShelterRequests}
         />
         <Drawer.Screen
           name="Matches"
+          style={{ position: 'absolute' }}
           options={{
             headerShown: true,
             drawerActiveTintColor: '#24a6a8',
-            header: () => <Header />,
+            headerMode: 'screen',
+            header: () => <Header style={{ position: 'absolute' }} />,
           }}
           component={ShelterMatches}
         />
         <Drawer.Screen
           name="Chat"
+          style={{ position: 'absolute' }}
           options={{
             headerShown: true,
             drawerActiveTintColor: '#24a6a8',
-            header: () => <Header />,
+            headerMode: 'screen',
+            header: () => <Header style={{ position: 'absolute' }} />,
           }}
           component={ShelterChat}
         />
