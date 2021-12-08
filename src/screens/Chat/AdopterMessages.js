@@ -130,7 +130,7 @@ export default function AdopterMessages(props) {
         </Text>
         {/* <Button style={styles.button} onPress={openLink} title="Schedule an adoption appointment" color="#56d9db" /> */}
         {/* <Button style={styles.button} onPress={() => navigation.navigate('Schedule', {adopter, shelter, pet, match})} title="Schedule an adoption appointment" color="#56d9db" /> */}
-        <Button style={styles.button} onPress={() => navigation.navigate('EventCalendar', {adopter, shelter, pet, match})} title="Schedule an adoption appointment" color="#56d9db" />
+        <Button style={styles.button} onPress={() => navigation.navigate('Scheduler', {adopter, shelter, pet, match})} title="Schedule an adoption appointment" color="#56d9db" />
         <ScrollView
           ref={scrollViewRef}
           onContentSizeChange={() =>

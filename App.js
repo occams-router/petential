@@ -19,7 +19,7 @@ import {
   ShelterChat,
   ShelterMessages,
   Schedule,
-  EventCalendar,
+  Scheduler,
 } from "./src/screens";
 import { decode, encode } from "base-64";
 import { auth, db } from "./src/firebase/config";
@@ -112,7 +112,7 @@ export default function App() {
             <Stack.Screen name="AdopterChat" component={AdopterChat} />
             <Stack.Screen name="AdopterMessages" component={AdopterMessages} />
             <Stack.Screen name="Schedule" component={Schedule} />
-            <Stack.Screen name="EventCalendar" component={EventCalendar} />
+            <Stack.Screen name="Scheduler" component={Scheduler} />
           </>
         ) : (
           (screen = <Stack.Screen name="Loading" component={Loading} />)
