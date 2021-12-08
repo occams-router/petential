@@ -24,6 +24,21 @@ export default function ShelterHome({ navigation }) {
       'shelterPets'
     );
 
+    useEffect(
+      () =>
+        onSnapshot(
+          query(collection(db, 'shelters', `${shelter.id}`, 'shelterPets')),
+          (snapshot) =>
+            setPetData(
+              snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+              }))
+            )
+        ),
+      []
+    );
+
     const unsub = onSnapshot(petsCollectionRef, async () => {
       const petDocs = await getDocs(petsCollectionRef);
       const petData = petDocs.docs.map((doc) => ({
