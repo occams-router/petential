@@ -1,11 +1,12 @@
 {
   "expo": {
-    "name": "test-app",
-    "slug": "test-app",
+    "name": "Petential",
+    "slug": "Petential",
+    "description": "Find your furever friend",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "plugins":[
+    "plugins": [
       [
         "expo-image-picker",
         {
@@ -21,9 +22,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },

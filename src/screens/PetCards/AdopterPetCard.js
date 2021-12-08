@@ -44,15 +44,15 @@ export default function AdopterPetCard(props) {
 
   const swiped = async (direction, pet) => {
     // check if the pet already exists in the user's 'seen' subcollection
-    const seenSubRef = collection(db, 'adopters', `${user.id}`, 'seen');
-    const seenPetsDocs = await getDocs(seenSubRef);
-    const seenPetsArr = seenPetsDocs.docs.map((doc) => ({ ...doc.data() }));
-    const petExists = seenPetsArr.find((element) => element.id === pet.id);
+    // const seenSubRef = collection(db, 'adopters', `${user.id}`, 'seen');
+    // const seenPetsDocs = await getDocs(seenSubRef);
+    // const seenPetsArr = seenPetsDocs.docs.map((doc) => ({ ...doc.data() }));
+    // const petExists = seenPetsArr.find((element) => element.id === pet.id);
 
-    if (!petExists) {
-      // add pet to current user's 'seen' subcollection
-      await addDoc(seenSubRef, pet);
-    }
+    // if (!petExists) {
+    //   // add pet to current user's 'seen' subcollection
+    //   await addDoc(seenSubRef, pet);
+    // }
 
     // if right swipe, add pet to its shelter's 'requests' subcollection
     if (direction === 'right') {
