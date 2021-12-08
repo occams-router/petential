@@ -1,9 +1,9 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Image, Text, TouchableOpacity, FlatList, View } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import styles from './styles';
-import GlobalStyles from '../../../GlobalStyles';
-import { db } from '../../firebase/config';
+import React, { useState, useContext, useEffect } from "react";
+import { Image, Text, TouchableOpacity, FlatList, View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import styles from "./styles";
+import GlobalStyles from "../../../GlobalStyles";
+import { db } from "../../firebase/config";
 import {
   doc,
   getDoc,
@@ -11,10 +11,10 @@ import {
   query,
   where,
   onSnapshot,
-} from 'firebase/firestore';
-import { UserContext } from '../../../App';
-import ShelterRequestCard from './ShelterRequestCard';
-import Loading from '../Loading';
+} from "firebase/firestore";
+import { UserContext } from "../../../App";
+import ShelterRequestCard from "./ShelterRequestCard";
+import Loading from "../Loading";
 
 export default function ShelterRequests() {
   const shelter = useContext(UserContext);
@@ -25,13 +25,13 @@ export default function ShelterRequests() {
     setLoading(true);
     const requestsSubRef = collection(
       db,
-      'shelters',
+      "shelters",
       `${shelter.id}`,
-      'requests'
+      "requests"
     );
 
     // retrieve only pending requests for this shelter
-    const q = query(requestsSubRef, where('status', '==', 'pending'));
+    const q = query(requestsSubRef, where("status", "==", "pending"));
     const unsub = onSnapshot(q, async (querySnapshot) => {
       const requestsData = querySnapshot.docs.map((doc) => ({
         ...doc.data(),
@@ -42,12 +42,12 @@ export default function ShelterRequests() {
       const data = requestsData.map(async (request) => {
         try {
           // retrieve adopter info
-          const adopterDocRef = doc(db, 'adopters', `${request.adopterRefId}`);
+          const adopterDocRef = doc(db, "adopters", `${request.adopterRefId}`);
           const adopterDoc = await getDoc(adopterDocRef);
           const adopterData = adopterDoc.data();
 
           // retrieve pet info
-          const petDocRef = doc(db, 'pets', `${request.petRefId}`);
+          const petDocRef = doc(db, "pets", `${request.petRefId}`);
           const petDoc = await getDoc(petDocRef);
           const petData = petDoc.data();
 
@@ -76,7 +76,7 @@ export default function ShelterRequests() {
 
           return adopterAndPet;
         } catch (e) {
-          console.log('There was an error:', e);
+          console.log("There was an error:", e);
         }
       });
 
@@ -98,7 +98,7 @@ export default function ShelterRequests() {
       {loading ? (
         <Loading />
       ) : adoptersAndPets.length === 0 ? (
-        <Text style={{ alignSelf: 'center' }}>No matches to display!</Text>
+        <Text style={{ alignSelf: "center" }}>No requests to display!</Text>
       ) : (
         <FlatList
           data={adoptersAndPets}
