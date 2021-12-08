@@ -14,6 +14,8 @@ import {
   deleteDoc,
 } from 'firebase/firestore';
 import { UserContext } from '../../../App';
+import { TextInput as PaperInput } from 'react-native-paper';
+import { selectImage, retrieveImage } from '../../ImageUpload';
 
 export default function PetProfile(props) {
   const pet = props.route.params.pet;
@@ -160,7 +162,7 @@ export default function PetProfile(props) {
           underlineColorAndroid="transparent"
           autoCapitalize="words"
         />
-        <TextInput
+        <PaperInput
           style={styles.input}
           placeholderTextColor="#aaaaaa"
           placeholder="Image URL"
@@ -168,6 +170,20 @@ export default function PetProfile(props) {
           value={imageUrl}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
+          right={
+            <PaperInput.Icon
+              name="camera"
+              onPress={async () => {
+                const imageResult = await selectImage();
+                if (imageResult) {
+                  // retrieve image url from cloud
+                  const retrieved = await retrieveImage(imageResult);
+                  // update in local state to be saved in db
+                  setImageUrl(retrieved);
+                }
+              }}
+            />
+          }
         />
         <TextInput
           style={styles.input}

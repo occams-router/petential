@@ -6,6 +6,8 @@ import GlobalStyles from '../../../GlobalStyles';
 import { db } from '../../firebase/config';
 import { doc, updateDoc, onSnapshot, query } from 'firebase/firestore';
 import { UserContext } from '../../../App';
+import { TextInput as PaperInput } from 'react-native-paper';
+import { selectImage, retrieveImage } from '../../ImageUpload';
 
 export default function ShelterProfile() {
   const shelter = useContext(UserContext);
@@ -105,7 +107,7 @@ export default function ShelterProfile() {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-        <TextInput
+        <PaperInput
           style={styles.input}
           placeholderTextColor="#aaaaaa"
           placeholder="Image URL"
@@ -113,6 +115,20 @@ export default function ShelterProfile() {
           value={imageUrl}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
+          right={
+            <PaperInput.Icon
+              name="camera"
+              onPress={async () => {
+                const imageResult = await selectImage();
+                if (imageResult) {
+                  // retrieve image url from cloud
+                  const retrieved = await retrieveImage(imageResult);
+                  // update in local state to be saved in db
+                  setImageUrl(retrieved);
+                }
+              }}
+            />
+          }
         />
         <TextInput
           style={styles.input}
@@ -126,7 +142,7 @@ export default function ShelterProfile() {
           autoCapitalize="sentences"
         />
         <TouchableOpacity style={styles.button} onPress={() => onSavePress()}>
-          <Text style={styles.buttonTitle}>Save</Text>
+          <Text style={styles.buttonTitle}>Update Profile</Text>
         </TouchableOpacity>
       </KeyboardAwareScrollView>
     </View>
