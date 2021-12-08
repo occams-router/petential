@@ -1,28 +1,42 @@
 # **Petential**
 
-
 Welcome to Petential! Petential is a tinder-like application connecting shelters to adopters and adopters to their furever friends.
 
+![](assets/corgi-logo-square.png)
+
+## **Demo:**
+
+### Adopter Experience
+
+<div>
+<img src=assets/adopter.gif width="250" height="500">
+</div>
+
+### Shelter Experience
+
+<img src=assets/shelter.gif width="250" height="500">
+
 ## **Features**
+
 **Animal Shelters**
+
 - Can create an account for their shelter
 - Can create, edit and delete profiles for their available pets
 - Can receive requests from Adopters
 
 **Adopters**
+
 - Can swipe left or right on pets they're interested in
 - Can view their 'petential' matches
 - Can chat with a shelter to discuss their pet matches
 
-
-
 ## **Set Up:**
+
 ```
 git clone git@github.com:occams-router/testing-app.git
 npm install
 expo start
 ```
-
 
 ## **Tech Stack:**
 
@@ -35,11 +49,6 @@ expo start
 **React-Spring:** Spring-physics based animation library.
 
 **Tailwind CSS:** Utility-first CSS framework for rapidly building custom user interfaces.
-
-## **Screenshots:**
-
-
-
 
 ## **Team:**
 
@@ -66,4 +75,3 @@ expo start
 [LinkedIn](https://www.linkedin.com/in/walters-jordan/)
 
 [GitHub](https://github.com/J-Walters)
-

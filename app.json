@@ -5,7 +5,7 @@
     "description": "Find your furever friend",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "assets/corgi-logo-square.png",
     "plugins": [
       [
         "expo-image-picker",
