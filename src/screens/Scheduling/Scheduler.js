@@ -50,6 +50,7 @@ const Scheduler = () => {
       </View>
       {show && (
         <DateTimePicker
+        minimumDate={new Date()}
           testID="dateTimePicker"
           value={date}
           mode={mode}
