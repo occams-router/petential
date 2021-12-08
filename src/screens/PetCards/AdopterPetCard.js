@@ -98,8 +98,20 @@ export default function AdopterPetCard(props) {
 
   useEffect(async () => {
     setLoading(true);
-    const petsCollectionRef = collection(db, 'pets');
+    let petsCollectionRef;
+    if(props.value === 'dogs'){
+    petsCollectionRef = query(
+        collection(db, 'pets'),
+        where('species', '==', 'Dog'),
+      )
+    } else if(props.value === 'cats'){
+      petsCollectionRef = query(
+        collection(db, 'pets'),
+        where('species', '==', 'Cat'))
+    } else {
     // retrieve all pets
+    petsCollectionRef = collection(db, 'pets');
+    }
     const allPets = await getDocs(petsCollectionRef);
     let petsData = allPets.docs.map((doc) => ({
       ...doc.data(),

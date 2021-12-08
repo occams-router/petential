@@ -1,10 +1,11 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-  },
+	container: {
+		flex: 1,
+		paddingTop: 40,
+		alignItems: "center"
+	  },
   title: {
     alignSelf: "center",
     margin: 30,
