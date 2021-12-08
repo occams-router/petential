@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
 import tailwind from 'tailwind-rn';
 import React, { useState, useContext, useEffect, useRef } from 'react';
@@ -31,6 +32,7 @@ import {
 } from '@firebase/firestore';
 import { db } from '../../firebase/config.js';
 import { ScrollView } from 'react-native';
+
 
 export default function ShelterMessages(props) {
   const pet = props.route.params.pet;

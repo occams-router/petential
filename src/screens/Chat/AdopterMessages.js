@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   FlatList,
+ Linking,
 } from 'react-native';
 import tailwind from 'tailwind-rn';
 import React, { useState, useContext, useEffect, useRef } from 'react';
@@ -32,6 +33,11 @@ import { db } from '../../firebase/config.js';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import GlobalStyles from '../../../GlobalStyles.js';
 import { ScrollView } from 'react-native';
+import { openPopupWidget, InlineWidget, PopupWidget, PopupButton } from "react-calendly";
+import InAppBrowser from 'react-native-inappbrowser-reborn';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { CustomTabs } from 'react-native-custom-tabs';
+import { useNavigation } from '@react-navigation/native';
 export default function AdopterMessages(props) {
   const pet = props.route.params.pet;
   const shelter = props.route.params.shelter;
@@ -40,6 +46,7 @@ export default function AdopterMessages(props) {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
   const scrollViewRef = useRef();
+  const navigation = useNavigation();
   let messageDoc;
   let docRefId;
 
@@ -83,6 +90,7 @@ export default function AdopterMessages(props) {
     []
   );
 
+
   const sendMessage = async () => {
     const docRef = await addDoc(collection(db, 'messages'), {
       timestamp: serverTimestamp(),
@@ -99,6 +107,16 @@ export default function AdopterMessages(props) {
     docRefId = docRef.id;
     setInput('');
   };
+
+  const openLink = async () => {
+      try{
+      const url = 'https://calendly.com/miami_shelter'
+      Linking.openURL(url);
+      } catch(error) {
+          console.log(error)
+      }
+  }
+
   return (
     <SafeAreaView style={tailwind('flex-1')}>
       <KeyboardAvoidingView
@@ -110,6 +128,9 @@ export default function AdopterMessages(props) {
         <Text style={GlobalStyles.droidSafeArea} style={styles.title}>
           {pet.name} at {shelter.name}
         </Text>
+        {/* <Button style={styles.button} onPress={openLink} title="Schedule an adoption appointment" color="#56d9db" /> */}
+        {/* <Button style={styles.button} onPress={() => navigation.navigate('Schedule', {adopter, shelter, pet, match})} title="Schedule an adoption appointment" color="#56d9db" /> */}
+        <Button style={styles.button} onPress={() => navigation.navigate('EventCalendar', {adopter, shelter, pet, match})} title="Schedule an adoption appointment" color="#56d9db" />
         <ScrollView
           ref={scrollViewRef}
           onContentSizeChange={() =>

@@ -41,3 +41,6 @@ export { default as AdopterMessages } from './Chat/AdopterMessages';
 export { default as ShelterChat } from './Chat/ShelterChat';
 
 export { default as ShelterMessages } from './Chat/ShelterMessages';
+
+export { default as Schedule } from './Scheduling/Schedule';
+export { default as EventCalendar} from './Scheduling/EventCalendar';
