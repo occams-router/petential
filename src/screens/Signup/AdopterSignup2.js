@@ -50,7 +50,7 @@ const AdopterSignup2 = ({ navigation }) => {
       >
         <Text style={styles.text}>Help us get to know you better!</Text>
         <Text style={styles.text}>
-          The more you fill out, the better your changes of getting a match!
+          The more you fill out, the better your chances of getting a match!
         </Text>
         <TextInput
           style={styles.input}
@@ -80,7 +80,7 @@ const AdopterSignup2 = ({ navigation }) => {
           autoCapitalize="none"
         />
         <PaperInput
-          style={styles.input}
+          style={[styles.input, { paddingLeft: 0, fontSize: 14 }]}
           placeholderTextColor="#aaaaaa"
           placeholder="Image URL"
           onChangeText={(text) => setImageUrl(text)}

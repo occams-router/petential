@@ -1,27 +1,27 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import styles from './styles';
-import GlobalStyles from '../../../GlobalStyles';
-import { db } from '../../firebase/config';
-import { doc, updateDoc, onSnapshot, query } from 'firebase/firestore';
-import { UserContext } from '../../../App';
-import { TextInput as PaperInput } from 'react-native-paper';
-import { selectImage, retrieveImage } from '../../ImageUpload';
+import React, { useState, useContext, useEffect } from "react";
+import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import styles from "./styles";
+import GlobalStyles from "../../../GlobalStyles";
+import { db } from "../../firebase/config";
+import { doc, updateDoc, onSnapshot, query } from "firebase/firestore";
+import { UserContext } from "../../../App";
+import { TextInput as PaperInput } from "react-native-paper";
+import { selectImage, retrieveImage } from "../../ImageUpload";
 
 export default function ShelterProfile() {
   const shelter = useContext(UserContext);
   const [loading, setLoading] = useState(true);
 
-  const [nameOfShelter, setNameOfShelter] = useState(shelter.name || '');
-  const [city, setCity] = useState(shelter.city || '');
-  const [state, setState] = useState(shelter.state || '');
-  const [phone, setPhone] = useState(shelter.phone || '');
+  const [nameOfShelter, setNameOfShelter] = useState(shelter.name || "");
+  const [city, setCity] = useState(shelter.city || "");
+  const [state, setState] = useState(shelter.state || "");
+  const [phone, setPhone] = useState(shelter.phone || "");
   const [imageUrl, setImageUrl] = useState(
     shelter.imageUrl ||
-      'https://blog.greendot.org/wp-content/uploads/sites/13/2021/09/placeholder-image.png'
+      "https://blog.greendot.org/wp-content/uploads/sites/13/2021/09/placeholder-image.png"
   );
-  const [description, setDescription] = useState(shelter.description || '');
+  const [description, setDescription] = useState(shelter.description || "");
 
   useEffect(() => {
     setLoading(false);
@@ -37,18 +37,18 @@ export default function ShelterProfile() {
         imageUrl,
         description,
       };
-      const shelterRef = doc(db, 'shelters', shelter.id);
+      const shelterRef = doc(db, "shelters", shelter.id);
       await updateDoc(shelterRef, data);
-      alert('Update was successful!');
+      alert("Update was successful!");
     } catch (error) {
       console.log(error);
-      alert('Update failed');
+      alert("Update failed");
     }
   };
 
   useEffect(
     async () =>
-      onSnapshot(query(doc(db, 'shelters', shelter.id)), (snapshot) => {
+      onSnapshot(query(doc(db, "shelters", shelter.id)), (snapshot) => {
         setNameOfShelter(snapshot.data().name);
         setCity(snapshot.data().city);
         setState(snapshot.data().state);
@@ -66,7 +66,7 @@ export default function ShelterProfile() {
   ) : (
     <View style={GlobalStyles.droidSafeArea}>
       <KeyboardAwareScrollView
-        style={{ flex: 1, width: '100%' }}
+        style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"
       >
         <Text style={styles.title}>Welcome, {nameOfShelter}!</Text>
@@ -108,7 +108,7 @@ export default function ShelterProfile() {
           autoCapitalize="none"
         />
         <PaperInput
-          style={styles.input}
+          style={[styles.input, { paddingLeft: 0, fontSize: 14 }]}
           placeholderTextColor="#aaaaaa"
           placeholder="Image URL"
           onChangeText={(text) => setImageUrl(text)}
