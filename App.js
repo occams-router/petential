@@ -1,8 +1,8 @@
-import "react-native-gesture-handler";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import React, { createContext, useEffect, useState } from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import 'react-native-gesture-handler';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import React, { createContext, useEffect, useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
   ShelterSignup,
   ShelterSignup2,
@@ -33,12 +33,12 @@ import {
   limit,
   doc,
   getDoc,
-} from "@firebase/firestore";
-import { Provider as PaperProvider } from "react-native-paper";
-import theme from "./src/PaperTheme";
-import { LogBox } from "react-native";
+} from '@firebase/firestore';
+import { Provider as PaperProvider } from 'react-native-paper';
+import theme from './src/PaperTheme';
+import { LogBox } from 'react-native';
 
-LogBox.ignoreLogs([`Setting a timer for a long period`]);
+LogBox.ignoreAllLogs();
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -59,7 +59,7 @@ export default function App() {
   useEffect(async () => {
     setLoading(true);
     let userData;
-    onSnapshot(collection(db, "users"), (snapshot) => {
+    onSnapshot(collection(db, 'users'), (snapshot) => {
       userData = snapshot.docs.map((doc) => doc.data());
       onAuthStateChanged(auth, async (currentUser) => {
         if (currentUser) {
@@ -95,7 +95,7 @@ export default function App() {
   } else {
     if (user) {
       screen =
-        userType === "shelter" && specificUser !== {} && loading === false ? (
+        userType === 'shelter' && specificUser !== {} && loading === false ? (
           <>
             <Stack.Screen name="ShelterSidebar" component={ShelterSidebar} />
             <Stack.Screen name="ShelterSignup2" component={ShelterSignup2} />
@@ -103,7 +103,7 @@ export default function App() {
             <Stack.Screen name="ShelterChat" component={ShelterChat} />
             <Stack.Screen name="ShelterMessages" component={ShelterMessages} />
           </>
-        ) : userType === "adopter" &&
+        ) : userType === 'adopter' &&
           specificUser !== {} &&
           loading === false ? (
           <>
