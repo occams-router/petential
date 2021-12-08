@@ -7,6 +7,8 @@ import GlobalStyles from '../../../GlobalStyles';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase/config';
 import { UserContext } from '../../../App';
+import { TextInput as PaperInput } from 'react-native-paper';
+import { selectImage, retrieveImage } from '../../ImageUpload';
 
 const ShelterSignup2 = ({ navigation }) => {
   const shelter = useContext(UserContext);
@@ -73,7 +75,7 @@ const ShelterSignup2 = ({ navigation }) => {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-        <TextInput
+        <PaperInput
           style={styles.input}
           placeholderTextColor="#aaaaaa"
           placeholder="Image URL"
@@ -81,6 +83,20 @@ const ShelterSignup2 = ({ navigation }) => {
           value={imageUrl}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
+          right={
+            <PaperInput.Icon
+              name="camera"
+              onPress={async () => {
+                const imageResult = await selectImage();
+                if (imageResult) {
+                  // retrieve image url from cloud
+                  const retrieved = await retrieveImage(imageResult);
+                  // update in local state to be saved in db
+                  setImageUrl(retrieved);
+                }
+              }}
+            />
+          }
         />
         <TextInput
           style={styles.input}
