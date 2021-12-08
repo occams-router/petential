@@ -1,7 +1,6 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, Image, StyleSheet } from 'react-native';
-import styles from './styles';
 import GlobalStyles from '../../../GlobalStyles';
 import { Title, Button } from 'react-native-paper';
 
