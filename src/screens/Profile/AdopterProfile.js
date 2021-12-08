@@ -79,8 +79,12 @@ export default function AdopterProfile() {
         keyboardShouldPersistTaps="always"
       >
         <Text style={styles.title}> Welcome, {name}!</Text>
-        <Image style={styles.logo} source={{ uri: adopter.imageUrl ||
-      "https://blog.greendot.org/wp-content/uploads/sites/13/2021/09/placeholder-image.png" }} />
+        <Image
+          style={styles.logo}
+          source={{
+            uri: imageUrl,
+          }}
+        />
         <TextInput
           style={styles.input}
           label="Name"

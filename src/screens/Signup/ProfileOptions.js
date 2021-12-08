@@ -21,7 +21,7 @@ export default function ProfileOptions({ navigation }) {
         <Image
           style={styles.image}
           source={{
-            uri: 'https://www.americanhumane.org/app/uploads/2018/04/shelter-cats.jpg',
+            uri: 'https://www.mnpower.com/Content/Images/Company/MPJournal/2017/12202017_01.jpg',
           }}
         />
         <Image

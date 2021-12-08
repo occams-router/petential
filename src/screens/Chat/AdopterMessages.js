@@ -14,7 +14,7 @@ import tailwind from 'tailwind-rn';
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import { UserContext } from '../../../App.js';
 import HeaderBack from '../Sidebar/HeaderBack';
-import styles from '../Login/styles.js';
+import styles from '../Profile/styles.js';
 import SenderMessage from './SenderMessage.js';
 import ReceiverMessage from './ReceiverMessage.js';
 import {

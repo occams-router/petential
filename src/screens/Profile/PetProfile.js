@@ -38,8 +38,12 @@ export default function PetProfile(props) {
   const [shelterName, setShelterName] = pet
     ? useState(pet.shelter || shelter.name)
     : useState(shelter.name);
-  const [city, setCity] = pet ? useState(pet.city || "") : useState("");
-  const [state, setState] = pet ? useState(pet.state || "") : useState("");
+  const [city, setCity] = pet
+    ? useState(pet.city || shelter.city)
+    : useState(shelter.city);
+  const [state, setState] = pet
+    ? useState(pet.state || shelter.state)
+    : useState(shelter.state);
   const [description, setDescription] = pet
     ? useState(pet.description || "")
     : useState("");

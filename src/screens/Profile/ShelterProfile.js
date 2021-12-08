@@ -70,7 +70,12 @@ export default function ShelterProfile() {
         keyboardShouldPersistTaps="always"
       >
         <Text style={styles.title}>Welcome, {nameOfShelter}!</Text>
-        <Image style={styles.logo} source={{ uri: imageUrl }} />
+        <Image
+          style={styles.logo}
+          source={{
+            uri: imageUrl,
+          }}
+        />
         <TextInput
           style={styles.input}
           placeholder="Name of Shelter"
