@@ -1,23 +1,23 @@
-import React, { useState, useContext } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Text, TextInput, TouchableOpacity } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import styles from './styles';
-import GlobalStyles from '../../../GlobalStyles';
-import { doc, updateDoc } from 'firebase/firestore';
-import { db } from '../../firebase/config';
-import { UserContext } from '../../../App';
-import { TextInput as PaperInput } from 'react-native-paper';
-import { selectImage, retrieveImage } from '../../ImageUpload';
+import React, { useState, useContext } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Text, TextInput, TouchableOpacity } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import styles from "./styles";
+import GlobalStyles from "../../../GlobalStyles";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase/config";
+import { UserContext } from "../../../App";
+import { TextInput as PaperInput } from "react-native-paper";
+import { selectImage, retrieveImage } from "../../ImageUpload";
 
 const ShelterSignup2 = ({ navigation }) => {
   const shelter = useContext(UserContext);
 
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [phone, setPhone] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
-  const [description, setDescription] = useState('');
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [phone, setPhone] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [description, setDescription] = useState("");
 
   const onSavePress = async () => {
     try {
@@ -28,12 +28,12 @@ const ShelterSignup2 = ({ navigation }) => {
         imageUrl,
         description,
       };
-      const shelterRef = doc(db, 'shelters', shelter.id);
+      const shelterRef = doc(db, "shelters", shelter.id);
       await updateDoc(shelterRef, shelterData);
-      alert('Profile updated!');
-      navigation.navigate('ShelterSidebar');
+      alert("Profile updated!");
+      navigation.navigate("ShelterSidebar");
     } catch (error) {
-      alert('Profile not updated');
+      alert("Profile not updated");
       console.log(error);
     }
   };
@@ -41,7 +41,7 @@ const ShelterSignup2 = ({ navigation }) => {
   return (
     <SafeAreaView style={GlobalStyles.droidSafeArea}>
       <KeyboardAwareScrollView
-        style={{ flex: 1, width: '100%' }}
+        style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"
       >
         <Text style={styles.text}>Help us get to know you better!</Text>
@@ -76,7 +76,7 @@ const ShelterSignup2 = ({ navigation }) => {
           autoCapitalize="none"
         />
         <PaperInput
-          style={styles.input}
+          style={[styles.input, { paddingLeft: 0, fontSize: 14 }]}
           placeholderTextColor="#aaaaaa"
           placeholder="Image URL"
           onChangeText={(text) => setImageUrl(text)}
