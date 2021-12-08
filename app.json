@@ -1,12 +1,12 @@
 {
   "expo": {
     "name": "Petential",
-    "slug": "petential",
-    "description": "find your furever friend",
+    "slug": "Petential",
+    "description": "Find your furever friend",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/corgi-logo-square.png",
-    "plugins":[
+    "icon": "./assets/icon.png",
+    "plugins": [
       [
         "expo-image-picker",
         {
@@ -22,9 +22,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
