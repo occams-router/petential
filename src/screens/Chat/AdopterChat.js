@@ -1,12 +1,12 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Text, FlatList, View } from "react-native";
-import styles from "../Home/styles";
-import GlobalStyles from "../../../GlobalStyles";
-import { db } from "../../firebase/config";
-import { getDocs, collection, onSnapshot } from "firebase/firestore";
-import { UserContext } from "../../../App";
-import AdopterChatList from "./AdopterChatList";
-import Loading from "../Loading";
+import React, { useState, useContext, useEffect } from 'react';
+import { Text, FlatList, View } from 'react-native';
+import styles from '../Home/styles';
+import GlobalStyles from '../../../GlobalStyles';
+import { db } from '../../firebase/config';
+import { getDocs, collection, onSnapshot } from 'firebase/firestore';
+import { UserContext } from '../../../App';
+import AdopterChatList from './AdopterChatList';
+import Loading from '../Loading';
 
 export default function AdopterChat() {
   const adopter = useContext(UserContext);
@@ -17,9 +17,9 @@ export default function AdopterChat() {
     setLoading(true);
     const matchesCollectionRef = collection(
       db,
-      "adopters",
+      'adopters',
       `${adopter.id}`,
-      "matches"
+      'matches'
     );
 
     const unsub = onSnapshot(matchesCollectionRef, async () => {
@@ -39,7 +39,9 @@ export default function AdopterChat() {
       {loading ? (
         <Loading />
       ) : matches.length === 0 ? (
-        <Text style={{ alignSelf: "center" }}>No messages to display!</Text>
+        <Text style={{ alignSelf: 'center', paddingTop: 50 }}>
+          No messages to display!
+        </Text>
       ) : (
         <FlatList
           data={matches}

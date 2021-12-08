@@ -1,11 +1,11 @@
-import ShelterChatList from "./ShelterChatList";
-import React, { useState, useContext, useEffect } from "react";
-import { Text, FlatList, View } from "react-native";
-import { db } from "../../firebase/config";
-import { getDocs, collection, onSnapshot } from "firebase/firestore";
-import { UserContext } from "../../../App";
-import GlobalStyles from "../../../GlobalStyles";
-import Loading from "../Loading";
+import ShelterChatList from './ShelterChatList';
+import React, { useState, useContext, useEffect } from 'react';
+import { Text, FlatList, View } from 'react-native';
+import { db } from '../../firebase/config';
+import { getDocs, collection, onSnapshot } from 'firebase/firestore';
+import { UserContext } from '../../../App';
+import GlobalStyles from '../../../GlobalStyles';
+import Loading from '../Loading';
 
 export default function ShelterChat() {
   const shelter = useContext(UserContext);
@@ -16,9 +16,9 @@ export default function ShelterChat() {
     setLoading(true);
     const matchesCollectionRef = collection(
       db,
-      "shelters",
+      'shelters',
       `${shelter.id}`,
-      "matches"
+      'matches'
     );
 
     const unsub = onSnapshot(matchesCollectionRef, async () => {
@@ -38,7 +38,9 @@ export default function ShelterChat() {
       {loading ? (
         <Loading />
       ) : matches.length === 0 ? (
-        <Text style={{ alignSelf: "center" }}>No messages to display!</Text>
+        <Text style={{ alignSelf: 'center', paddingTop: 50 }}>
+          No messages to display!
+        </Text>
       ) : (
         <FlatList
           data={matches}
