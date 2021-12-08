@@ -3,11 +3,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import {
+  Header,
   ShelterHome,
   ShelterProfile,
   ShelterRequests,
   ShelterMatches,
-  Header,
   ShelterChat,
 } from '../index.js';
 import GlobalStyles from '../../../GlobalStyles.js';

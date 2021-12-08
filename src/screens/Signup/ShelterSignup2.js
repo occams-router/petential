@@ -7,6 +7,8 @@ import GlobalStyles from '../../../GlobalStyles';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase/config';
 import { UserContext } from '../../../App';
+import { TextInput as PaperInput } from 'react-native-paper';
+import { selectImage, retrieveImage } from '../../ImageUpload';
 
 const ShelterSignup2 = ({ navigation }) => {
   const shelter = useContext(UserContext);
@@ -44,7 +46,7 @@ const ShelterSignup2 = ({ navigation }) => {
       >
         <Text style={styles.text}>Help us get to know you better!</Text>
         <Text style={styles.text}>
-          The more you fill out, the better your changes of getting a match!
+          The more you fill out, the better your chances of getting a match!
         </Text>
         <TextInput
           style={styles.input}
@@ -73,14 +75,28 @@ const ShelterSignup2 = ({ navigation }) => {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-        <TextInput
-          style={styles.input}
+        <PaperInput
+          style={[styles.input, { paddingLeft: 0, fontSize: 14 }]}
           placeholderTextColor="#aaaaaa"
           placeholder="Image URL"
           onChangeText={(text) => setImageUrl(text)}
           value={imageUrl}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
+          right={
+            <PaperInput.Icon
+              name="camera"
+              onPress={async () => {
+                const imageResult = await selectImage();
+                if (imageResult) {
+                  // retrieve image url from cloud
+                  const retrieved = await retrieveImage(imageResult);
+                  // update in local state to be saved in db
+                  setImageUrl(retrieved);
+                }
+              }}
+            />
+          }
         />
         <TextInput
           style={styles.input}

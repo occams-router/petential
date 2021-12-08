@@ -1,25 +1,17 @@
-import AdopterChatList from './AdopterChatList';
-import React, { useState, useContext, useEffect } from 'react';
-import { Text, FlatList, View } from 'react-native';
-import styles from '../Home/styles';
-import { db } from '../../firebase/config';
-import {
-	doc,
-	getDocs,
-	collection,
-	getDoc,
-	onSnapshot,
-	query,
-} from 'firebase/firestore';
-import { UserContext } from '../../../App';
-import Header from '../Sidebar/Header';
-import GlobalStyles from '../../../GlobalStyles';
-import Loading from '../Loading';
+import React, { useState, useContext, useEffect } from "react";
+import { Text, FlatList, View } from "react-native";
+import styles from "../Home/styles";
+import GlobalStyles from "../../../GlobalStyles";
+import { db } from "../../firebase/config";
+import { getDocs, collection, onSnapshot } from "firebase/firestore";
+import { UserContext } from "../../../App";
+import AdopterChatList from "./AdopterChatList";
+import Loading from "../Loading";
 
 export default function AdopterChat() {
-	const adopter = useContext(UserContext);
-	const [matches, setMatches] = useState([]);
-  const [loading, setLoading] = useState(true)
+  const adopter = useContext(UserContext);
+  const [matches, setMatches] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(async () => {
     setLoading(true);
@@ -42,19 +34,19 @@ export default function AdopterChat() {
     return unsub;
   }, []);
 
-	return (
+  return (
     <View style={GlobalStyles.droidSafeArea}>
-    {loading ? (<Loading/>) : matches.length === 0 ? (
-        <Text style={{ alignSelf: "center" }}>No matches to display!</Text>
-      ) : 
-(
-					<FlatList
-						data={matches}
-						keyExtractor={(item) => item.id}
-						renderItem={({ item }) => <AdopterChatList match={item} />}
-					/>
-			)
-			}
-		</View>
-	);
+      {loading ? (
+        <Loading />
+      ) : matches.length === 0 ? (
+        <Text style={{ alignSelf: "center" }}>No messages to display!</Text>
+      ) : (
+        <FlatList
+          data={matches}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <AdopterChatList match={item} />}
+        />
+      )}
+    </View>
+  );
 }

@@ -13,11 +13,6 @@ export default function ShelterSignup({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  // const [imageUrl, setImageUrl] = useState('');
-  // const [city, setCity] = useState('');
-  // const [state, setState] = useState('');
-  // const [phone, setPhone] = useState('');
-  // const [description, setDescription] = useState('');
 
   const onFooterLinkPress = () => {
     navigation.navigate('Login');
@@ -39,11 +34,6 @@ export default function ShelterSignup({ navigation }) {
         name: nameOfShelter,
         email,
         password,
-        // imageUrl,
-        // city,
-        // state,
-        // phone,
-        // description,
       };
       const docRef = await addDoc(collection(db, 'shelters'), data);
       const shelterRef = doc(db, 'shelters', docRef.id);
@@ -69,7 +59,7 @@ export default function ShelterSignup({ navigation }) {
         <Text style={styles.title}>Welcome!</Text>
         <Image
           style={styles.logo}
-          source={require('../../../assets/icon.png')}
+          source={require('../../../assets/corgi-logo.png')}
         />
         <TextInput
           style={styles.input}
@@ -109,53 +99,6 @@ export default function ShelterSignup({ navigation }) {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-        {/* <TextInput
-          style={styles.input}
-          placeholderTextColor="#aaaaaa"
-          placeholder="Image URL"
-          onChangeText={(text) => setImageUrl(text)}
-          value={imageUrl}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.input}
-          placeholderTextColor="#aaaaaa"
-          placeholder="City"
-          onChangeText={(text) => setCity(text)}
-          value={city}
-          underlineColorAndroid="transparent"
-          autoCapitalize="words"
-        />
-        <TextInput
-          style={styles.input}
-          placeholderTextColor="#aaaaaa"
-          placeholder="State"
-          onChangeText={(text) => setState(text)}
-          value={state}
-          underlineColorAndroid="transparent"
-          autoCapitalize="words"
-        />
-        <TextInput
-          style={styles.input}
-          placeholderTextColor="#aaaaaa"
-          placeholder="Phone No."
-          onChangeText={(text) => setPhone(text)}
-          value={phone}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.input}
-          multiline
-          numberOfLines={5}
-          placeholderTextColor="#aaaaaa"
-          placeholder="Description"
-          onChangeText={(text) => setDescription(text)}
-          value={description}
-          underlineColorAndroid="transparent"
-          autoCapitalize="sentences"
-        /> */}
         <TouchableOpacity
           style={styles.button}
           onPress={() => onRegisterPress()}

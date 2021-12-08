@@ -1,24 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
-import {
-  Text,
-  Image,
-  TextInput,
-  TouchableOpacity,
-  View,
-  Platform,
-} from "react-native";
+import { Text, Image, TextInput, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { db } from "../../firebase/config";
 import { doc, updateDoc, onSnapshot, query } from "firebase/firestore";
 import styles from "./styles";
 import GlobalStyles from "../../../GlobalStyles";
 import { UserContext } from "../../../App";
-import {
-  Button,
-  TextInput as PaperInput,
-  IconButton,
-} from "react-native-paper";
-import selectImage from "../../ImageUpload";
+import { TextInput as PaperInput } from "react-native-paper";
+import { selectImage, retrieveImage } from "../../ImageUpload";
 
 export default function AdopterProfile() {
   const adopter = useContext(UserContext);
@@ -28,7 +17,10 @@ export default function AdopterProfile() {
   const [city, setCity] = useState(adopter.city || "");
   const [state, setState] = useState(adopter.state || "");
   const [phone, setPhone] = useState(adopter.phone || "");
-  const [imageUrl, setImageUrl] = useState(adopter.imageUrl || "");
+  const [imageUrl, setImageUrl] = useState(
+    adopter.imageUrl ||
+      "https://blog.greendot.org/wp-content/uploads/sites/13/2021/09/placeholder-image.png"
+  );
   const [description, setDescription] = useState(adopter.description || "");
   const [housing, setHousing] = useState(adopter.housing || "");
   const [lifestyle, setLifestyle] = useState(adopter.lifestyle || "");
@@ -38,11 +30,8 @@ export default function AdopterProfile() {
     setLoading(false);
   }, []);
 
-  const adopterRef = doc(db, "adopters", adopter.id);
-
   const updateAdopter = async () => {
     try {
-      const adopterRef = doc(db, "adopters", adopter.id);
       const updates = {
         name,
         city,
@@ -54,6 +43,7 @@ export default function AdopterProfile() {
         lifestyle,
         petHistory,
       };
+      const adopterRef = doc(db, "adopters", adopter.id);
       await updateDoc(adopterRef, updates);
       alert("Update was successful!");
     } catch (error) {
@@ -77,11 +67,6 @@ export default function AdopterProfile() {
       }),
     []
   );
-
-  const updateImageInDb = async (image) => {
-    console.log("image:", image);
-    await updateDoc(adopterRef, { imageUrl: image });
-  };
 
   return loading ? (
     <View style={GlobalStyles.droidSafeArea}>
@@ -136,9 +121,8 @@ export default function AdopterProfile() {
           autoCapitalize="none"
         />
         <PaperInput
-          style={styles.input}
+          style={[styles.input, { paddingLeft: 0, fontSize: 14 }]}
           placeholderTextColor="#aaaaaa"
-          // label="Image URL"
           placeholder="Image URL"
           onChangeText={(text) => setImageUrl(text)}
           value={imageUrl}
@@ -150,8 +134,10 @@ export default function AdopterProfile() {
               onPress={async () => {
                 const imageResult = await selectImage();
                 if (imageResult) {
-                  // update in db
-                  updateImageInDb(imageResult);
+                  // retrieve image url from cloud
+                  const retrieved = await retrieveImage(imageResult);
+                  // update in local state to be saved in db
+                  setImageUrl(retrieved);
                 }
               }}
             />

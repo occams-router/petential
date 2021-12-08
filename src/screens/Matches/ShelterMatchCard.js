@@ -1,19 +1,12 @@
-import React, { useContext, useState, useEffect } from "react";
-import { useNavigation } from "@react-navigation/native";
-import { SafeAreaView, Text } from "react-native";
-import {
-  Card,
-  Avatar,
-  Title,
-  Paragraph,
-  Button,
-  Divider,
-} from "react-native-paper";
-import styled from "styled-components/native";
-import styles from "../Home/styles";
-import { db } from "../../firebase/config";
-import { doc, getDoc } from "firebase/firestore";
-import { UserContext } from "../../../App";
+import React, { useContext, useState, useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { View } from 'react-native';
+import { Card, Title, Paragraph, Button, Divider } from 'react-native-paper';
+import styled from 'styled-components/native';
+import GlobalStyles from '../../../GlobalStyles';
+import { db } from '../../firebase/config';
+import { doc, getDoc } from 'firebase/firestore';
+import { UserContext } from '../../../App';
 
 const Container = styled.View`
   display: flex;
@@ -30,18 +23,19 @@ const CardContainer = styled.View`
 `;
 
 export default function ShelterMatchCard({ match }) {
+  const navigation = useNavigation();
   const shelter = useContext(UserContext);
   const [adopter, setAdopter] = useState([]);
   const [pet, setPet] = useState([]);
 
   const getAdopter = async () => {
-    const adopterDocRef = doc(db, "adopters", `${match.adopterRefId}`);
+    const adopterDocRef = doc(db, 'adopters', `${match.adopterRefId}`);
     const adopterDoc = await getDoc(adopterDocRef);
     setAdopter(adopterDoc.data());
   };
 
   const getPet = async () => {
-    const petDocRef = doc(db, "pets", `${match.petRefId}`);
+    const petDocRef = doc(db, 'pets', `${match.petRefId}`);
     const petDoc = await getDoc(petDocRef);
     setPet(petDoc.data());
   };
@@ -50,9 +44,9 @@ export default function ShelterMatchCard({ match }) {
     getAdopter();
     getPet();
   }, []);
-  const navigation = useNavigation();
+
   return (
-    <SafeAreaView>
+    <View style={GlobalStyles.droidSafeArea}>
       <Container>
         <CardContainer>
           <Card style={{ marginBottom: 10, padding: 10 }}>
@@ -74,7 +68,7 @@ export default function ShelterMatchCard({ match }) {
               <Button
                 icon="chat"
                 onPress={() =>
-                  navigation.navigate("ShelterMessages", {
+                  navigation.navigate('ShelterMessages', {
                     match,
                     pet,
                     adopter,
@@ -87,6 +81,6 @@ export default function ShelterMatchCard({ match }) {
           </Card>
         </CardContainer>
       </Container>
-    </SafeAreaView>
+    </View>
   );
 }
