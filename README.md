@@ -4,8 +4,9 @@ Welcome to Petential! Petential is a tinder-like application connecting shelters
 
 ![](assets/corgi-logo-square.png)
 
-Try it for yourself!
-Download the Expo Go app and scan the QR code.
+**Try it for yourself!**
+
+Android Users: Download the Expo Go app and scan the QR code.
 
 iPhone Users: Download the Expo Go app and login with username: Petential password: 123Pets!.
 
@@ -40,7 +41,7 @@ iPhone Users: Download the Expo Go app and login with username: Petential passwo
 ## **Set Up:**
 
 ```
-git clone git@github.com:occams-router/testing-app.git
+git clone git@github.com:occams-router/petential
 npm install
 expo start
 ```
