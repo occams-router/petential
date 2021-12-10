@@ -4,6 +4,13 @@ Welcome to Petential! Petential is a tinder-like application connecting shelters
 
 ![](assets/corgi-logo-square.png)
 
+Try it for yourself!
+Download the Expo Go app and scan the QR code.
+
+iPhone Users: Download the Expo Go app and login with username: Petential password: 123Pets!.
+
+![](assets/QR-code.png)
+
 ## **Demo:**
 
 ### Adopter Experience
